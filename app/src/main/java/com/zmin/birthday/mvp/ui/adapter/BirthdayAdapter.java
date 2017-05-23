@@ -4,7 +4,9 @@ import android.view.View;
 
 import com.jess.arms.base.BaseHolder;
 import com.jess.arms.base.DefaultAdapter;
+import com.zmin.birthday.R;
 import com.zmin.birthday.mvp.model.entity.Birthday;
+import com.zmin.birthday.mvp.ui.holder.BirthdayHolder;
 
 import java.util.List;
 
@@ -22,11 +24,11 @@ public class BirthdayAdapter extends DefaultAdapter<Birthday>{
 
     @Override
     public BaseHolder<Birthday> getHolder(View v, int viewType) {
-        return null;
+        return new BirthdayHolder(v);
     }
 
     @Override
     public int getLayoutId(int viewType) {
-        return 0;
+        return R.layout.item_main;
     }
 }

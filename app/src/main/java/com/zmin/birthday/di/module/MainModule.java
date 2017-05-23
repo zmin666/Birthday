@@ -27,6 +27,8 @@ public class MainModule {
         return view;
     }
 
+    @ActivityScope
+    @Provides
     MainContract.Model provideMainModel(BirthdayModel model){
         return model;
     }

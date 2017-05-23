@@ -58,7 +58,7 @@ public class MainPresenter extends BasePresenter<MainContract.Model, MainContrac
     /**
      *  添加生日
      */
-    public void addItemData(){
+    public void deleteItemData(){
         Birthday birthday = new Birthday("张三丰", "1901", "7", "1", "1901", "6", "7");
         mBirthdays.add(birthday);
         mMAdapter.notifyItemInserted(mBirthdays.size()-1);
@@ -68,7 +68,7 @@ public class MainPresenter extends BasePresenter<MainContract.Model, MainContrac
     /**
      *  删除生日
      */
-    public void addItemData(int position){
+    public void deleteItemData(int position){
         mBirthdays.remove(position);
         mMAdapter.notifyDataSetChanged();
     }

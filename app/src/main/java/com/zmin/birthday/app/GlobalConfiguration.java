@@ -31,6 +31,7 @@ import org.json.JSONObject;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
+import butterknife.ButterKnife;
 import okhttp3.Interceptor;
 import okhttp3.Request;
 import okhttp3.Response;
@@ -144,6 +145,7 @@ public class GlobalConfiguration implements ConfigModule {
         lifecycles.add(new Application.ActivityLifecycleCallbacks() {
             @Override
             public void onActivityCreated(Activity activity, Bundle savedInstanceState) {
+                ButterKnife.bind(activity);
                 //这里全局给Activity设置toolbar和title,你想象力有多丰富,这里就有多强大,以前放到BaseActivity的操作都可以放到这里
 //                if (activity.findViewById(R.id.toolbar) != null) {
 //                    if (activity instanceof AppCompatActivity) {
