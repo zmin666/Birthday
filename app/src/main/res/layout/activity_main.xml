@@ -1,15 +1,29 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
+<FrameLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context="com.zmin.birthday.mvp.ui.activity.MainActivity">
 
-    <TextView
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/rv"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"/>
+
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/fab"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Hello World!"
-        />
+        android:layout_gravity="bottom|right"
+        android:layout_marginBottom="30px"
+        android:layout_marginRight="30px"
+        android:clickable="true"
+        android:src="@mipmap/ic_launcher"
+        app:backgroundTint="#03A9F4"
+        app:elevation="12dp"
+        app:pressedTranslationZ="24dp"
+        app:rippleColor="#0288D1"/>
 
-</LinearLayout>
+</FrameLayout>
