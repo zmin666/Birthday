@@ -1,0 +1,23 @@
+apply from: "config.gradle"
+
+buildscript {
+    repositories {
+        jcenter()
+    }
+    dependencies {
+        classpath 'com.android.tools.build:gradle:2.3.2'
+        //lambda
+        classpath 'me.tatarka:gradle-retrolambda:3.6.0'
+    }
+}
+
+allprojects {
+    repositories {
+        jcenter()
+        maven { url "https://jitpack.io" }// 这里要使用rxcahche指定的仓库
+    }
+}
+
+task clean(type: Delete) {
+    delete rootProject.buildDir
+}
