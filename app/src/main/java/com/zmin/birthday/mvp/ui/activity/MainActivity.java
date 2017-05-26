@@ -17,6 +17,7 @@ import com.zmin.birthday.mvp.contract.MainContract;
 import com.zmin.birthday.mvp.presenter.MainPresenter;
 
 import butterknife.BindView;
+import butterknife.OnClick;
 
 public class MainActivity extends BaseActivity<MainPresenter> implements MainContract.view {
     @Nullable
@@ -25,6 +26,10 @@ public class MainActivity extends BaseActivity<MainPresenter> implements MainCon
     @Nullable
     @BindView(R.id.fab)
     FloatingActionButton mFloatingActionButton;
+    @OnClick(R.id.fab)
+    public void onViewClicked() {
+
+    }
 
     @Override
     public void setupActivityComponent(AppComponent appComponent) {
@@ -86,4 +91,7 @@ public class MainActivity extends BaseActivity<MainPresenter> implements MainCon
     public void killMyself() {
 
     }
+
+
+
 }
