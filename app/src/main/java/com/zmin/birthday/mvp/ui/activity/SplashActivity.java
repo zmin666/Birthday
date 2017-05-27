@@ -59,6 +59,7 @@ public class SplashActivity extends BaseActivity<SplashPresenter> implements Spl
     @Override
     public void launchActivity(Intent intent) {
         startActivity(intent);
+        finish();
     }
 
     @Override

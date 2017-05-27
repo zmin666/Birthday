@@ -3,9 +3,9 @@ package com.zmin.birthday.mvp.ui.activity;
 import android.content.Intent;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 
 import com.jess.arms.base.BaseActivity;
 import com.jess.arms.base.DefaultAdapter;
@@ -26,6 +26,9 @@ public class MainActivity extends BaseActivity<MainPresenter> implements MainCon
     @Nullable
     @BindView(R.id.fab)
     FloatingActionButton mFloatingActionButton;
+    @Nullable
+    @BindView(R.id.srl)
+    SwipeRefreshLayout mSwipeRefreshLayout;
     @OnClick(R.id.fab)
     public void onViewClicked() {
         addItem();
@@ -48,7 +51,17 @@ public class MainActivity extends BaseActivity<MainPresenter> implements MainCon
 
     @Override
     public void initData() {
-        mPresenter.requestBirthdayData();
+        addListener();
+        mPresenter.requestBirthdayData(true);
+    }
+
+    private void addListener() {
+        mSwipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                mPresenter.requestBirthdayData(true);
+            }
+        });
     }
 
     @Override
@@ -69,12 +82,17 @@ public class MainActivity extends BaseActivity<MainPresenter> implements MainCon
 
     @Override
     public void showLoading() {
-        Log.i("zmin.............", "..showLoading..");
+        if (!mSwipeRefreshLayout.isRefreshing()) {
+            mSwipeRefreshLayout.setRefreshing(true);
+        }
+
     }
 
     @Override
     public void hideLoading() {
-        Log.i("zmin.............", "..hideLoading..");
+        if (mSwipeRefreshLayout.isRefreshing()) {
+            mSwipeRefreshLayout.setRefreshing(false);
+        }
     }
 
     @Override

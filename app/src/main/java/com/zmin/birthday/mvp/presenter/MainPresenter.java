@@ -44,23 +44,30 @@ public class MainPresenter extends BasePresenter<MainContract.Model, MainContrac
         this.mApplication = application;
         this.mErrorHandler = handler;
         this.mAppManager = appManager;
-        mActivity = (MainActivity) mRootView;
 
+        mActivity = (MainActivity) mRootView;
     }
 
     /**
      * 获取数据展示数据
+     *
+     * @param refresh ture先清空现有的数据  刷新的时候和首次加载的时候为ture
      */
-    public void requestBirthdayData() {
+    public void requestBirthdayData(boolean refresh) {
+        mRootView.showLoading();
         if (mMAdapter == null) {
             mMAdapter = new BirthdayAdapter(mBirthdays);
             mRootView.setAdapter(mMAdapter);//设置Adapter
         }
-
         //获取数据  展示数据
         List<Birthday> birthdayData = mModel.getBirthdayData();
+        if (refresh) {
+            mBirthdays.clear();
+        }
         mBirthdays.addAll(birthdayData);
         mMAdapter.notifyDataSetChanged();
+        mRootView.hideLoading();
+
     }
 
     /**
