@@ -26,6 +26,16 @@ public class Birthday {
         this.day = day;
     }
 
+    public Birthday(String name, int old_year, int old_month, int old_day, int year, int month, int day) {
+        this.name = name;
+        this.old_year = String.valueOf(old_year);
+        this.old_month = String.valueOf(old_month);
+        this.old_day = String.valueOf(old_day);
+        this.year = String.valueOf(year);
+        this.month = String.valueOf(month);
+        this.day = String.valueOf(day);
+    }
+
     public String getName() {
         return name;
     }

@@ -28,7 +28,7 @@ public class MainActivity extends BaseActivity<MainPresenter> implements MainCon
     FloatingActionButton mFloatingActionButton;
     @OnClick(R.id.fab)
     public void onViewClicked() {
-
+        addItem();
     }
 
     @Override
@@ -59,7 +59,7 @@ public class MainActivity extends BaseActivity<MainPresenter> implements MainCon
 
     @Override
     public void addItem() {
-        mPresenter.deleteItemData();
+        mPresenter.addItemData();
     }
 
     @Override
