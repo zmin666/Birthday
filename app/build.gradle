@@ -73,4 +73,7 @@ dependencies {
     annotationProcessor rootProject.ext.dependencies["dagger2-compiler"]//依赖插件, annotationProcessor 是 AndroidStudio 自带并用来替换 APT
     annotationProcessor rootProject.ext.dependencies["butterknife-compiler"]
     provided rootProject.ext.dependencies["javax.annotation"]//dagger2必须依赖jsr250 annotation
+
+    //其他//
+    compile 'com.android.support:design:25.3.1'
 }

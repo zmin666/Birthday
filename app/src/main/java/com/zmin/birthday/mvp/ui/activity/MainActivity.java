@@ -1,11 +1,15 @@
 package com.zmin.birthday.mvp.ui.activity;
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.support.annotation.Nullable;
+import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.Toolbar;
+import android.view.View;
 
 import com.jess.arms.base.BaseActivity;
 import com.jess.arms.base.DefaultAdapter;
@@ -29,6 +33,13 @@ public class MainActivity extends BaseActivity<MainPresenter> implements MainCon
     @Nullable
     @BindView(R.id.srl)
     SwipeRefreshLayout mSwipeRefreshLayout;
+    @Nullable
+    @BindView(R.id.toolbar)
+    Toolbar mToolbar;
+    @Nullable
+    @BindView(R.id.collapsing_toolbar_layout)
+    CollapsingToolbarLayout mCollapsingToolbarLayout;
+
     @OnClick(R.id.fab)
     public void onViewClicked() {
         addItem();
@@ -46,13 +57,30 @@ public class MainActivity extends BaseActivity<MainPresenter> implements MainCon
 
     @Override
     public int initView() {
-        return R.layout.activity_main;
+        return R.layout.activity_main_coor;
     }
 
     @Override
     public void initData() {
+        setupView();
         addListener();
         mPresenter.requestBirthdayData(true);
+    }
+
+    private void setupView() {
+        setSupportActionBar(mToolbar);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        mToolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onBackPressed();
+            }
+        });
+        //使用CollapsingToolbarLayout必须把title设置到CollapsingToolbarLayout上，设置到Toolbar上则不会显示
+        mCollapsingToolbarLayout.setTitle("生日记录");
+        //通过CollapsingToolbarLayout修改字体颜色
+        mCollapsingToolbarLayout.setExpandedTitleColor(Color.WHITE);//设置还没收缩时状态下字体颜色
+        mCollapsingToolbarLayout.setCollapsedTitleTextColor(Color.GREEN);//设置收缩后Toolbar上字体的颜色
     }
 
     private void addListener() {
