@@ -7,4 +7,5 @@ import com.jess.arms.base.BaseApplication;
  */
 
 public class App extends BaseApplication {
+
 }

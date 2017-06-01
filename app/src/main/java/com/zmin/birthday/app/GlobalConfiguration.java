@@ -8,6 +8,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.text.TextUtils;
 
+import com.avos.avoscloud.AVOSCloud;
 import com.jess.arms.base.App;
 import com.jess.arms.base.delegate.AppDelegate;
 import com.jess.arms.di.module.GlobalConfigModule;
@@ -19,6 +20,7 @@ import com.jess.arms.utils.UiUtils;
 import com.squareup.leakcanary.LeakCanary;
 import com.squareup.leakcanary.RefWatcher;
 import com.zmin.birthday.BuildConfig;
+import com.zmin.birthday.app.db.DbCore;
 import com.zmin.birthday.mvp.model.api.Api;
 import com.zmin.birthday.mvp.model.api.cache.CommonCache;
 import com.zmin.birthday.mvp.model.api.service.CommonService;
@@ -130,6 +132,11 @@ public class GlobalConfiguration implements ConfigModule {
                 }
                 //leakCanary内存泄露检查
                 ((App) application).getAppComponent().extras().put(RefWatcher.class.getName(), BuildConfig.USE_CANARY ? LeakCanary.install(application) : RefWatcher.DISABLED);
+                // 初始化参数依次为 this, AppId, AppKey
+                AVOSCloud.initialize(context,"V3cr3sUeFENOdjEekOGCIG7P-gzGzoHsz","DVztMKlqm6uG5YlkaMBrHAJV");
+
+                //数据库初始化
+                DbCore.init(context);
             }
 
             @Override

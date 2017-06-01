@@ -2,12 +2,18 @@ package com.zmin.birthday.mvp.presenter;
 
 import android.app.Application;
 import android.app.DatePickerDialog;
+import android.util.Log;
 import android.widget.DatePicker;
 import android.widget.Toast;
 
+import com.avos.avoscloud.AVException;
+import com.avos.avoscloud.AVObject;
+import com.avos.avoscloud.SaveCallback;
 import com.jess.arms.di.scope.ActivityScope;
 import com.jess.arms.integration.AppManager;
 import com.jess.arms.mvp.BasePresenter;
+import com.zmin.birthday.app.db.BirthdayHelp;
+import com.zmin.birthday.app.db.DbUtil;
 import com.zmin.birthday.mvp.contract.MainContract;
 import com.zmin.birthday.mvp.model.entity.Birthday;
 import com.zmin.birthday.mvp.ui.activity.MainActivity;
@@ -86,9 +92,52 @@ public class MainPresenter extends BasePresenter<MainContract.Model, MainContrac
                 Birthday birthday = new Birthday("张三丰", year, monthOfYear + 1, dayOfMonth, 0, 0, 0);
                 mBirthdays.add(birthday);
                 mMAdapter.notifyItemInserted(mBirthdays.size() - 1);
+                //保存到本地数据库
+                savaInDB(birthday);
+                //上传到服务器
+                uploadeData(birthday);
             }
+
+
         }, year, month, day).show();
     }
+
+    /**
+     * 保存生日信息到数据库
+     * @param birthday
+     */
+    private void savaInDB(Birthday birthday) {
+        BirthdayHelp driverHelper = DbUtil.getDriverHelper();
+        int size = driverHelper.queryAll().size();
+        birthday.setId(String.valueOf(size));
+        driverHelper.save(birthday);
+    }
+
+    private void uploadeData(Birthday data) {
+        //获取birthday的表
+        AVObject birthday = new AVObject("Birthday");
+        //这个是存贮这个条目的归属用户
+        birthday.put("user_id","001");
+        birthday.put("user_key","ff001");
+
+        birthday.put("name",data.getName());
+        birthday.put("old_year",data.getOld_year());
+        birthday.put("old_month",data.getOld_month());
+        birthday.put("old_day",data.getOld_day());
+        birthday.put("year",data.getYear());
+        birthday.put("month",data.getMonth());
+        birthday.put("day",data.getDay());
+
+        birthday.saveInBackground(new SaveCallback() {
+            @Override
+            public void done(AVException e) {
+                if(e == null){
+                    Log.d("saved","success!");
+                }
+            }
+        });
+    }
+
 
 
     /**

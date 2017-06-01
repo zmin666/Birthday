@@ -1,19 +1,34 @@
 package com.zmin.birthday.mvp.model.entity;
 
+import org.greenrobot.greendao.annotation.Entity;
+import org.greenrobot.greendao.annotation.Id;
+import org.greenrobot.greendao.annotation.Property;
+import org.greenrobot.greendao.annotation.Generated;
+
 /**
  * @author: ZhangMin
  * @date: 2017/5/23 17:00
  * @desc:
  */
+@Entity
 public class Birthday {
+    @Id
+    private String id;
+    @Property(nameInDb = "NAME")
     private String name;
     //农历生日
+    @Property(nameInDb = "OLD_YEAR")
     private String old_year;
+    @Property(nameInDb = "OLD_MONTH")
     private String old_month;
+    @Property(nameInDb = "OLD_DAY")
     private String old_day;
     //阳历生日
+    @Property(nameInDb = "YEAR")
     private String year;
+    @Property(nameInDb = "MONTH")
     private String month;
+    @Property(nameInDb = "DAY")
     private String day;
 
     public Birthday(String name, String old_year, String old_month, String old_day, String year, String month, String day) {
@@ -34,6 +49,23 @@ public class Birthday {
         this.year = String.valueOf(year);
         this.month = String.valueOf(month);
         this.day = String.valueOf(day);
+    }
+
+    @Generated(hash = 1733568019)
+    public Birthday(String id, String name, String old_year, String old_month, String old_day, String year, String month,
+            String day) {
+        this.id = id;
+        this.name = name;
+        this.old_year = old_year;
+        this.old_month = old_month;
+        this.old_day = old_day;
+        this.year = year;
+        this.month = month;
+        this.day = day;
+    }
+
+    @Generated(hash = 1467867887)
+    public Birthday() {
     }
 
     public String getName() {
@@ -90,5 +122,13 @@ public class Birthday {
 
     public void setDay(String day) {
         this.day = day;
+    }
+
+    public String getId() {
+        return this.id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
     }
 }

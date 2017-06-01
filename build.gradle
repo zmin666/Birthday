@@ -3,18 +3,30 @@ apply from: "config.gradle"
 buildscript {
     repositories {
         jcenter()
+        //这里是 LeanCloud 的包仓库
+        maven {
+            url "http://mvn.leancloud.cn/nexus/content/repositories/public"
+        }
+        mavenCentral()
     }
     dependencies {
         classpath 'com.android.tools.build:gradle:2.3.2'
         //lambda
         classpath 'me.tatarka:gradle-retrolambda:3.6.0'
+        //greendao
+        classpath 'org.greenrobot:greendao-gradle-plugin:3.2.2'
     }
 }
+
 
 allprojects {
     repositories {
         jcenter()
         maven { url "https://jitpack.io" }// 这里要使用rxcahche指定的仓库
+        //这里是 LeanCloud 的包仓库
+        maven {
+            url "http://mvn.leancloud.cn/nexus/content/repositories/public"
+        }
     }
 }
 
