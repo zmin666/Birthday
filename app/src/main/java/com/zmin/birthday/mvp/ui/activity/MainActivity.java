@@ -12,17 +12,17 @@ import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
 
-import com.avos.avoscloud.AVException;
-import com.avos.avoscloud.AVObject;
-import com.avos.avoscloud.AVQuery;
-import com.avos.avoscloud.FindCallback;
 import com.jess.arms.base.BaseActivity;
 import com.jess.arms.base.DefaultAdapter;
 import com.jess.arms.di.component.AppComponent;
 import com.zmin.birthday.R;
+import com.zmin.birthday.app.db.DbCore;
+import com.zmin.birthday.app.db.dao.BirthdayDao;
+import com.zmin.birthday.app.db.dao.DaoSession;
 import com.zmin.birthday.di.component.DaggerMainComponent;
 import com.zmin.birthday.di.module.MainModule;
 import com.zmin.birthday.mvp.contract.MainContract;
+import com.zmin.birthday.mvp.model.entity.Birthday;
 import com.zmin.birthday.mvp.presenter.MainPresenter;
 
 import java.util.List;
@@ -58,14 +58,14 @@ public class MainActivity extends BaseActivity<MainPresenter> implements MainCon
     @OnClick(R.id.fab_test)
     public void onViewTextClicked() {
         // 测试获取数
-        AVQuery<AVObject> query = new AVQuery<>("Birthday");
-        query.whereEqualTo("user_id", "001");
-        query.findInBackground(new FindCallback<AVObject>() {
-            @Override
-            public void done(List<AVObject> list, AVException e) {
-                Log.i("zmin.............","...." + list.size() );
-            }
-        });
+        DaoSession daoSession = DbCore.getDaoSession();
+        BirthdayDao birthdayDao = daoSession.getBirthdayDao();
+        List<Birthday> list = birthdayDao.queryBuilder()
+                .where(BirthdayDao.Properties.Name.eq("张三丰"))
+                .orderAsc(BirthdayDao.Properties.Id)
+                .limit(2)
+                .build().list();
+        Log.i("zmin.............","...." +  list);
     }
 
     @Override

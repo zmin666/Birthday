@@ -23,15 +23,10 @@ import com.zmin.birthday.app.db.dao.DaoSession;
 import org.greenrobot.greendao.query.QueryBuilder;
 
 /**
- * 文 件 名: DbCore
- * 说   明: 核心辅助类，用于获取DaoMaster和DaoSession
- * 参   考：http://blog.inet198.cn/?sbsujjbcy/article/details/48156683
- * 创 建 人: 蒋朋
- * 创建日期: 16-7-19 10:12
- * 邮   箱: jp19891017@gmail.com
- * 博   客: http://jp1017.github.io
- * 修改时间：
- * 修改备注：
+ * @author: ZhangMin
+ * @date:  2017/6/2 16:38
+ * @desc:  这个类用于提供Daomaster 和DaoSession
+ *          获取daomaster的时候再额外配置一下 方便升级
  */
 public class DbCore {
     private static final String DEFAULT_DB_NAME = "green-dao3.db";
@@ -57,7 +52,8 @@ public class DbCore {
         if (daoMaster == null) {
             //此处不可用 DaoMaster.DevOpenHelper, 那是开发辅助类，我们要自定义一个，方便升级
             DaoMaster.OpenHelper helper = new MyOpenHelper(mContext, DB_NAME);
-            daoMaster = new DaoMaster(helper.getEncryptedReadableDb("password"));
+           // daoMaster = new DaoMaster(helper.getEncryptedReadableDb("password"));
+            daoMaster = new DaoMaster(helper.getWritableDb());
         }
         return daoMaster;
     }

@@ -50,18 +50,12 @@ import com.zmin.birthday.app.db.dao.DaoMaster;
 
 import org.greenrobot.greendao.database.Database;
 
-/**
- * 文 件 名: MyOpenHelper
- * 创 建 人: 蒋朋
- * 创建日期: 16-10-11 08:28
- * 邮    箱: jp19891017@gmail.com
- * 博    客: https://jp1017.github.io/
- * 描    述:
- * 修 改 人:
- * 修改时间：
- * 修改备注：
- */
 
+/**
+ * @author: ZhangMin
+ * @date:  2017/6/2 16:40
+ * @desc: 升级数据库的操作. 在build.gradle中配置数据库的版本号
+ */
 public class MyOpenHelper extends DaoMaster.OpenHelper {
     public MyOpenHelper(Context context, String name) {
         super(context, name);
@@ -74,7 +68,6 @@ public class MyOpenHelper extends DaoMaster.OpenHelper {
 
         switch (oldVersion) {
             case 1:
-
                 //不能先删除表，否则数据都木了
               //  StudentDao.dropTable(db, true);
 
@@ -83,6 +76,16 @@ public class MyOpenHelper extends DaoMaster.OpenHelper {
                 // 加入新字段 score
                // db.execSQL("ALTER TABLE 'STUDENT' ADD 'SCORE' TEXT;");
 
+                break;
+            case 2:
+
+                //不能先删除表，否则数据都木了
+                //  StudentDao.dropTable(db, true);
+
+                // BirthdayDao.createTable(db, true);
+
+                // 加入新字段 score
+                // db.execSQL("ALTER TABLE 'STUDENT' ADD 'SCORE' TEXT;");
                 break;
         }
 

@@ -65,14 +65,23 @@ public class MainPresenter extends BasePresenter<MainContract.Model, MainContrac
             mMAdapter = new BirthdayAdapter(mBirthdays);
             mRootView.setAdapter(mMAdapter);//设置Adapter
         }
-        //获取数据  展示数据
+        //获取数据  展示数据  保存到数据库中
         List<Birthday> birthdayData = mModel.getBirthdayData();
+        BirthdayHelp driverHelper = DbUtil.getDriverHelper();
         if (refresh) {
             mBirthdays.clear();
+            driverHelper.deleteAll();
         }
         mBirthdays.addAll(birthdayData);
+        for (Birthday birthday : birthdayData) {
+            int size = driverHelper.queryAll().size();
+            birthday.setId(String.valueOf(size));
+            driverHelper.save(birthday);
+        }
+
         mMAdapter.notifyDataSetChanged();
         mRootView.hideLoading();
+
 
     }
 

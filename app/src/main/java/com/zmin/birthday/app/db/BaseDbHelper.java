@@ -22,14 +22,9 @@ import org.greenrobot.greendao.query.QueryBuilder;
 import java.util.List;
 
 /**
- * 文 件 名: BaseDbHelper
- * 说   明:  greedDAO 基础辅助类
- * 创 建 人: 蒋朋
- * 创建日期: 16-7-19 10:19
- * 邮   箱: jp19891017@gmail.com
- * 博   客: http://jp1017.github.io
- * 修改时间：
- * 修改备注：
+ * @author: ZhangMin
+ * @date:  2017/6/2 16:42
+ * @desc: 封装数据库操作辅助类.
  */
 public class BaseDbHelper<T, K> {
     private AbstractDao<T, K> mDao;
