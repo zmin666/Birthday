@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.text.TextUtils;
+import android.util.Log;
 
 import com.avos.avoscloud.AVOSCloud;
 import com.jess.arms.base.App;
@@ -53,6 +54,7 @@ public class GlobalConfiguration implements ConfigModule {
                     public Response onHttpResultResponse(String httpResult, Interceptor.Chain chain, Response response) {
                         /* 这里可以先客户端一步拿到每一次http请求的结果,可以解析成json,做一些操作,如检测到token过期后
                            重新请求token,并重新执行请求 */
+                        Log.i("zmin...httpResult....", "...." + httpResult);
                         try {
                             if (!TextUtils.isEmpty(httpResult) && RequestInterceptor.isJson(response.body())) {
                                 JSONArray array = new JSONArray(httpResult);
@@ -116,7 +118,9 @@ public class GlobalConfiguration implements ConfigModule {
 
     @Override
     public void registerComponents(Context context, IRepositoryManager repositoryManager) {
+
         repositoryManager.injectRetrofitService(CommonService.class, UserService.class);
+
         repositoryManager.injectCacheService(CommonCache.class);
     }
 
@@ -133,7 +137,7 @@ public class GlobalConfiguration implements ConfigModule {
                 //leakCanary内存泄露检查
                 ((App) application).getAppComponent().extras().put(RefWatcher.class.getName(), BuildConfig.USE_CANARY ? LeakCanary.install(application) : RefWatcher.DISABLED);
                 // 初始化参数依次为 this, AppId, AppKey
-                AVOSCloud.initialize(context,"V3cr3sUeFENOdjEekOGCIG7P-gzGzoHsz","DVztMKlqm6uG5YlkaMBrHAJV");
+                AVOSCloud.initialize(context, "V3cr3sUeFENOdjEekOGCIG7P-gzGzoHsz", "DVztMKlqm6uG5YlkaMBrHAJV");
 
                 //数据库初始化
                 DbCore.init(context);
@@ -151,7 +155,7 @@ public class GlobalConfiguration implements ConfigModule {
         lifecycles.add(new Application.ActivityLifecycleCallbacks() {
             @Override
             public void onActivityCreated(Activity activity, Bundle savedInstanceState) {
-           //     ButterKnife.bind(activity);
+                //     ButterKnife.bind(activity);
                 //这里全局给Activity设置toolbar和title,你想象力有多丰富,这里就有多强大,以前放到BaseActivity的操作都可以放到这里
 //                if (activity.findViewById(R.id.toolbar) != null) {
 //                    if (activity instanceof AppCompatActivity) {

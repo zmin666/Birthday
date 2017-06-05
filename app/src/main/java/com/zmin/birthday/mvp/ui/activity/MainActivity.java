@@ -66,6 +66,10 @@ public class MainActivity extends BaseActivity<MainPresenter> implements MainCon
                 .limit(2)
                 .build().list();
         Log.i("zmin.............","...." +  list);
+
+
+        //获取网络数据
+        mPresenter.getUsers();
     }
 
     @Override

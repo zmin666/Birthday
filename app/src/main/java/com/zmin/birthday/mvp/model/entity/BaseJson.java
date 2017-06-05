@@ -1,7 +1,5 @@
 package com.zmin.birthday.mvp.model.entity;
 
-import com.zmin.birthday.mvp.model.api.Api;
-
 import java.io.Serializable;
 
 
@@ -34,10 +32,11 @@ public class BaseJson<T> implements Serializable{
      * @return
      */
     public boolean isSuccess() {
-        if (code.equals(Api.RequestSuccess)) {
-            return true;
-        } else {
-            return false;
-        }
+//        if (code.equals(Api.RequestSuccess)) {
+//            return true;
+//        } else {
+//            return false;
+//        }
+        return true;
     }
 }

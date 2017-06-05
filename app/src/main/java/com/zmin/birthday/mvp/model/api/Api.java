@@ -5,6 +5,6 @@ package com.zmin.birthday.mvp.model.api;
  * contact with jess.yan.effort@gmail.com
  */
 public interface Api {
-    String APP_DOMAIN = "https://api.github.com";
-    String RequestSuccess = "0";
+    /** 基础URL  豆瓣接口*/
+     String APP_DOMAIN = "https://api.douban.com/v2/movie/";
 }

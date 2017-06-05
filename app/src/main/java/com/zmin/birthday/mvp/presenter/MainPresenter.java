@@ -14,8 +14,10 @@ import com.jess.arms.integration.AppManager;
 import com.jess.arms.mvp.BasePresenter;
 import com.zmin.birthday.app.db.BirthdayHelp;
 import com.zmin.birthday.app.db.DbUtil;
+import com.zmin.birthday.app.utils.RxUtils;
 import com.zmin.birthday.mvp.contract.MainContract;
 import com.zmin.birthday.mvp.model.entity.Birthday;
+import com.zmin.birthday.mvp.model.entity.MovieEntity;
 import com.zmin.birthday.mvp.ui.activity.MainActivity;
 import com.zmin.birthday.mvp.ui.adapter.BirthdayAdapter;
 
@@ -25,7 +27,13 @@ import java.util.List;
 
 import javax.inject.Inject;
 
+import io.reactivex.Observer;
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.annotations.NonNull;
+import io.reactivex.disposables.Disposable;
+import io.reactivex.schedulers.Schedulers;
 import me.jessyan.rxerrorhandler.core.RxErrorHandler;
+import me.jessyan.rxerrorhandler.handler.RetryWithDelay;
 
 /**
  * @author: ZhangMin
@@ -82,7 +90,36 @@ public class MainPresenter extends BasePresenter<MainContract.Model, MainContrac
         mMAdapter.notifyDataSetChanged();
         mRootView.hideLoading();
 
+    }
 
+    public void getUsers(){
+        mModel.getUsers(0,10)
+                .subscribeOn(Schedulers.io())
+                .unsubscribeOn(Schedulers.io())
+                .compose(RxUtils.bindToLifecycle(mRootView))
+                .retryWhen(new RetryWithDelay(3, 2))
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Observer<MovieEntity>() {
+                    @Override
+                    public void onSubscribe(@NonNull Disposable d) {
+
+                    }
+
+                    @Override
+                    public void onNext(@NonNull MovieEntity movieEntity) {
+                        Log.i("zmin.............",".11..." +  movieEntity);
+                    }
+
+                    @Override
+                    public void onError(@NonNull Throwable e) {
+                        Log.i("zmin.............",".22..." +  e);
+                    }
+
+                    @Override
+                    public void onComplete() {
+
+                    }
+                });
     }
 
     /**
