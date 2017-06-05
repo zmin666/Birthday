@@ -1,6 +1,6 @@
 package com.zmin.birthday.mvp.model.api.cache;
 
-import com.zmin.birthday.mvp.model.entity.GankEntity;
+import com.zmin.birthday.mvp.model.entity.MovieEntity;
 
 import java.util.concurrent.TimeUnit;
 
@@ -16,5 +16,8 @@ import io.rx_cache2.Reply;
  */
 public interface CommonCache {
     @LifeCache(duration = 2, timeUnit = TimeUnit.MINUTES)
-    Observable<Reply<GankEntity>> getTopMovie(Observable<GankEntity> users, DynamicKey idLastUserQueried, EvictProvider evictProvider);
+    Observable<Reply<MovieEntity>> getTopMovie(Observable<MovieEntity> movieEntityObservable, DynamicKey idLastUserQueried, EvictProvider evictProvider);
+
+
+//    Observable<MovieEntity> getTopMovie(@Query("start") int start, @Query("count") int count);
 }
