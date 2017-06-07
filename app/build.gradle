@@ -57,9 +57,9 @@ android {
 
 //greendao配置
 greendao {
-    schemaVersion 1                             //版本号，升级时可配置
+    schemaVersion 2                             //版本号，升级时可配置
     daoPackage'com.zmin.birthday.app.db.dao'           //包名
-    targetGenDir'src/main/java'                 //生成目录
+    targetGenDir 'src/main/java'                 //生成目录
 }
 
 buildscript {

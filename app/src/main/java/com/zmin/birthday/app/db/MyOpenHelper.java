@@ -85,7 +85,7 @@ public class MyOpenHelper extends DaoMaster.OpenHelper {
                 // BirthdayDao.createTable(db, true);
 
                 // 加入新字段 score
-                // db.execSQL("ALTER TABLE 'STUDENT' ADD 'SCORE' TEXT;");
+                //db.execSQL("ALTER TABLE 'STUDENT' ADD 'SCORE' TEXT;");
                 break;
         }
 

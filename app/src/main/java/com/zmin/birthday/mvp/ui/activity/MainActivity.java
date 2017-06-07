@@ -25,6 +25,10 @@ import com.zmin.birthday.mvp.contract.MainContract;
 import com.zmin.birthday.mvp.model.entity.Birthday;
 import com.zmin.birthday.mvp.presenter.MainPresenter;
 
+import org.greenrobot.greendao.query.CountQuery;
+import org.greenrobot.greendao.query.Query;
+import org.greenrobot.greendao.query.WhereCondition;
+
 import java.util.List;
 
 import butterknife.BindView;
@@ -65,8 +69,18 @@ public class MainActivity extends BaseActivity<MainPresenter> implements MainCon
                 .orderAsc(BirthdayDao.Properties.Id)
                 .limit(2)
                 .build().list();
+
+
+
+
         Log.i("zmin.............","...." +  list);
 
+
+        Query<Birthday> query = birthdayDao.queryBuilder().where(new WhereCondition.StringCondition("_ID IN " + "(SELECT USER_ID FROM USER_MESSAGE WHERE READ_FLAG = 0)")).build();
+        CountQuery<Birthday> birthdayCountQuery = birthdayDao.queryBuilder().buildCount();
+
+        birthdayDao.queryRaw("", CountQuery)
+       // birthdayDao.queryRawCreate()
 
         //获取网络数据
         mPresenter.getUsers();
