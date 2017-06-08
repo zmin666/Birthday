@@ -1,6 +1,7 @@
 package com.zmin.birthday.app.userpermission.user;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 
 /**
  * @author: ZhangMin
@@ -19,10 +20,12 @@ public class User implements Serializable {
     private String userId = "0";
     /** 捐赠钱数 */
     private String donate = "0";
+    private ArrayList<String> permission = new ArrayList<>();
     /**********************************不影响权限的属性**********************************************/
     private String name;
     private String phoneNum; //账号
     private String password; //明文密码
+    private String image;//头像图片
 
     //生日偏好,1农历 2阳历 3农历阳历都过
     private String preferData;
@@ -130,4 +133,23 @@ public class User implements Serializable {
     public void setDay(String day) {
         this.day = day;
     }
+
+    public ArrayList<String> getPermission() {
+        return permission;
+    }
+
+    public void setPermission(ArrayList<String> permission) {
+        this.permission = permission;
+    }
+
+
+    public String getImage() {
+        return image;
+    }
+
+    public void setImage(String image) {
+        this.image = image;
+    }
+
+
 }
