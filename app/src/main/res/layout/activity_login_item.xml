@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginLeft="94px"
+    android:layout_marginRight="94px"
+    android:layout_marginTop="112px"
+    android:visibility="gone"
+    android:id="@+id/ll_login"
+    android:orientation="vertical">
+
+    <android.support.design.widget.TextInputLayout
+        android:id="@+id/ll_login_1"
+        android:layout_width="match_parent"
+        android:layout_height="90px"
+        android:gravity="end"
+        android:orientation="vertical"
+        app:errorEnabled="true">
+
+
+        <EditText
+            android:id="@+id/et_user_num"
+            android:layout_width="match_parent"
+            android:layout_height="80px"
+            android:background="@null"
+            android:hint="请输入账户名"
+            android:inputType="number"
+            android:maxLength="11"
+            android:paddingTop="10px"
+            android:singleLine="true"
+            android:textColor="@color/color_333333"
+            android:textColorHint="@color/color_cccccc"
+            android:textCursorDrawable="@drawable/color_cursor"
+            android:textSize="16sp"/>
+    </android.support.design.widget.TextInputLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/color_c2874"/>
+
+    <android.support.design.widget.TextInputLayout
+        android:id="@+id/ll_login_2"
+        android:layout_width="match_parent"
+        android:layout_height="90px"
+        android:layout_marginTop="32px"
+        android:gravity="end"
+        app:errorEnabled="true">
+
+        <!-- <ImageView
+             android:layout_width=" 40"
+             android:layout_height=" 40"
+             android:src="@drawable/password" />-->
+
+        <EditText
+            android:id="@+id/et_user_password"
+            android:layout_width="match_parent"
+            android:layout_height="80px"
+            android:background="@null"
+            android:hint="请输入密码"
+            android:imeOptions="actionGo"
+            android:inputType="textPassword"
+            android:maxLength="12"
+            android:paddingTop="10px"
+            android:singleLine="true"
+            android:textColor="@color/color_333333"
+            android:textColorHint="@color/color_cccccc"
+            android:textCursorDrawable="@drawable/color_cursor"
+            android:textSize="16sp"/>
+
+
+    </android.support.design.widget.TextInputLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/color_c2874"/>
+
+
+</LinearLayout>

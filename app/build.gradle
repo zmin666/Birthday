@@ -69,7 +69,7 @@ buildscript {
 }
 
 dependencies {
-    compile fileTree(dir: 'libs', include: ['*.jar'])
+    compile fileTree(include: ['*.jar'], dir: 'libs')
     compile rootProject.ext.dependencies["support-v4"]
     compile rootProject.ext.dependencies["gson"]
     compile rootProject.ext.dependencies["appcompat-v7"]
@@ -82,19 +82,18 @@ dependencies {
     debugCompile rootProject.ext.dependencies["canary-debug"]
     releaseCompile rootProject.ext.dependencies["canary-release"]
     testCompile rootProject.ext.dependencies["canary-release"]
-
     //导入整体框架
     compile 'me.jessyan:arms:2.0.2'
     //dagger2
-    annotationProcessor rootProject.ext.dependencies["dagger2-compiler"]//依赖插件, annotationProcessor 是 AndroidStudio 自带并用来替换 APT
+    annotationProcessor rootProject.ext.dependencies["dagger2-compiler"]
+    //依赖插件, annotationProcessor 是 AndroidStudio 自带并用来替换 APT
     annotationProcessor rootProject.ext.dependencies["butterknife-compiler"]
-    provided rootProject.ext.dependencies["javax.annotation"]//dagger2必须依赖jsr250 annotation
-
+    provided rootProject.ext.dependencies["javax.annotation"]
+    //dagger2必须依赖jsr250 annotation
     //其他//
     compile 'com.android.support:design:25.3.1'
     //数据库
     compile 'org.greenrobot:greendao:3.2.2'
-
     // LeanCloud 基础包
-    compile ('cn.leancloud.android:avoscloud-sdk:v4.1.0')
+    compile 'cn.leancloud.android:avoscloud-sdk:v4.1.0'
 }

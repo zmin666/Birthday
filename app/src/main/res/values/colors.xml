@@ -1,6 +1,57 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <color name="color_83D7FB">#83D7FB</color>//我的界面
+    <color name="color_C5E9FE">#C5E9FE</color>//工作界面
     <color name="colorPrimary">#3F51B5</color>
     <color name="colorPrimaryDark">#303F9F</color>
     <color name="colorAccent">#FF4081</color>
+    <color name="color_c2c5d0">#c2c5d0</color>//登录界面点击确定登录使用的btn的颜色
+    <color name="style_color">#465aaa</color>//主题色
+    <color name="division_e4e4e4">#e4e4e4</color>//分割线条的颜色
+    <color name="color_666666">#666666</color>
+    <color name="color_333333">#333333</color>
+    <color name="division_dddddd">#dddddd</color>
+    <color name="color_ffffff">#ffffff</color>
+    <color name="color_999999">#999999</color>
+    <color name="color_f4f4f4">#f4f4f4</color>
+    <color name="color_cccccc">#cccccc</color>
+    <color name="color_c2874">#2c2874</color>
+    <color name="color_dedede">#dedede</color>
+    <color name="color_465aaa">#465aaa</color>
+    <color name="color_596fbf">#596fbf</color>
+    <color name="color_fcfdf8">#fcfdf8</color>
+    <color name="color_dddddd">#dddddd</color>
+    <color name="color_e51e1e">#e51e1e</color>
+    <color name="color_d43434">#d43434</color>
+    <color name="color_f6f6f6">#f6f6f6</color>
+    <color name="color_eeeeee">#eeeeee</color>
+    <color name="color_3090e6">#3090e6</color>
+    <color name="color_cdcdcd">#cdcdcd</color>
+    <color name="color_0f000000">#51000000</color>
+    <color name="color_00ffffff">#00ffffff</color>
+    <color name="color_30000000">#30000000</color>
+    <color name="color_f78001">#f78001</color>
+    <color name="color_86d0ab">#86d0ab</color>
+    <color name="color_null">#00ffffff</color>
+    <color name="color_4162ff">#4162ff</color>
+    <color name="color_c21c1c">#c21c1c</color>
+    <color name="color_e5e5e5">#e5e5e5</color>
+    <color name="color_de5050">#de5050</color>
+    <color name="color_c8c8c8">#c8c8c8</color>
+
+
+    <color name="pickerview_timebtn_nor">#057dff</color>
+    <color name="pickerview_timebtn_pre">#c2daf5</color>
+    <color name="pickerview_bg_topbar">#f5f5f5</color>
+    <color name="pickerview_topbar_title">#000000</color>
+    <color name="pickerview_wheelview_textcolor_out">#a8a8a8</color>
+    <color name="pickerview_wheelview_textcolor_center">#2a2a2a</color>
+    <color name="pickerview_wheelview_textcolor_divider">#d5d5d5</color>
+    <!--覆盖颜色-->
+    <color name="bgColor_overlay">#60000000</color>
+    <color name="color_484848">#484848</color>
+    <color name="color_e6e6e6">#e6e6e6</color>
+    <color name="color_c1c1c1">#79c1c1c1</color>
+    <color name="color_b6b6b6">#b6b6b6</color>
+
 </resources>

@@ -6,5 +6,6 @@ package com.zmin.birthday.mvp.model.api;
  */
 public interface Api {
     /** 基础URL  豆瓣接口*/
-     String APP_DOMAIN = "https://api.douban.com/v2/movie/";
+//     String APP_DOMAIN = "https://api.douban.com/v2/movie/";
+     String APP_DOMAIN = "http:// www.lovexsj.com/xxd/z_app";
 }
