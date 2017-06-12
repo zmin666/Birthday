@@ -4,8 +4,11 @@ import com.jess.arms.di.scope.ActivityScope;
 import com.jess.arms.integration.IRepositoryManager;
 import com.jess.arms.mvp.BaseModel;
 import com.zmin.birthday.mvp.contract.LoginContract;
+import com.zmin.birthday.mvp.model.api.service.UserService;
 
 import javax.inject.Inject;
+
+import io.reactivex.Observable;
 
 /**
  * Created by jess on 9/4/16 10:56
@@ -26,7 +29,7 @@ public class LoginModel extends BaseModel implements LoginContract.Model {
     }
 
     @Override
-    public void login(int userName, int pwd) {
-
+    public Observable login(String userName, String pwd) {
+        return mRepositoryManager.obtainRetrofitService(UserService.class).login(userName, pwd);
     }
 }
