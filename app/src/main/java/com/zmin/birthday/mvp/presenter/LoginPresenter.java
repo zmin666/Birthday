@@ -15,6 +15,7 @@ import java.util.List;
 
 import javax.inject.Inject;
 
+import hugo.weaving.DebugLog;
 import me.jessyan.rxerrorhandler.core.RxErrorHandler;
 
 /**
@@ -44,11 +45,13 @@ public class LoginPresenter extends BasePresenter<LoginContract.Model, LoginCont
         mActivity = (LoginActivity) mRootView;
     }
 
+    @DebugLog
     public void login(String userName,String pwd){
 
     }
 
-    public void register(){
+    @DebugLog
+    public void register(String phoneNum, String pwd, String pwd_agin, String ver){
 
     }
 

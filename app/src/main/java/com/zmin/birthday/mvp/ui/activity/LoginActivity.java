@@ -24,6 +24,11 @@ public class LoginActivity extends BaseActivity<LoginPresenter> implements Login
     @BindView(R.id.ll_login) LinearLayout ll_login;
     @BindView(R.id.ll_rigister) LinearLayout ll_rigister;
 
+    @BindView(R.id.et_usename) EditText et_usename;
+    @BindView(R.id.et_pwd) EditText et_pwd;
+    @BindView(R.id.et_pwd_agin) EditText et_pwd_agin;
+    @BindView(R.id.et_verification) EditText et_verification;
+
 
     @OnClick(R.id.bt_login)
     public void login(View view) {
@@ -39,6 +44,11 @@ public class LoginActivity extends BaseActivity<LoginPresenter> implements Login
     public void register(View view) {
         showRegisterView();
         Toast.makeText(this, "点击了注册", Toast.LENGTH_SHORT).show();
+        String phoneNum = et_usename.getText().toString().trim();
+        String pwd = et_pwd.getText().toString().trim();
+        String pwd_agin = et_pwd_agin.getText().toString().trim();
+        String ver = et_verification.getText().toString().trim();
+        mPresenter.register(phoneNum,pwd,pwd_agin,ver);
     }
 
     @Override
@@ -58,7 +68,11 @@ public class LoginActivity extends BaseActivity<LoginPresenter> implements Login
 
     @Override
     public void initData() {
+        setupView();
+    }
 
+    private void setupView() {
+        showLoginView();
     }
 
     @Override
