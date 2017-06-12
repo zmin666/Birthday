@@ -10,7 +10,9 @@ import com.jess.arms.mvp.IView;
  */
 public interface LoginContract {
     interface view extends IView {
+        void showLoginView();
 
+        void showRegisterView();
     }
 
     interface Model extends IModel {
