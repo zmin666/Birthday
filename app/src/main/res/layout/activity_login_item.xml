@@ -75,5 +75,35 @@
         android:layout_marginTop="2px"
         android:background="@color/color_c2874"/>
 
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="110px"
+        android:layout_marginTop="54px"
+        >
+
+        <Button
+            android:id="@+id/login_bt_login"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="20px"
+            android:layout_weight="2"
+            android:background="@drawable/login_back_select"
+            android:text="登录"
+            android:textColor="@color/color_ffffff"
+            android:textSize="32px"/>
+
+        <Button
+            android:id="@+id/login_bt_register"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="20px"
+            android:layout_weight="1"
+            android:background="@drawable/login_back"
+            android:text="注册"
+            android:textColor="@color/color_ffffff"
+            android:textSize="32px"/>
+
+    </LinearLayout>
+
 
 </LinearLayout>

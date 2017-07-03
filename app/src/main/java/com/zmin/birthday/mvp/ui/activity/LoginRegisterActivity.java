@@ -13,7 +13,6 @@ import com.zmin.birthday.R;
 import com.zmin.birthday.di.component.DaggerLoginComponent;
 import com.zmin.birthday.di.module.LoginModule;
 import com.zmin.birthday.mvp.contract.LoginRegisterContract;
-import com.zmin.birthday.mvp.model.entity.Loginer;
 import com.zmin.birthday.mvp.presenter.LoginRegisterPresenter;
 
 import java.math.BigInteger;
@@ -34,42 +33,42 @@ public class LoginRegisterActivity extends BaseActivity<LoginRegisterPresenter> 
     @BindView(R.id.et_pwd_agin) EditText et_pwd_agin;
     @BindView(R.id.et_verification) EditText et_verification;
 
+    private static final String login_view = "LOGIN_VIEW";
+    private static final String register_view = "REGISTER_VIEW";
+    private String viewState = login_view;
 
-    //登录
-    @OnClick(R.id.bt_login)
-    public void login(View view) {
-        showLoginView();
-        Toast.makeText(this, "点击了登录", Toast.LENGTH_SHORT).show();
-        String userName = et_user_num.getText().toString().trim();
-        String pwd = et_user_password.getText().toString().trim();
-        long time = System.currentTimeMillis();
-        String md5 = getMD5(time + "2");
-        Loginer loginer = new Loginer("xxd123456", "6748129", "2", String.valueOf(time), md5);
-        mPresenter.login(loginer);
+    @OnClick(R.id.login_bt_login)
+    public void login_login(View view) {
+        Log.i("zmin.............", ".登录操作...");
     }
 
-
-    //注册
-    @OnClick(R.id.bt_register)
-    public void register(View view) {
+    @OnClick(R.id.login_bt_register)
+    public void login_register(View view) {
+        Log.i("zmin.............", ".注册界面...");
         showRegisterView();
-        long time = System.currentTimeMillis();
-        String md5 = getMD5(time + "2");
-        Log.i("zmin......time.......", "...." + time);
-        Log.i("zmin......md5.......", "...." + getMD5(time + "2"));
+    }
 
+    @OnClick(R.id.register_bt_login)
+    public void register_login(View view) {
+        Log.i("zmin.............", ".登录界面...");
+        showLoginView();
+    }
 
+    @OnClick(R.id.register_bt_register)
+    public void register_register(View view) {
+        Log.i("zmin.............", ".注册操作...");
         String userName = et_usename.getText().toString().trim();
         String pwd = et_pwd.getText().toString().trim();
         String pwd_agin = et_pwd_agin.getText().toString().trim();
-        if (pwd.equals(pwd_agin)) {
-            mPresenter.register(userName, pwd);
+        if (userName.isEmpty() || pwd.isEmpty() || pwd_agin.isEmpty()) {
+            Toast.makeText(this, "信息不能为空", Toast.LENGTH_SHORT).show();
+        } else if (!pwd.equals(pwd_agin)) {
+            Toast.makeText(this, "两次密码输入不一致,请重输入", Toast.LENGTH_SHORT).show();
         } else {
-            Toast.makeText(this,"两次密码输入不一致,请重输入",Toast.LENGTH_SHORT).show();
+            mPresenter.register(userName, pwd);
         }
-
-
     }
+
 
     public static String getMD5(String str) {
         try {
@@ -140,12 +139,12 @@ public class LoginRegisterActivity extends BaseActivity<LoginRegisterPresenter> 
     @Override
     public void showLoginView() {
         ll_login.setVisibility(View.VISIBLE);
-        ll_rigister.setVisibility(View.GONE);
+        ll_rigister.setVisibility(View.INVISIBLE);
     }
 
     @Override
     public void showRegisterView() {
-        ll_login.setVisibility(View.GONE);
+        ll_login.setVisibility(View.INVISIBLE);
         ll_rigister.setVisibility(View.VISIBLE);
     }
 }
