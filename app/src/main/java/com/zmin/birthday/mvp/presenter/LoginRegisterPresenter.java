@@ -1,6 +1,7 @@
 package com.zmin.birthday.mvp.presenter;
 
 import android.app.Application;
+import android.util.Log;
 import android.widget.Toast;
 
 import com.jess.arms.di.scope.ActivityScope;
@@ -10,6 +11,7 @@ import com.zmin.birthday.mvp.contract.LoginRegisterContract;
 import com.zmin.birthday.mvp.model.entity.Birthday;
 import com.zmin.birthday.mvp.model.entity.Loginer;
 import com.zmin.birthday.mvp.model.entity.RegisterBeen;
+import com.zmin.birthday.mvp.model.entity.RegisterRequestBeen;
 import com.zmin.birthday.mvp.ui.activity.LoginRegisterActivity;
 import com.zmin.birthday.mvp.ui.adapter.BirthdayAdapter;
 
@@ -59,8 +61,8 @@ public class LoginRegisterPresenter extends BasePresenter<LoginRegisterContract.
     }
 
     @DebugLog
-    public void register(String userName, String pwd) {
-        mModel.register(userName, pwd)
+    public void register(RegisterRequestBeen registerRequestBeen) {
+        mModel.register(registerRequestBeen)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Observer<RegisterBeen>() {
@@ -80,7 +82,7 @@ public class LoginRegisterPresenter extends BasePresenter<LoginRegisterContract.
 
                     @Override
                     public void onError(@NonNull Throwable e) {
-
+                        Log.i("zmin.............","...." + e.toString() );
                     }
 
                     @Override

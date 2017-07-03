@@ -6,6 +6,8 @@ import com.jess.arms.mvp.BaseModel;
 import com.zmin.birthday.mvp.contract.LoginRegisterContract;
 import com.zmin.birthday.mvp.model.api.service.UserService;
 import com.zmin.birthday.mvp.model.entity.Loginer;
+import com.zmin.birthday.mvp.model.entity.RegisterBeen;
+import com.zmin.birthday.mvp.model.entity.RegisterRequestBeen;
 
 import javax.inject.Inject;
 
@@ -25,8 +27,8 @@ public class LoginModel extends BaseModel implements LoginRegisterContract.Model
 
 
     @Override
-    public Observable register(String userName, String pwd) {
-        return mRepositoryManager.obtainRetrofitService(UserService.class).register(userName, pwd);
+    public Observable<RegisterBeen> register(RegisterRequestBeen registerRequestBeen) {
+        return mRepositoryManager.obtainRetrofitService(UserService.class).register(registerRequestBeen);
     }
 
     @Override

@@ -13,6 +13,7 @@ import com.zmin.birthday.R;
 import com.zmin.birthday.di.component.DaggerLoginComponent;
 import com.zmin.birthday.di.module.LoginModule;
 import com.zmin.birthday.mvp.contract.LoginRegisterContract;
+import com.zmin.birthday.mvp.model.entity.RegisterRequestBeen;
 import com.zmin.birthday.mvp.presenter.LoginRegisterPresenter;
 
 import java.math.BigInteger;
@@ -60,12 +61,14 @@ public class LoginRegisterActivity extends BaseActivity<LoginRegisterPresenter> 
         String userName = et_usename.getText().toString().trim();
         String pwd = et_pwd.getText().toString().trim();
         String pwd_agin = et_pwd_agin.getText().toString().trim();
+        long time = System.currentTimeMillis();
         if (userName.isEmpty() || pwd.isEmpty() || pwd_agin.isEmpty()) {
             Toast.makeText(this, "信息不能为空", Toast.LENGTH_SHORT).show();
         } else if (!pwd.equals(pwd_agin)) {
             Toast.makeText(this, "两次密码输入不一致,请重输入", Toast.LENGTH_SHORT).show();
         } else {
-            mPresenter.register(userName, pwd);
+            RegisterRequestBeen registerRequestBeen = new RegisterRequestBeen(time, 1, getMD5(time + "1"), userName, pwd);
+            mPresenter.register(registerRequestBeen);
         }
     }
 
