@@ -1,14 +1,16 @@
 package com.zmin.birthday.mvp.presenter;
 
 import android.app.Application;
-import android.util.Log;
+import android.widget.Toast;
 
 import com.jess.arms.di.scope.ActivityScope;
 import com.jess.arms.integration.AppManager;
 import com.jess.arms.mvp.BasePresenter;
-import com.zmin.birthday.mvp.contract.LoginContract;
+import com.zmin.birthday.mvp.contract.LoginRegisterContract;
 import com.zmin.birthday.mvp.model.entity.Birthday;
-import com.zmin.birthday.mvp.ui.activity.LoginActivity;
+import com.zmin.birthday.mvp.model.entity.Loginer;
+import com.zmin.birthday.mvp.model.entity.RegisterBeen;
+import com.zmin.birthday.mvp.ui.activity.LoginRegisterActivity;
 import com.zmin.birthday.mvp.ui.adapter.BirthdayAdapter;
 
 import java.util.ArrayList;
@@ -30,41 +32,50 @@ import me.jessyan.rxerrorhandler.core.RxErrorHandler;
  * @desc:
  */
 @ActivityScope
-public class LoginPresenter extends BasePresenter<LoginContract.Model, LoginContract.view> {
+public class LoginRegisterPresenter extends BasePresenter<LoginRegisterContract.Model, LoginRegisterContract.view> {
 
     private final Application mApplication;
     private final RxErrorHandler mErrorHandler;
     private final AppManager mAppManager;
-    private final LoginActivity mActivity;
+    private final LoginRegisterActivity mActivity;
 
     private List<Birthday> mBirthdays = new ArrayList<>();
     private BirthdayAdapter mMAdapter;
 
     @Inject
-    public LoginPresenter(LoginContract.Model model, LoginContract.view rootView, RxErrorHandler handler
+    public LoginRegisterPresenter(LoginRegisterContract.Model model, LoginRegisterContract.view rootView, RxErrorHandler handler
             , AppManager appManager, Application application) {
         super(model, rootView);
         this.mApplication = application;
         this.mErrorHandler = handler;
         this.mAppManager = appManager;
 
-        mActivity = (LoginActivity) mRootView;
+        mActivity = (LoginRegisterActivity) mRootView;
     }
 
     @DebugLog
-    public void login(String userName,String pwd){
-        mModel.login(userName,pwd)
-                .subscribeOn(Schedulers.newThread())
+    public void login(Loginer loginer) {
+
+    }
+
+    @DebugLog
+    public void register(String userName, String pwd) {
+        mModel.register(userName, pwd)
+                .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Observer() {
+                .subscribe(new Observer<RegisterBeen>() {
                     @Override
                     public void onSubscribe(@NonNull Disposable d) {
 
                     }
 
                     @Override
-                    public void onNext(@NonNull Object o) {
-                        Log.i("zmin.............","...." +  o);
+                    public void onNext(@NonNull RegisterBeen registerBeen) {
+                        if (registerBeen.getCode() == 200) {
+                            Toast.makeText(mApplication, registerBeen.getMsg(), Toast.LENGTH_SHORT).show();
+                        } else if (registerBeen.getCode() == 300) {
+                            Toast.makeText(mApplication, registerBeen.getMsg(), Toast.LENGTH_SHORT).show();
+                        }
                     }
 
                     @Override
@@ -77,11 +88,6 @@ public class LoginPresenter extends BasePresenter<LoginContract.Model, LoginCont
 
                     }
                 });
-    }
-
-    @DebugLog
-    public void register(String phoneNum, String pwd, String pwd_agin, String ver){
-
     }
 
 }

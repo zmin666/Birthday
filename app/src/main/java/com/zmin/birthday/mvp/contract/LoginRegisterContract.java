@@ -2,6 +2,8 @@ package com.zmin.birthday.mvp.contract;
 
 import com.jess.arms.mvp.IModel;
 import com.jess.arms.mvp.IView;
+import com.zmin.birthday.mvp.model.entity.Loginer;
+import com.zmin.birthday.mvp.model.entity.RegisterBeen;
 
 import io.reactivex.Observable;
 
@@ -10,7 +12,7 @@ import io.reactivex.Observable;
  * @date: 2017/5/23 16:52
  * @desc:
  */
-public interface LoginContract {
+public interface LoginRegisterContract {
     interface view extends IView {
         void showLoginView();
 
@@ -19,8 +21,8 @@ public interface LoginContract {
 
     interface Model extends IModel {
         //注册
-        void register();
+        Observable<RegisterBeen> register(String userName, String pwd);
         //登录
-        Observable login(String userName, String pwd);
+        Observable login(Loginer loginer);
     }
 }

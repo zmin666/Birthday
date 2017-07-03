@@ -1,6 +1,7 @@
 package com.zmin.birthday.mvp.ui.activity;
 
 import android.content.Intent;
+import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.LinearLayout;
@@ -11,13 +12,17 @@ import com.jess.arms.di.component.AppComponent;
 import com.zmin.birthday.R;
 import com.zmin.birthday.di.component.DaggerLoginComponent;
 import com.zmin.birthday.di.module.LoginModule;
-import com.zmin.birthday.mvp.contract.LoginContract;
-import com.zmin.birthday.mvp.presenter.LoginPresenter;
+import com.zmin.birthday.mvp.contract.LoginRegisterContract;
+import com.zmin.birthday.mvp.model.entity.Loginer;
+import com.zmin.birthday.mvp.presenter.LoginRegisterPresenter;
+
+import java.math.BigInteger;
+import java.security.MessageDigest;
 
 import butterknife.BindView;
 import butterknife.OnClick;
 
-public class LoginActivity extends BaseActivity<LoginPresenter> implements LoginContract.view {
+public class LoginRegisterActivity extends BaseActivity<LoginRegisterPresenter> implements LoginRegisterContract.view {
 
     @BindView(R.id.et_user_num) EditText et_user_num;
     @BindView(R.id.et_user_password) EditText et_user_password;
@@ -30,25 +35,57 @@ public class LoginActivity extends BaseActivity<LoginPresenter> implements Login
     @BindView(R.id.et_verification) EditText et_verification;
 
 
+    //登录
     @OnClick(R.id.bt_login)
     public void login(View view) {
         showLoginView();
         Toast.makeText(this, "点击了登录", Toast.LENGTH_SHORT).show();
         String userName = et_user_num.getText().toString().trim();
         String pwd = et_user_password.getText().toString().trim();
-        mPresenter.login(userName, pwd);
+        long time = System.currentTimeMillis();
+        String md5 = getMD5(time + "2");
+        Loginer loginer = new Loginer("xxd123456", "6748129", "2", String.valueOf(time), md5);
+        mPresenter.login(loginer);
     }
 
 
+    //注册
     @OnClick(R.id.bt_register)
     public void register(View view) {
         showRegisterView();
-        Toast.makeText(this, "点击了注册", Toast.LENGTH_SHORT).show();
-        String phoneNum = et_usename.getText().toString().trim();
+        long time = System.currentTimeMillis();
+        String md5 = getMD5(time + "2");
+        Log.i("zmin......time.......", "...." + time);
+        Log.i("zmin......md5.......", "...." + getMD5(time + "2"));
+
+
+        String userName = et_usename.getText().toString().trim();
         String pwd = et_pwd.getText().toString().trim();
         String pwd_agin = et_pwd_agin.getText().toString().trim();
-        String ver = et_verification.getText().toString().trim();
-        mPresenter.register(phoneNum,pwd,pwd_agin,ver);
+        if (pwd.equals(pwd_agin)) {
+            mPresenter.register(userName, pwd);
+        } else {
+            Toast.makeText(this,"两次密码输入不一致,请重输入",Toast.LENGTH_SHORT).show();
+        }
+
+
+    }
+
+    public static String getMD5(String str) {
+        try {
+            // 生成一个MD5加密计算摘要
+            MessageDigest md = MessageDigest.getInstance("MD5");
+            // 计算md5函数
+            md.update(str.getBytes());
+            System.out.println("aaaaaaaaaaaaaaa:" + str);
+            System.out.println("aaaaaaaaaaaaaaa:" + md.digest());
+            // digest()最后确定返回md5 hash值，返回值为8为字符串。因为md5 hash值是16位的hex值，实际上就是8位的字符
+            // BigInteger函数则将8位的字符串转换成16位hex值，用字符串来表示；得到字符串形式的hash值
+            return new BigInteger(1, md.digest()).toString(16);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return str;
+        }
     }
 
     @Override

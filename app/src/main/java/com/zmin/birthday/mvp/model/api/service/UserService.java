@@ -1,7 +1,8 @@
 package com.zmin.birthday.mvp.model.api.service;
 
-import com.zmin.birthday.app.userpermission.user.User;
+import com.zmin.birthday.mvp.model.entity.Loginer;
 import com.zmin.birthday.mvp.model.entity.MovieEntity;
+import com.zmin.birthday.mvp.model.entity.RegisterBeen;
 
 import io.reactivex.Observable;
 import retrofit2.http.Body;
@@ -16,11 +17,11 @@ public interface UserService {
     Observable<MovieEntity> getTopMovie(@Query("start") int start, @Query("count") int count);
 
     //注册
-    @POST("/sysapi/web.user.php")
-    Observable<Object> register(@Body User user);
+    @FormUrlEncoded
+    @POST("sysapi/web.user.php")
+    Observable<RegisterBeen> register(@Field("username") String username, @Field("pwd") String pwd);
 
     //登录
-    @FormUrlEncoded
-    @POST("/sysapi/web.user.php")
-    Observable<Object> login(@Field("username") String userName, @Field("password")String pwd);
+    @POST("sysapi/web.user.php")
+    Observable<Object> login(@Body Loginer loginer);
 }

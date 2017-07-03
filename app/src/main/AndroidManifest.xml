@@ -30,7 +30,7 @@
         <!--</activity>-->
 
         <!--测试-->
-        <activity android:name=".mvp.ui.activity.LoginActivity">
+        <activity android:name=".mvp.ui.activity.LoginRegisterActivity">
 
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
