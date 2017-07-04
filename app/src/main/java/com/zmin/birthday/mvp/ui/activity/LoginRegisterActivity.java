@@ -37,6 +37,7 @@ public class LoginRegisterActivity extends BaseActivity<LoginRegisterPresenter> 
     @OnClick(R.id.login_bt_login)
     public void login_login(View view) {
         Log.i("zmin.............", ".登录操作...");
+        mPresenter.login(getFiels(et_user_num, et_user_password, 2));
     }
 
     @OnClick(R.id.login_bt_register)
@@ -57,22 +58,34 @@ public class LoginRegisterActivity extends BaseActivity<LoginRegisterPresenter> 
         String userName = et_usename.getText().toString().trim();
         String pwd = et_pwd.getText().toString().trim();
         String pwd_agin = et_pwd_agin.getText().toString().trim();
-        long time = System.currentTimeMillis();
         if (userName.isEmpty() || pwd.isEmpty() || pwd_agin.isEmpty()) {
             Toast.makeText(this, "信息不能为空", Toast.LENGTH_SHORT).show();
         } else if (!pwd.equals(pwd_agin)) {
             Toast.makeText(this, "两次密码输入不一致,请重输入", Toast.LENGTH_SHORT).show();
         } else {
-            Map fields = new HashMap<String, Object>();
-            fields.put("time", time);
-            fields.put("act", 1);
-            fields.put("md5", MD5Utils.getMd5(time + "1"));
-            fields.put("username", userName);
-            fields.put("password", pwd);
-            mPresenter.register(fields);
+            mPresenter.register(getFiels(et_usename, et_pwd, 1));
         }
     }
 
+    /**
+     * 获取参数
+     *
+     * @param etName
+     * @param etPwd
+     * @return
+     */
+    private Map getFiels(EditText etName, EditText etPwd, int act) {
+        String userName = etName.getText().toString().trim();
+        String pwd = etPwd.getText().toString().trim();
+        long time = System.currentTimeMillis();
+        Map fields = new HashMap<String, Object>();
+        fields.put("time", time);
+        fields.put("act", act);
+        fields.put("md5", MD5Utils.getMd5(time + "" + act));
+        fields.put("username", userName);
+        fields.put("password", pwd);
+        return fields;
+    }
 
     @Override
     public void setupActivityComponent(AppComponent appComponent) {

@@ -9,7 +9,7 @@ import com.jess.arms.integration.AppManager;
 import com.jess.arms.mvp.BasePresenter;
 import com.zmin.birthday.mvp.contract.LoginRegisterContract;
 import com.zmin.birthday.mvp.model.entity.Birthday;
-import com.zmin.birthday.mvp.model.entity.Loginer;
+import com.zmin.birthday.mvp.model.entity.LoginBeen;
 import com.zmin.birthday.mvp.model.entity.RegisterBeen;
 import com.zmin.birthday.mvp.ui.activity.LoginRegisterActivity;
 import com.zmin.birthday.mvp.ui.adapter.BirthdayAdapter;
@@ -56,8 +56,35 @@ public class LoginRegisterPresenter extends BasePresenter<LoginRegisterContract.
     }
 
     @DebugLog
-    public void login(Loginer loginer) {
+    public void login(Map<String, Object> fields) {
+        mModel.login(fields)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Observer<LoginBeen>() {
+                    @Override
+                    public void onSubscribe(@NonNull Disposable d) {
 
+                    }
+
+                    @Override
+                    public void onNext(@NonNull LoginBeen loginBeen) {
+                        if (loginBeen.getCode() == 200) {
+                            Toast.makeText(mApplication, loginBeen.getMsg(), Toast.LENGTH_SHORT).show();
+                        } else if (loginBeen.getCode() == 300) {
+                            Toast.makeText(mApplication, loginBeen.getMsg(), Toast.LENGTH_SHORT).show();
+                        }
+                    }
+
+                    @Override
+                    public void onError(@NonNull Throwable e) {
+                        Log.i("zmin.............","...." + e.toString() );
+                    }
+
+                    @Override
+                    public void onComplete() {
+
+                    }
+                });
     }
 
     @DebugLog
@@ -82,7 +109,7 @@ public class LoginRegisterPresenter extends BasePresenter<LoginRegisterContract.
 
                     @Override
                     public void onError(@NonNull Throwable e) {
-                        Log.i("zmin.............","...." + e.toString() );
+                        Log.i("zmin.............", "...." + e.toString());
                     }
 
                     @Override

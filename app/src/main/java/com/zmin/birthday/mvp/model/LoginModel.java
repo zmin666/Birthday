@@ -5,7 +5,7 @@ import com.jess.arms.integration.IRepositoryManager;
 import com.jess.arms.mvp.BaseModel;
 import com.zmin.birthday.mvp.contract.LoginRegisterContract;
 import com.zmin.birthday.mvp.model.api.service.UserService;
-import com.zmin.birthday.mvp.model.entity.Loginer;
+import com.zmin.birthday.mvp.model.entity.LoginBeen;
 import com.zmin.birthday.mvp.model.entity.RegisterBeen;
 
 import java.util.Map;
@@ -33,7 +33,7 @@ public class LoginModel extends BaseModel implements LoginRegisterContract.Model
     }
 
     @Override
-    public Observable login(Loginer loginer) {
-        return mRepositoryManager.obtainRetrofitService(UserService.class).login(loginer);
+    public Observable<LoginBeen> login(Map<String, Object> fields) {
+        return mRepositoryManager.obtainRetrofitService(UserService.class).login(fields);
     }
 }

@@ -2,7 +2,7 @@ package com.zmin.birthday.mvp.contract;
 
 import com.jess.arms.mvp.IModel;
 import com.jess.arms.mvp.IView;
-import com.zmin.birthday.mvp.model.entity.Loginer;
+import com.zmin.birthday.mvp.model.entity.LoginBeen;
 import com.zmin.birthday.mvp.model.entity.RegisterBeen;
 
 import java.util.Map;
@@ -25,6 +25,6 @@ public interface LoginRegisterContract {
         //注册
         Observable<RegisterBeen> register(Map<String, Object> fields);
         //登录
-        Observable login(Loginer loginer);
+        Observable<LoginBeen> login(Map<String, Object> fields);
     }
 }

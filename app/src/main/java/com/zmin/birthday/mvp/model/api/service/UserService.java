@@ -1,13 +1,12 @@
 package com.zmin.birthday.mvp.model.api.service;
 
-import com.zmin.birthday.mvp.model.entity.Loginer;
+import com.zmin.birthday.mvp.model.entity.LoginBeen;
 import com.zmin.birthday.mvp.model.entity.MovieEntity;
 import com.zmin.birthday.mvp.model.entity.RegisterBeen;
 
 import java.util.Map;
 
 import io.reactivex.Observable;
-import retrofit2.http.Body;
 import retrofit2.http.FieldMap;
 import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.GET;
@@ -24,6 +23,7 @@ public interface UserService {
     Observable<RegisterBeen> register(@FieldMap Map<String, Object> fields);
 
     //登录
+    @FormUrlEncoded
     @POST("sysapi/web.user.php")
-    Observable<Object> login(@Body Loginer loginer);
+    Observable<LoginBeen> login(@FieldMap Map<String, Object> fields);
 }
