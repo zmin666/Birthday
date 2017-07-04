@@ -7,7 +7,8 @@ import com.zmin.birthday.mvp.contract.LoginRegisterContract;
 import com.zmin.birthday.mvp.model.api.service.UserService;
 import com.zmin.birthday.mvp.model.entity.Loginer;
 import com.zmin.birthday.mvp.model.entity.RegisterBeen;
-import com.zmin.birthday.mvp.model.entity.RegisterRequestBeen;
+
+import java.util.Map;
 
 import javax.inject.Inject;
 
@@ -27,8 +28,8 @@ public class LoginModel extends BaseModel implements LoginRegisterContract.Model
 
 
     @Override
-    public Observable<RegisterBeen> register(RegisterRequestBeen registerRequestBeen) {
-        return mRepositoryManager.obtainRetrofitService(UserService.class).register(registerRequestBeen);
+    public Observable<RegisterBeen> register( Map<String, Object> fields) {
+        return mRepositoryManager.obtainRetrofitService(UserService.class).register(fields);
     }
 
     @Override

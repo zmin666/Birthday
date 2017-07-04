@@ -10,14 +10,14 @@ import android.widget.Toast;
 import com.jess.arms.base.BaseActivity;
 import com.jess.arms.di.component.AppComponent;
 import com.zmin.birthday.R;
+import com.zmin.birthday.app.utils.MD5Utils;
 import com.zmin.birthday.di.component.DaggerLoginComponent;
 import com.zmin.birthday.di.module.LoginModule;
 import com.zmin.birthday.mvp.contract.LoginRegisterContract;
-import com.zmin.birthday.mvp.model.entity.RegisterRequestBeen;
 import com.zmin.birthday.mvp.presenter.LoginRegisterPresenter;
 
-import java.math.BigInteger;
-import java.security.MessageDigest;
+import java.util.HashMap;
+import java.util.Map;
 
 import butterknife.BindView;
 import butterknife.OnClick;
@@ -33,10 +33,6 @@ public class LoginRegisterActivity extends BaseActivity<LoginRegisterPresenter> 
     @BindView(R.id.et_pwd) EditText et_pwd;
     @BindView(R.id.et_pwd_agin) EditText et_pwd_agin;
     @BindView(R.id.et_verification) EditText et_verification;
-
-    private static final String login_view = "LOGIN_VIEW";
-    private static final String register_view = "REGISTER_VIEW";
-    private String viewState = login_view;
 
     @OnClick(R.id.login_bt_login)
     public void login_login(View view) {
@@ -67,28 +63,16 @@ public class LoginRegisterActivity extends BaseActivity<LoginRegisterPresenter> 
         } else if (!pwd.equals(pwd_agin)) {
             Toast.makeText(this, "两次密码输入不一致,请重输入", Toast.LENGTH_SHORT).show();
         } else {
-            RegisterRequestBeen registerRequestBeen = new RegisterRequestBeen(time, 1, getMD5(time + "1"), userName, pwd);
-            mPresenter.register(registerRequestBeen);
+            Map fields = new HashMap<String, Object>();
+            fields.put("time", time);
+            fields.put("act", 1);
+            fields.put("md5", MD5Utils.getMd5(time + "1"));
+            fields.put("username", userName);
+            fields.put("password", pwd);
+            mPresenter.register(fields);
         }
     }
 
-
-    public static String getMD5(String str) {
-        try {
-            // 生成一个MD5加密计算摘要
-            MessageDigest md = MessageDigest.getInstance("MD5");
-            // 计算md5函数
-            md.update(str.getBytes());
-            System.out.println("aaaaaaaaaaaaaaa:" + str);
-            System.out.println("aaaaaaaaaaaaaaa:" + md.digest());
-            // digest()最后确定返回md5 hash值，返回值为8为字符串。因为md5 hash值是16位的hex值，实际上就是8位的字符
-            // BigInteger函数则将8位的字符串转换成16位hex值，用字符串来表示；得到字符串形式的hash值
-            return new BigInteger(1, md.digest()).toString(16);
-        } catch (Exception e) {
-            e.printStackTrace();
-            return str;
-        }
-    }
 
     @Override
     public void setupActivityComponent(AppComponent appComponent) {

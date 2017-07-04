@@ -11,12 +11,12 @@ import com.zmin.birthday.mvp.contract.LoginRegisterContract;
 import com.zmin.birthday.mvp.model.entity.Birthday;
 import com.zmin.birthday.mvp.model.entity.Loginer;
 import com.zmin.birthday.mvp.model.entity.RegisterBeen;
-import com.zmin.birthday.mvp.model.entity.RegisterRequestBeen;
 import com.zmin.birthday.mvp.ui.activity.LoginRegisterActivity;
 import com.zmin.birthday.mvp.ui.adapter.BirthdayAdapter;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import javax.inject.Inject;
 
@@ -61,8 +61,8 @@ public class LoginRegisterPresenter extends BasePresenter<LoginRegisterContract.
     }
 
     @DebugLog
-    public void register(RegisterRequestBeen registerRequestBeen) {
-        mModel.register(registerRequestBeen)
+    public void register(Map<String, Object> fields) {
+        mModel.register(fields)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Observer<RegisterBeen>() {

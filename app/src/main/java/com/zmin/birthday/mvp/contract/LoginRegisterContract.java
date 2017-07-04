@@ -4,7 +4,8 @@ import com.jess.arms.mvp.IModel;
 import com.jess.arms.mvp.IView;
 import com.zmin.birthday.mvp.model.entity.Loginer;
 import com.zmin.birthday.mvp.model.entity.RegisterBeen;
-import com.zmin.birthday.mvp.model.entity.RegisterRequestBeen;
+
+import java.util.Map;
 
 import io.reactivex.Observable;
 
@@ -22,7 +23,7 @@ public interface LoginRegisterContract {
 
     interface Model extends IModel {
         //注册
-        Observable<RegisterBeen> register(RegisterRequestBeen registerRequestBeen);
+        Observable<RegisterBeen> register(Map<String, Object> fields);
         //登录
         Observable login(Loginer loginer);
     }
