@@ -1,17 +1,22 @@
 package com.zmin.birthday.mvp.presenter;
 
 import android.app.Application;
+import android.content.Intent;
 import android.util.Log;
 import android.widget.Toast;
 
 import com.jess.arms.di.scope.ActivityScope;
 import com.jess.arms.integration.AppManager;
 import com.jess.arms.mvp.BasePresenter;
+import com.zmin.birthday.app.userpermission.user.User;
+import com.zmin.birthday.app.userpermission.user.UserControl;
+import com.zmin.birthday.app.utils.MD5Utils;
 import com.zmin.birthday.mvp.contract.LoginRegisterContract;
 import com.zmin.birthday.mvp.model.entity.Birthday;
 import com.zmin.birthday.mvp.model.entity.LoginBeen;
 import com.zmin.birthday.mvp.model.entity.RegisterBeen;
 import com.zmin.birthday.mvp.ui.activity.LoginRegisterActivity;
+import com.zmin.birthday.mvp.ui.activity.MainActivity;
 import com.zmin.birthday.mvp.ui.adapter.BirthdayAdapter;
 
 import java.util.ArrayList;
@@ -63,13 +68,18 @@ public class LoginRegisterPresenter extends BasePresenter<LoginRegisterContract.
                 .subscribe(new Observer<LoginBeen>() {
                     @Override
                     public void onSubscribe(@NonNull Disposable d) {
-
+                        Log.i("zmin...onSubscribe..", "....");
                     }
 
                     @Override
                     public void onNext(@NonNull LoginBeen loginBeen) {
                         if (loginBeen.getCode() == 200) {
                             Toast.makeText(mApplication, loginBeen.getMsg(), Toast.LENGTH_SHORT).show();
+                            User currentUser = UserControl.getInstance().getCurrentUser(mActivity);
+                            currentUser.setUser(loginBeen.getData());
+                            UserControl.getInstance().setUserToXml(mActivity, currentUser);
+                            mRootView.launchActivity(new Intent(mActivity, MainActivity.class));
+                            mRootView.killMyself();
                         } else if (loginBeen.getCode() == 300) {
                             Toast.makeText(mApplication, loginBeen.getMsg(), Toast.LENGTH_SHORT).show();
                         }
@@ -77,7 +87,7 @@ public class LoginRegisterPresenter extends BasePresenter<LoginRegisterContract.
 
                     @Override
                     public void onError(@NonNull Throwable e) {
-                        Log.i("zmin.............","...." + e.toString() );
+                        Log.i("zmin.............", "...." + e.toString());
                     }
 
                     @Override
@@ -102,6 +112,11 @@ public class LoginRegisterPresenter extends BasePresenter<LoginRegisterContract.
                     public void onNext(@NonNull RegisterBeen registerBeen) {
                         if (registerBeen.getCode() == 200) {
                             Toast.makeText(mApplication, registerBeen.getMsg(), Toast.LENGTH_SHORT).show();
+                            long time = System.currentTimeMillis();
+                            fields.put("act", 2);
+                            fields.put("time", time);
+                            fields.put("md5", MD5Utils.getMd5(time + "2"));
+                            login(fields);
                         } else if (registerBeen.getCode() == 300) {
                             Toast.makeText(mApplication, registerBeen.getMsg(), Toast.LENGTH_SHORT).show();
                         }
@@ -109,7 +124,7 @@ public class LoginRegisterPresenter extends BasePresenter<LoginRegisterContract.
 
                     @Override
                     public void onError(@NonNull Throwable e) {
-                        Log.i("zmin.............", "...." + e.toString());
+                        Toast.makeText(mApplication, "注册失败", Toast.LENGTH_SHORT).show();
                     }
 
                     @Override

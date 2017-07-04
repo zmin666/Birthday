@@ -11,7 +11,9 @@ import com.jess.arms.di.scope.ActivityScope;
 import com.jess.arms.integration.AppManager;
 import com.jess.arms.mvp.BaseModel;
 import com.jess.arms.mvp.BasePresenter;
+import com.zmin.birthday.app.userpermission.user.UserControl;
 import com.zmin.birthday.mvp.contract.SplashContract;
+import com.zmin.birthday.mvp.ui.activity.LoginRegisterActivity;
 import com.zmin.birthday.mvp.ui.activity.MainActivity;
 import com.zmin.birthday.mvp.ui.activity.SplashActivity;
 
@@ -65,7 +67,13 @@ public class SplashPresenter extends BasePresenter<BaseModel, SplashContract.vie
 
             @Override
             public void onAnimationEnd(Animator animation) {
-                Intent intent = new Intent((SplashActivity)mRootView, MainActivity.class);
+                String userId = UserControl.getInstance().getCurrentUser(mApplication).getUserId();
+                Intent intent =  new Intent();
+                if (userId == null || userId.equals("0")) {
+                    intent = new Intent((SplashActivity) mRootView, LoginRegisterActivity.class);
+                } else {
+                    intent = new Intent((SplashActivity) mRootView, MainActivity.class);
+                }
                 mRootView.launchActivity(intent);
             }
 

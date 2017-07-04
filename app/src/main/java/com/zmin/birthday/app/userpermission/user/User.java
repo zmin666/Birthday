@@ -1,11 +1,13 @@
 package com.zmin.birthday.app.userpermission.user;
 
+import com.zmin.birthday.mvp.model.entity.LoginBeen;
+
 import java.io.Serializable;
 import java.util.ArrayList;
 
 /**
  * @author: ZhangMin
- * @date:  2017/6/7 16:12
+ * @date: 2017/6/7 16:12
  * @desc: 户信息存储
  * 用户的属性分影响权限的和不影响权限的属性
  */
@@ -22,8 +24,10 @@ public class User implements Serializable {
     private String donate = "0";
     private ArrayList<String> permission = new ArrayList<>();
     /**********************************不影响权限的属性**********************************************/
-    private String name;
-    private String phoneNum; //账号
+    private String userName;  //账号
+    private String name;  //真名
+
+    private String phoneNum; //手机号码
     private String password; //明文密码
     private String image;//头像图片
 
@@ -37,6 +41,7 @@ public class User implements Serializable {
     private String year;
     private String month;
     private String day;
+
     /**********************************其他**********************************************/
     public String getUserId() {
         return userId;
@@ -44,6 +49,32 @@ public class User implements Serializable {
 
     public void setUserId(String userId) {
         this.userId = userId;
+    }
+
+    public void setUser(LoginBeen.DataBean dataBean) {
+        this.userId = dataBean.getSysid();
+        this.donate = dataBean.getSupply_money();
+
+        this.name = dataBean.getRealname();
+        this.userName = dataBean.getUsername();
+        this.phoneNum = dataBean.getTel();
+        this.password = dataBean.getPassword();
+        //  this.image = dataBean.getSysid();
+        this.preferData = dataBean.getPrefer_brith();
+
+        //生日
+        String lunar_birthday = dataBean.getLunar_birthday();
+        String[] lunar = lunar_birthday.split("-");
+        this.old_year = lunar[0];
+        this.old_month = lunar[1];
+        this.old_day = lunar[2];
+
+        String solar_birthday = dataBean.getSolar_birthday();
+        String[] solar = solar_birthday.split("-");
+        this.year = solar[0];
+        this.month = solar[1];
+        this.day = solar[2];
+
     }
 
     public String getDonate() {
@@ -152,4 +183,32 @@ public class User implements Serializable {
     }
 
 
+    public String getUserName() {
+        return userName;
+    }
+
+    public void setUserName(String userName) {
+        this.userName = userName;
+    }
+
+    @Override
+    public String toString() {
+        return "User{" +
+                "userId='" + userId + '\'' +
+                ", donate='" + donate + '\'' +
+                ", permission=" + permission +
+                ", userName='" + userName + '\'' +
+                ", name='" + name + '\'' +
+                ", phoneNum='" + phoneNum + '\'' +
+                ", password='" + password + '\'' +
+                ", image='" + image + '\'' +
+                ", preferData='" + preferData + '\'' +
+                ", old_year='" + old_year + '\'' +
+                ", old_month='" + old_month + '\'' +
+                ", old_day='" + old_day + '\'' +
+                ", year='" + year + '\'' +
+                ", month='" + month + '\'' +
+                ", day='" + day + '\'' +
+                '}';
+    }
 }

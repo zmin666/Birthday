@@ -128,12 +128,12 @@ public class LoginRegisterActivity extends BaseActivity<LoginRegisterPresenter> 
 
     @Override
     public void launchActivity(Intent intent) {
-
+        startActivity(intent);
     }
 
     @Override
     public void killMyself() {
-
+        finish();
     }
 
     @Override

@@ -10,7 +10,9 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.View;
+import android.widget.Toast;
 
 import com.jess.arms.base.BaseActivity;
 import com.jess.arms.base.DefaultAdapter;
@@ -19,6 +21,8 @@ import com.zmin.birthday.R;
 import com.zmin.birthday.app.db.DbCore;
 import com.zmin.birthday.app.db.dao.BirthdayDao;
 import com.zmin.birthday.app.db.dao.DaoSession;
+import com.zmin.birthday.app.userpermission.user.User;
+import com.zmin.birthday.app.userpermission.user.UserControl;
 import com.zmin.birthday.di.component.DaggerMainComponent;
 import com.zmin.birthday.di.module.MainModule;
 import com.zmin.birthday.mvp.contract.MainContract;
@@ -52,7 +56,9 @@ public class MainActivity extends BaseActivity<MainPresenter> implements MainCon
 
     @OnClick(R.id.fab)
     public void onViewClicked() {
-        addItem();
+        //addItem();
+        User currentUser = UserControl.getInstance().getCurrentUser(this);
+        Log.i("zmin.............","...." +  currentUser.toString());
     }
 
     @OnClick(R.id.fab_test)
@@ -81,6 +87,11 @@ public class MainActivity extends BaseActivity<MainPresenter> implements MainCon
         //获取网络数据
         mPresenter.getUsers();
     }
+
+    //记录用户首次点击返回键的时间
+    private long firstTime=0;
+
+
 
     @Override
     public void setupActivityComponent(AppComponent appComponent) {
@@ -173,6 +184,21 @@ public class MainActivity extends BaseActivity<MainPresenter> implements MainCon
     @Override
     public void killMyself() {
 
+    }
+
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        if(keyCode==KeyEvent.KEYCODE_BACK && event.getAction()==KeyEvent.ACTION_DOWN){
+            if (System.currentTimeMillis()-firstTime>2000){
+                Toast.makeText(MainActivity.this,"再按一次退出程序",Toast.LENGTH_SHORT).show();
+                firstTime=System.currentTimeMillis();
+            }else{
+                finish();
+                System.exit(0);
+            }
+            return true;
+        }
+        return super.onKeyDown(keyCode, event);
     }
 
 

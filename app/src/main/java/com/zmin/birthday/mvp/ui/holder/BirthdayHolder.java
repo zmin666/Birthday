@@ -34,7 +34,7 @@ public class BirthdayHolder extends BaseHolder<Birthday> {
     @Override
     public void setData(Birthday data, int position) {
         tv_name.setText(data.getName());
-        tv_new_birthday.setText(data.getYear() + data.getMonth() + data.getDay());
-        tv_old_birthday.setText(data.getOld_year() + data.getOld_month() + data.getOld_day());
+        tv_new_birthday.setText("阳历生日: " + data.getYear() + data.getMonth() + data.getDay());
+        tv_old_birthday.setText("农历生日: " + data.getOld_year() + data.getOld_month() + data.getOld_day());
     }
 }
