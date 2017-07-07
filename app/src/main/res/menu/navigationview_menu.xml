@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/user_data"
+        android:icon="@mipmap/ic_launcher"
+        android:title="个人资料"/>
+    <item
+        android:id="@+id/num_find"
+        android:icon="@mipmap/ic_launcher"
+        android:title="号码匹配"/>
+    <item
+        android:id="@+id/remind"
+        android:icon="@mipmap/ic_launcher"
+        android:title="提醒设置"/>
+    <item
+        android:id="@+id/update"
+        android:icon="@mipmap/ic_launcher"
+        android:title="检查更新"/>
+    <item
+        android:id="@+id/advise"
+        android:icon="@mipmap/ic_launcher"
+        android:title="意见建议"/>
+    <item
+        android:id="@+id/donate"
+        android:icon="@mipmap/ic_launcher"
+        android:title="捐赠我们"/>
+    <item
+        android:id="@+id/about_us"
+        android:icon="@mipmap/ic_launcher"
+        android:title="关于我们"/>
+</menu>

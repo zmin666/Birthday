@@ -1,35 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout
+<android.support.v4.widget.DrawerLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/drawerLayout"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    >
-
-    <android.support.v4.widget.SwipeRefreshLayout
-        android:id="@+id/srl"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:scrollbars="vertical">
-
-        <android.support.v7.widget.RecyclerView
-            android:id="@+id/rv"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"/>
-    </android.support.v4.widget.SwipeRefreshLayout>
-
-    <android.support.design.widget.FloatingActionButton
-        android:id="@+id/fab"
+    android:layout_height="match_parent">
+    <!--主布局-->
+    <include layout="@layout/activity_main_coor"/>
+    <!--侧滑菜单-->
+    <android.support.design.widget.NavigationView
+        android:id="@+id/navigation"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="bottom|right"
-        android:layout_marginBottom="30px"
-        android:layout_marginRight="30px"
-        android:clickable="true"
-        android:src="@mipmap/ic_launcher"
-        app:backgroundTint="#03A9F4"
-        app:elevation="12dp"
-        app:pressedTranslationZ="24dp"
-        app:rippleColor="#0288D1"/>
+        android:layout_height="match_parent"
+        android:layout_gravity="left"
+        android:background="#ddd"
+        app:headerLayout="@layout/navigationview_header"
+        app:menu="@menu/navigationview_menu"/>
 
-</FrameLayout>
+</android.support.v4.widget.DrawerLayout>

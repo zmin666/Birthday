@@ -78,11 +78,6 @@ public class MainActivity extends BaseActivity<MainPresenter> implements MainCon
         Log.i("zmin.............","...." +  list);
 
 
-//        Query<Birthday> query = birthdayDao.queryBuilder().where(new WhereCondition.StringCondition("_ID IN " + "(SELECT USER_ID FROM USER_MESSAGE WHERE READ_FLAG = 0)")).build();
-//        CountQuery<Birthday> birthdayCountQuery = birthdayDao.queryBuilder().buildCount();
-//
-//        birthdayDao.queryRaw("", CountQuery)
-       // birthdayDao.queryRawCreate()
 
         //获取网络数据
         mPresenter.getUsers();
@@ -105,7 +100,8 @@ public class MainActivity extends BaseActivity<MainPresenter> implements MainCon
 
     @Override
     public int initView() {
-        return R.layout.activity_main_coor;
+        //提醒  捐赠  更新
+        return R.layout.activity_main;
     }
 
     @Override
