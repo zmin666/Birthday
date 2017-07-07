@@ -5,7 +5,7 @@ package com.zmin.birthday.mvp.model.entity;
  * @date: 2017/7/3 16:05
  * @desc:
  */
-public class RegisterBeen {
+public class ResponseBeen {
 
     /**
      * code : 300

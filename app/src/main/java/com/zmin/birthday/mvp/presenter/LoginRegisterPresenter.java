@@ -14,7 +14,7 @@ import com.zmin.birthday.app.utils.MD5Utils;
 import com.zmin.birthday.mvp.contract.LoginRegisterContract;
 import com.zmin.birthday.mvp.model.entity.Birthday;
 import com.zmin.birthday.mvp.model.entity.LoginBeen;
-import com.zmin.birthday.mvp.model.entity.RegisterBeen;
+import com.zmin.birthday.mvp.model.entity.ResponseBeen;
 import com.zmin.birthday.mvp.ui.activity.LoginRegisterActivity;
 import com.zmin.birthday.mvp.ui.activity.MainActivity;
 import com.zmin.birthday.mvp.ui.adapter.BirthdayAdapter;
@@ -102,14 +102,14 @@ public class LoginRegisterPresenter extends BasePresenter<LoginRegisterContract.
         mModel.register(fields)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Observer<RegisterBeen>() {
+                .subscribe(new Observer<ResponseBeen>() {
                     @Override
                     public void onSubscribe(@NonNull Disposable d) {
 
                     }
 
                     @Override
-                    public void onNext(@NonNull RegisterBeen registerBeen) {
+                    public void onNext(@NonNull ResponseBeen registerBeen) {
                         if (registerBeen.getCode() == 200) {
                             Toast.makeText(mApplication, registerBeen.getMsg(), Toast.LENGTH_SHORT).show();
                             long time = System.currentTimeMillis();

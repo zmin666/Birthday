@@ -2,7 +2,7 @@ package com.zmin.birthday.mvp.model.api.service;
 
 import com.zmin.birthday.mvp.model.entity.LoginBeen;
 import com.zmin.birthday.mvp.model.entity.MovieEntity;
-import com.zmin.birthday.mvp.model.entity.RegisterBeen;
+import com.zmin.birthday.mvp.model.entity.ResponseBeen;
 
 import java.util.Map;
 
@@ -20,7 +20,7 @@ public interface UserService {
     //注册
     @FormUrlEncoded
     @POST("sysapi/web.user.php")
-    Observable<RegisterBeen> register(@FieldMap Map<String, Object> fields);
+    Observable<ResponseBeen> register(@FieldMap Map<String, Object> fields);
 
     //登录
     @FormUrlEncoded
