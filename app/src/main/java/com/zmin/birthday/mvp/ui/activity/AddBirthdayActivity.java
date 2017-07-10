@@ -1,7 +1,9 @@
 package com.zmin.birthday.mvp.ui.activity;
 
 import android.content.Intent;
+import android.view.View;
 import android.widget.EditText;
+import android.widget.FrameLayout;
 import android.widget.ImageButton;
 import android.widget.RadioButton;
 
@@ -38,9 +40,11 @@ public class AddBirthdayActivity extends BaseActivity<AddBirthdayPresenter> impl
     @BindView(R.id.rb_remine_3) RadioButton mRbRemine3;
     @BindView(R.id.rb_note) RadioButton mRbNote;
     @BindView(R.id.rb_inform) RadioButton mRbInform;
+    @BindView(R.id.fl_loading) FrameLayout mFlloading;
 
     @OnClick(R.id.bt_add)
     public void onViewAddClicked() {
+        showLoading();
         mPresenter.uploadeData();
     }
 
@@ -103,12 +107,12 @@ public class AddBirthdayActivity extends BaseActivity<AddBirthdayPresenter> impl
 
     @Override
     public void showLoading() {
-
+        mFlloading.setVisibility(View.VISIBLE);
     }
 
     @Override
     public void hideLoading() {
-
+        mFlloading.setVisibility(View.GONE);
     }
 
     @Override

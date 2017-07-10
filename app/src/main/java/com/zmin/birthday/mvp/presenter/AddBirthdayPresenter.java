@@ -112,6 +112,7 @@ public class AddBirthdayPresenter extends BasePresenter<AddBirthdayContract.Mode
 
                     @Override
                     public void onNext(@NonNull ResponseBeen responseBeen) {
+                        mRootView.hideLoading();
                         if(responseBeen.getCode() == 200){
                             Intent data = new Intent();
                             Bundle bundle = new Bundle();

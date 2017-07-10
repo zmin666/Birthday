@@ -13,7 +13,7 @@ import com.zmin.birthday.mvp.contract.MainContract;
 import com.zmin.birthday.mvp.model.entity.Birthday;
 import com.zmin.birthday.mvp.model.entity.MovieEntity;
 import com.zmin.birthday.mvp.ui.activity.MainActivity;
-import com.zmin.birthday.mvp.ui.adapter.BirthdayAdapter;
+import com.zmin.birthday.mvp.ui.adapter.BirthdayDataAdapter;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -42,7 +42,7 @@ public class MainPresenter extends BasePresenter<MainContract.Model, MainContrac
     private final MainActivity mActivity;
 
     private List<Birthday> mBirthdays = new ArrayList<>();
-    private BirthdayAdapter mMAdapter;
+    private BirthdayDataAdapter mMAdapter;
 
     @Inject
     public MainPresenter(MainContract.Model model, MainContract.view rootView, RxErrorHandler handler
@@ -63,7 +63,8 @@ public class MainPresenter extends BasePresenter<MainContract.Model, MainContrac
     public void requestBirthdayData(boolean refresh) {
         mRootView.showLoading();
         if (mMAdapter == null) {
-            mMAdapter = new BirthdayAdapter(mBirthdays);
+          //  mMAdapter = new BirthdayAdapter(mBirthdays);
+            mMAdapter = new BirthdayDataAdapter(mBirthdays,mActivity);
             mRootView.setAdapter(mMAdapter);//设置Adapter
         }
         //获取数据  展示数据  保存到数据库中

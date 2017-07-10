@@ -6,17 +6,18 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.design.widget.FloatingActionButton;
+import android.support.v4.widget.DrawerLayout;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.KeyEvent;
 import android.view.View;
 import android.widget.Toast;
 
 import com.jess.arms.base.BaseActivity;
-import com.jess.arms.base.DefaultAdapter;
 import com.jess.arms.di.component.AppComponent;
 import com.zmin.birthday.R;
 import com.zmin.birthday.di.component.DaggerMainComponent;
@@ -24,6 +25,7 @@ import com.zmin.birthday.di.module.MainModule;
 import com.zmin.birthday.mvp.contract.MainContract;
 import com.zmin.birthday.mvp.model.entity.Birthday;
 import com.zmin.birthday.mvp.presenter.MainPresenter;
+import com.zmin.birthday.mvp.ui.adapter.BirthdayDataAdapter;
 
 import butterknife.BindView;
 import butterknife.OnClick;
@@ -50,6 +52,8 @@ public class MainActivity extends BaseActivity<MainPresenter> implements MainCon
     @Nullable
     @BindView(R.id.collapsing_toolbar_layout)
     CollapsingToolbarLayout mCollapsingToolbarLayout;
+    @BindView(R.id.drawerLayout)
+    DrawerLayout mDrawerLayout;
 
     @OnClick(R.id.fab)
     public void onViewClicked() {
@@ -103,6 +107,14 @@ public class MainActivity extends BaseActivity<MainPresenter> implements MainCon
         //通过CollapsingToolbarLayout修改字体颜色
         mCollapsingToolbarLayout.setExpandedTitleColor(Color.WHITE);//设置还没收缩时状态下字体颜色
         mCollapsingToolbarLayout.setCollapsedTitleTextColor(Color.GREEN);//设置收缩后Toolbar上字体的颜色
+        mToolbar.setNavigationIcon(R.mipmap.ic_launcher);
+        mToolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mDrawerLayout.openDrawer(Gravity.LEFT);
+            }
+        });
+        mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
     }
 
     private void addListener() {
@@ -115,11 +127,9 @@ public class MainActivity extends BaseActivity<MainPresenter> implements MainCon
     }
 
     @Override
-    public void setAdapter(DefaultAdapter adapter) {
-        mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
+    public void setAdapter(BirthdayDataAdapter adapter) {
         mRecyclerView.setAdapter(adapter);
     }
-
 
     @Override
     public void deleteItem(int position) {
