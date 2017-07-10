@@ -18,9 +18,6 @@ import io.reactivex.Observable;
 public interface MainContract {
     interface view extends IView {
         void setAdapter(DefaultAdapter adapter);
-
-        void addItem();
-
         void deleteItem(int position);
     }
 

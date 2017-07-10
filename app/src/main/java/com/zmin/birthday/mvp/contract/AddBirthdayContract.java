@@ -4,6 +4,7 @@ import com.jess.arms.mvp.IModel;
 import com.jess.arms.mvp.IView;
 import com.zmin.birthday.mvp.model.entity.ResponseBeen;
 
+import java.util.HashMap;
 import java.util.Map;
 
 import io.reactivex.Observable;
@@ -15,7 +16,11 @@ import io.reactivex.Observable;
  */
 public interface AddBirthdayContract {
     interface view extends IView {
-        void getBirth();
+        HashMap<String,Object> getBirth();
+
+        void selectDate();
+
+        void setDate(String date);
     }
 
     interface Model extends IModel {

@@ -4,6 +4,7 @@ import com.jess.arms.di.scope.ActivityScope;
 import com.jess.arms.integration.IRepositoryManager;
 import com.jess.arms.mvp.BaseModel;
 import com.zmin.birthday.mvp.contract.AddBirthdayContract;
+import com.zmin.birthday.mvp.model.api.service.CommonService;
 import com.zmin.birthday.mvp.model.entity.ResponseBeen;
 
 import java.util.Map;
@@ -26,6 +27,6 @@ public class AddBirthdayModel extends BaseModel implements AddBirthdayContract.M
 
     @Override
     public Observable<ResponseBeen> postBirthdayData(Map<String, Object> fields) {
-        return null;
+        return mRepositoryManager.obtainRetrofitService(CommonService.class).addBirthdate(fields);
     }
 }

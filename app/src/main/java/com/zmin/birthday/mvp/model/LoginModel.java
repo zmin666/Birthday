@@ -26,7 +26,6 @@ public class LoginModel extends BaseModel implements LoginRegisterContract.Model
         super(repositoryManager);
     }
 
-
     @Override
     public Observable<ResponseBeen> register(Map<String, Object> fields) {
         return mRepositoryManager.obtainRetrofitService(UserService.class).register(fields);

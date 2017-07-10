@@ -1,7 +1,11 @@
 package com.zmin.birthday.mvp.model.entity;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import org.greenrobot.greendao.annotation.Entity;
 import org.greenrobot.greendao.annotation.Id;
+import org.greenrobot.greendao.annotation.Keep;
 import org.greenrobot.greendao.annotation.Property;
 import org.greenrobot.greendao.annotation.Generated;
 
@@ -11,61 +15,40 @@ import org.greenrobot.greendao.annotation.Generated;
  * @desc:
  */
 @Entity
-public class Birthday {
+public class Birthday implements Parcelable {
     @Id
     private String id;
     @Property(nameInDb = "NAME")
     private String name;
     //农历生日
     @Property(nameInDb = "OLD_YEAR")
-    private String old_year;
-    @Property(nameInDb = "OLD_MONTH")
-    private String old_month;
-    @Property(nameInDb = "OLD_DAY")
-    private String old_day;
+    private String old_birth;
     //阳历生日
     @Property(nameInDb = "YEAR")
-    private String year;
-    @Property(nameInDb = "MONTH")
-    private String month;
-    @Property(nameInDb = "DAY")
-    private String day;
+    private String birth;
+    //生日偏好
+    @Property(nameInDb = "PERFER")
+    private String perfer;
+    //性别
+    @Property(nameInDb = "SEX")
+    private String sex;
 
-    public Birthday(String name, String old_year, String old_month, String old_day, String year, String month, String day) {
-        this.name = name;
-        this.old_year = old_year;
-        this.old_month = old_month;
-        this.old_day = old_day;
-        this.year = year;
-        this.month = month;
-        this.day = day;
-    }
-
-    public Birthday(String name, int old_year, int old_month, int old_day, int year, int month, int day) {
-        this.name = name;
-        this.old_year = String.valueOf(old_year);
-        this.old_month = String.valueOf(old_month);
-        this.old_day = String.valueOf(old_day);
-        this.year = String.valueOf(year);
-        this.month = String.valueOf(month);
-        this.day = String.valueOf(day);
-    }
-
-    @Generated(hash = 1733568019)
-    public Birthday(String id, String name, String old_year, String old_month, String old_day, String year, String month,
-            String day) {
+    @Keep
+    public Birthday(String id, String name, String old_birth, String birth, String perfer, String sex) {
         this.id = id;
         this.name = name;
-        this.old_year = old_year;
-        this.old_month = old_month;
-        this.old_day = old_day;
-        this.year = year;
-        this.month = month;
-        this.day = day;
+        this.old_birth = old_birth;
+        this.birth = birth;
+        this.perfer = perfer;
+        this.sex = sex;
     }
 
-    @Generated(hash = 1467867887)
-    public Birthday() {
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
     }
 
     public String getName() {
@@ -76,59 +59,76 @@ public class Birthday {
         this.name = name;
     }
 
-    public String getOld_year() {
-        return old_year;
+    public String getOld_birth() {
+        return old_birth;
     }
 
-    public void setOld_year(String old_year) {
-        this.old_year = old_year;
+    public void setOld_birth(String old_birth) {
+        this.old_birth = old_birth;
     }
 
-    public String getOld_month() {
-        return old_month;
+    public String getBirth() {
+        return birth;
     }
 
-    public void setOld_month(String old_month) {
-        this.old_month = old_month;
+    public void setBirth(String birth) {
+        this.birth = birth;
     }
 
-    public String getOld_day() {
-        return old_day;
+    public String getPerfer() {
+        return perfer;
     }
 
-    public void setOld_day(String old_day) {
-        this.old_day = old_day;
+    public void setPerfer(String perfer) {
+        this.perfer = perfer;
     }
 
-    public String getYear() {
-        return year;
+    public String getSex() {
+        return sex;
     }
 
-    public void setYear(String year) {
-        this.year = year;
+    public void setSex(String sex) {
+        this.sex = sex;
     }
 
-    public String getMonth() {
-        return month;
+
+    @Override
+    public int describeContents() {
+        return 0;
     }
 
-    public void setMonth(String month) {
-        this.month = month;
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(this.id);
+        dest.writeString(this.name);
+        dest.writeString(this.old_birth);
+        dest.writeString(this.birth);
+        dest.writeString(this.perfer);
+        dest.writeString(this.sex);
     }
 
-    public String getDay() {
-        return day;
+    protected Birthday(Parcel in) {
+        this.id = in.readString();
+        this.name = in.readString();
+        this.old_birth = in.readString();
+        this.birth = in.readString();
+        this.perfer = in.readString();
+        this.sex = in.readString();
     }
 
-    public void setDay(String day) {
-        this.day = day;
+    @Generated(hash = 1467867887)
+    public Birthday() {
     }
 
-    public String getId() {
-        return this.id;
-    }
+    public static final Parcelable.Creator<Birthday> CREATOR = new Parcelable.Creator<Birthday>() {
+        @Override
+        public Birthday createFromParcel(Parcel source) {
+            return new Birthday(source);
+        }
 
-    public void setId(String id) {
-        this.id = id;
-    }
+        @Override
+        public Birthday[] newArray(int size) {
+            return new Birthday[size];
+        }
+    };
 }

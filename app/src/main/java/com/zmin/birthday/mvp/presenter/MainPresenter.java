@@ -1,14 +1,8 @@
 package com.zmin.birthday.mvp.presenter;
 
 import android.app.Application;
-import android.app.DatePickerDialog;
 import android.util.Log;
-import android.widget.DatePicker;
-import android.widget.Toast;
 
-import com.avos.avoscloud.AVException;
-import com.avos.avoscloud.AVObject;
-import com.avos.avoscloud.SaveCallback;
 import com.jess.arms.di.scope.ActivityScope;
 import com.jess.arms.integration.AppManager;
 import com.jess.arms.mvp.BasePresenter;
@@ -22,7 +16,6 @@ import com.zmin.birthday.mvp.ui.activity.MainActivity;
 import com.zmin.birthday.mvp.ui.adapter.BirthdayAdapter;
 
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.List;
 
 import javax.inject.Inject;
@@ -75,18 +68,10 @@ public class MainPresenter extends BasePresenter<MainContract.Model, MainContrac
         }
         //获取数据  展示数据  保存到数据库中
         List<Birthday> birthdayData = mModel.getBirthdayData();
-        BirthdayHelp driverHelper = DbUtil.getDriverHelper();
         if (refresh) {
             mBirthdays.clear();
-            driverHelper.deleteAll();
         }
         mBirthdays.addAll(birthdayData);
-        for (Birthday birthday : birthdayData) {
-            int size = driverHelper.queryAll().size();
-            birthday.setId(String.valueOf(size));
-            driverHelper.save(birthday);
-        }
-
         mMAdapter.notifyDataSetChanged();
         mRootView.hideLoading();
 
@@ -126,26 +111,8 @@ public class MainPresenter extends BasePresenter<MainContract.Model, MainContrac
      * 添加生日
      */
     public void addItemData() {
-        //弹出日历
-        Calendar calendar = Calendar.getInstance();
-        int year = calendar.get(Calendar.YEAR);
-        int month = calendar.get(Calendar.MONTH);
-        int day = calendar.get(Calendar.DAY_OF_MONTH);
-        new DatePickerDialog(mActivity, new DatePickerDialog.OnDateSetListener() {
-            @Override
-            public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
-                Toast.makeText(mActivity, year + "年" + monthOfYear + 1 + "月" + dayOfMonth + "日", Toast.LENGTH_SHORT).show();
-                Birthday birthday = new Birthday("张三丰", year, monthOfYear + 1, dayOfMonth, 0, 0, 0);
-                mBirthdays.add(birthday);
-                mMAdapter.notifyItemInserted(mBirthdays.size() - 1);
-                //保存到本地数据库
-                savaInDB(birthday);
-                //上传到服务器
-                uploadeData(birthday);
-            }
 
 
-        }, year, month, day).show();
     }
 
     /**
@@ -159,33 +126,6 @@ public class MainPresenter extends BasePresenter<MainContract.Model, MainContrac
         driverHelper.save(birthday);
     }
 
-    private void uploadeData(Birthday data) {
-        //获取birthday的表
-        AVObject birthday = new AVObject("Birthday");
-        //这个是存贮这个条目的归属用户
-        birthday.put("user_id","001");
-        birthday.put("user_key","ff001");
-
-        birthday.put("name",data.getName());
-        birthday.put("old_year",data.getOld_year());
-        birthday.put("old_month",data.getOld_month());
-        birthday.put("old_day",data.getOld_day());
-        birthday.put("year",data.getYear());
-        birthday.put("month",data.getMonth());
-        birthday.put("day",data.getDay());
-
-        birthday.saveInBackground(new SaveCallback() {
-            @Override
-            public void done(AVException e) {
-                if(e == null){
-                    Log.d("saved","success!");
-                }
-            }
-        });
-    }
-
-
-
     /**
      * 删除生日
      */
@@ -197,5 +137,14 @@ public class MainPresenter extends BasePresenter<MainContract.Model, MainContrac
     @Override
     public void onDestroy() {
         super.onDestroy();
+    }
+
+    /**
+     * 添加条目
+     * @param newBirthday
+     */
+    public void addItemData(Birthday newBirthday) {
+        mBirthdays.add(newBirthday);
+        mMAdapter.notifyDataSetChanged();
     }
 }

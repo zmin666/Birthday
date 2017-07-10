@@ -25,7 +25,7 @@ public class BirthdayData {
     public static List<Birthday> getData() {
         ArrayList<Birthday> birthdays = new ArrayList<>();
         for (int i = 0; i < names.length; i++) {
-            birthdays.add(new Birthday(names[i], old_years[i], old_months[i], old_days[i], years[i], months[i], days[i]));
+            birthdays.add(new Birthday("001",names[i],"1991-1-1","1990-12-10","1","2"));
         }
         return birthdays;
     }

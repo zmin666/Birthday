@@ -2,6 +2,7 @@ package com.zmin.birthday.di.module;
 
 import com.jess.arms.di.scope.ActivityScope;
 import com.zmin.birthday.mvp.contract.AddBirthdayContract;
+import com.zmin.birthday.mvp.model.AddBirthdayModel;
 
 import dagger.Module;
 import dagger.Provides;
@@ -28,7 +29,7 @@ public class AddBirthdayModule {
 
     @ActivityScope
     @Provides
-    AddBirthdayContract.Model provideModel(AddBirthdayContract.Model model){
+    AddBirthdayContract.Model provideModel(AddBirthdayModel model){
         return model;
     }
 }

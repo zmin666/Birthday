@@ -1,6 +1,6 @@
 package com.zmin.birthday.mvp.model.api.service;
 
-import com.zmin.birthday.mvp.model.entity.LoginBeen;
+import com.zmin.birthday.mvp.model.entity.ResponseBeen;
 
 import java.util.Map;
 
@@ -15,8 +15,8 @@ import retrofit2.http.POST;
  * contact with jess.yan.effort@gmail.com
  */
 public interface CommonService {
-    //登录
+    //添加生日
     @FormUrlEncoded
     @POST("sysapi/web.other.php")
-    Observable<LoginBeen> login(@FieldMap Map<String, Object> fields);
+    Observable<ResponseBeen> addBirthdate(@FieldMap Map<String, Object> fields);
 }

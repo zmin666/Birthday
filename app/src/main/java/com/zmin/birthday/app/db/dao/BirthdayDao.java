@@ -26,12 +26,10 @@ public class BirthdayDao extends AbstractDao<Birthday, String> {
     public static class Properties {
         public final static Property Id = new Property(0, String.class, "id", true, "ID");
         public final static Property Name = new Property(1, String.class, "name", false, "NAME");
-        public final static Property Old_year = new Property(2, String.class, "old_year", false, "OLD_YEAR");
-        public final static Property Old_month = new Property(3, String.class, "old_month", false, "OLD_MONTH");
-        public final static Property Old_day = new Property(4, String.class, "old_day", false, "OLD_DAY");
-        public final static Property Year = new Property(5, String.class, "year", false, "YEAR");
-        public final static Property Month = new Property(6, String.class, "month", false, "MONTH");
-        public final static Property Day = new Property(7, String.class, "day", false, "DAY");
+        public final static Property Old_birth = new Property(2, String.class, "old_birth", false, "OLD_YEAR");
+        public final static Property Birth = new Property(3, String.class, "birth", false, "YEAR");
+        public final static Property Perfer = new Property(4, String.class, "perfer", false, "PERFER");
+        public final static Property Sex = new Property(5, String.class, "sex", false, "SEX");
     }
 
 
@@ -49,12 +47,10 @@ public class BirthdayDao extends AbstractDao<Birthday, String> {
         db.execSQL("CREATE TABLE " + constraint + "\"BIRTHDAY\" (" + //
                 "\"ID\" TEXT PRIMARY KEY NOT NULL ," + // 0: id
                 "\"NAME\" TEXT," + // 1: name
-                "\"OLD_YEAR\" TEXT," + // 2: old_year
-                "\"OLD_MONTH\" TEXT," + // 3: old_month
-                "\"OLD_DAY\" TEXT," + // 4: old_day
-                "\"YEAR\" TEXT," + // 5: year
-                "\"MONTH\" TEXT," + // 6: month
-                "\"DAY\" TEXT);"); // 7: day
+                "\"OLD_YEAR\" TEXT," + // 2: old_birth
+                "\"YEAR\" TEXT," + // 3: birth
+                "\"PERFER\" TEXT," + // 4: perfer
+                "\"SEX\" TEXT);"); // 5: sex
     }
 
     /** Drops the underlying database table. */
@@ -77,34 +73,24 @@ public class BirthdayDao extends AbstractDao<Birthday, String> {
             stmt.bindString(2, name);
         }
  
-        String old_year = entity.getOld_year();
-        if (old_year != null) {
-            stmt.bindString(3, old_year);
+        String old_birth = entity.getOld_birth();
+        if (old_birth != null) {
+            stmt.bindString(3, old_birth);
         }
  
-        String old_month = entity.getOld_month();
-        if (old_month != null) {
-            stmt.bindString(4, old_month);
+        String birth = entity.getBirth();
+        if (birth != null) {
+            stmt.bindString(4, birth);
         }
  
-        String old_day = entity.getOld_day();
-        if (old_day != null) {
-            stmt.bindString(5, old_day);
+        String perfer = entity.getPerfer();
+        if (perfer != null) {
+            stmt.bindString(5, perfer);
         }
  
-        String year = entity.getYear();
-        if (year != null) {
-            stmt.bindString(6, year);
-        }
- 
-        String month = entity.getMonth();
-        if (month != null) {
-            stmt.bindString(7, month);
-        }
- 
-        String day = entity.getDay();
-        if (day != null) {
-            stmt.bindString(8, day);
+        String sex = entity.getSex();
+        if (sex != null) {
+            stmt.bindString(6, sex);
         }
     }
 
@@ -122,34 +108,24 @@ public class BirthdayDao extends AbstractDao<Birthday, String> {
             stmt.bindString(2, name);
         }
  
-        String old_year = entity.getOld_year();
-        if (old_year != null) {
-            stmt.bindString(3, old_year);
+        String old_birth = entity.getOld_birth();
+        if (old_birth != null) {
+            stmt.bindString(3, old_birth);
         }
  
-        String old_month = entity.getOld_month();
-        if (old_month != null) {
-            stmt.bindString(4, old_month);
+        String birth = entity.getBirth();
+        if (birth != null) {
+            stmt.bindString(4, birth);
         }
  
-        String old_day = entity.getOld_day();
-        if (old_day != null) {
-            stmt.bindString(5, old_day);
+        String perfer = entity.getPerfer();
+        if (perfer != null) {
+            stmt.bindString(5, perfer);
         }
  
-        String year = entity.getYear();
-        if (year != null) {
-            stmt.bindString(6, year);
-        }
- 
-        String month = entity.getMonth();
-        if (month != null) {
-            stmt.bindString(7, month);
-        }
- 
-        String day = entity.getDay();
-        if (day != null) {
-            stmt.bindString(8, day);
+        String sex = entity.getSex();
+        if (sex != null) {
+            stmt.bindString(6, sex);
         }
     }
 
@@ -163,12 +139,10 @@ public class BirthdayDao extends AbstractDao<Birthday, String> {
         Birthday entity = new Birthday( //
             cursor.isNull(offset + 0) ? null : cursor.getString(offset + 0), // id
             cursor.isNull(offset + 1) ? null : cursor.getString(offset + 1), // name
-            cursor.isNull(offset + 2) ? null : cursor.getString(offset + 2), // old_year
-            cursor.isNull(offset + 3) ? null : cursor.getString(offset + 3), // old_month
-            cursor.isNull(offset + 4) ? null : cursor.getString(offset + 4), // old_day
-            cursor.isNull(offset + 5) ? null : cursor.getString(offset + 5), // year
-            cursor.isNull(offset + 6) ? null : cursor.getString(offset + 6), // month
-            cursor.isNull(offset + 7) ? null : cursor.getString(offset + 7) // day
+            cursor.isNull(offset + 2) ? null : cursor.getString(offset + 2), // old_birth
+            cursor.isNull(offset + 3) ? null : cursor.getString(offset + 3), // birth
+            cursor.isNull(offset + 4) ? null : cursor.getString(offset + 4), // perfer
+            cursor.isNull(offset + 5) ? null : cursor.getString(offset + 5) // sex
         );
         return entity;
     }
@@ -177,12 +151,10 @@ public class BirthdayDao extends AbstractDao<Birthday, String> {
     public void readEntity(Cursor cursor, Birthday entity, int offset) {
         entity.setId(cursor.isNull(offset + 0) ? null : cursor.getString(offset + 0));
         entity.setName(cursor.isNull(offset + 1) ? null : cursor.getString(offset + 1));
-        entity.setOld_year(cursor.isNull(offset + 2) ? null : cursor.getString(offset + 2));
-        entity.setOld_month(cursor.isNull(offset + 3) ? null : cursor.getString(offset + 3));
-        entity.setOld_day(cursor.isNull(offset + 4) ? null : cursor.getString(offset + 4));
-        entity.setYear(cursor.isNull(offset + 5) ? null : cursor.getString(offset + 5));
-        entity.setMonth(cursor.isNull(offset + 6) ? null : cursor.getString(offset + 6));
-        entity.setDay(cursor.isNull(offset + 7) ? null : cursor.getString(offset + 7));
+        entity.setOld_birth(cursor.isNull(offset + 2) ? null : cursor.getString(offset + 2));
+        entity.setBirth(cursor.isNull(offset + 3) ? null : cursor.getString(offset + 3));
+        entity.setPerfer(cursor.isNull(offset + 4) ? null : cursor.getString(offset + 4));
+        entity.setSex(cursor.isNull(offset + 5) ? null : cursor.getString(offset + 5));
      }
     
     @Override
