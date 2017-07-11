@@ -1,5 +1,6 @@
 package com.zmin.birthday.mvp.model.api.service;
 
+import com.zmin.birthday.mvp.model.entity.BithdayBeen;
 import com.zmin.birthday.mvp.model.entity.ResponseBeen;
 
 import java.util.Map;
@@ -19,4 +20,10 @@ public interface CommonService {
     @FormUrlEncoded
     @POST("sysapi/web.other.php")
     Observable<ResponseBeen> addBirthdate(@FieldMap Map<String, Object> fields);
+
+    //获取备份生日
+    @FormUrlEncoded
+    @POST("sysapi/web.other.php")
+    Observable<BithdayBeen> getBirthData(@FieldMap Map<String, Object> fields);
+
 }

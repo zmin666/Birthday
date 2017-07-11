@@ -2,11 +2,11 @@ package com.zmin.birthday.mvp.contract;
 
 import com.jess.arms.mvp.IModel;
 import com.jess.arms.mvp.IView;
-import com.zmin.birthday.mvp.model.entity.Birthday;
+import com.zmin.birthday.mvp.model.entity.BithdayBeen;
 import com.zmin.birthday.mvp.model.entity.MovieEntity;
 import com.zmin.birthday.mvp.ui.adapter.BirthdayDataAdapter;
 
-import java.util.List;
+import java.util.Map;
 
 import io.reactivex.Observable;
 
@@ -22,7 +22,7 @@ public interface MainContract {
     }
 
     interface Model extends IModel {
-        List<Birthday> getBirthdayData();
+        Observable<BithdayBeen> getBirthdayData(Map<String, Object> fields);
 
         Observable<MovieEntity> getUsers(int star, int end);
     }

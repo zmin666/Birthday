@@ -25,7 +25,6 @@
             android:layout_height="match_parent"
             android:background="@null"
             android:hint="请输入账户名"
-            android:inputType="number"
             android:maxLength="11"
             android:paddingTop="10px"
             android:singleLine="true"

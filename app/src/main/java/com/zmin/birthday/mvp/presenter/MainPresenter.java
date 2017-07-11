@@ -8,15 +8,19 @@ import com.jess.arms.integration.AppManager;
 import com.jess.arms.mvp.BasePresenter;
 import com.zmin.birthday.app.db.BirthdayHelp;
 import com.zmin.birthday.app.db.DbUtil;
+import com.zmin.birthday.app.userpermission.user.UserControl;
+import com.zmin.birthday.app.utils.FileUtils;
 import com.zmin.birthday.app.utils.RxUtils;
 import com.zmin.birthday.mvp.contract.MainContract;
 import com.zmin.birthday.mvp.model.entity.Birthday;
+import com.zmin.birthday.mvp.model.entity.BithdayBeen;
 import com.zmin.birthday.mvp.model.entity.MovieEntity;
 import com.zmin.birthday.mvp.ui.activity.MainActivity;
 import com.zmin.birthday.mvp.ui.adapter.BirthdayDataAdapter;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import javax.inject.Inject;
 
@@ -63,23 +67,66 @@ public class MainPresenter extends BasePresenter<MainContract.Model, MainContrac
     public void requestBirthdayData(boolean refresh) {
         mRootView.showLoading();
         if (mMAdapter == null) {
-          //  mMAdapter = new BirthdayAdapter(mBirthdays);
-            mMAdapter = new BirthdayDataAdapter(mBirthdays,mActivity);
+            //  mMAdapter = new BirthdayAdapter(mBirthdays);
+            mMAdapter = new BirthdayDataAdapter(mBirthdays, mActivity);
             mRootView.setAdapter(mMAdapter);//设置Adapter
         }
         //获取数据  展示数据  保存到数据库中
-        List<Birthday> birthdayData = mModel.getBirthdayData();
-        if (refresh) {
-            mBirthdays.clear();
-        }
-        mBirthdays.addAll(birthdayData);
-        mMAdapter.notifyDataSetChanged();
-        mRootView.hideLoading();
+        Map<String, Object> fileMap = FileUtils.getFileMap(3);
+        String userId = UserControl.getInstance().getCurrentUser(mActivity).getUserId();
+        fileMap.put("o_uid", userId);
+        mModel.getBirthdayData(fileMap)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Observer<BithdayBeen>() {
+                    @Override
+                    public void onSubscribe(@NonNull Disposable d) {
+                        if (refresh) {
+                            mBirthdays.clear();
+                        }
+                    }
+
+                    @Override
+                    public void onNext(@NonNull BithdayBeen bithdayBeen) {
+                        if (bithdayBeen.getCode() == 200) {
+                            List<BithdayBeen.DataBean> data = bithdayBeen.getData();
+                            mBirthdays.addAll(changeDate(data));
+                            mMAdapter.notifyDataSetChanged();
+                            mRootView.hideLoading();
+                        }
+                    }
+
+                    @Override
+                    public void onError(@NonNull Throwable e) {
+
+                    }
+
+                    @Override
+                    public void onComplete() {
+
+                    }
+                });
 
     }
 
-    public void getUsers(){
-        mModel.getUsers(0,10)
+    private List<Birthday> changeDate(List<BithdayBeen.DataBean> data) {
+        ArrayList<Birthday> birthdays = new ArrayList<>();
+        for (BithdayBeen.DataBean dataBean : data) {
+            Birthday birthday = new Birthday();
+            birthday.setId(dataBean.getSysid());
+            birthday.setBirth(dataBean.getO_solar_birthday());
+            birthday.setOld_birth(dataBean.getO_lunar_birthday());
+            birthday.setName(dataBean.getO_realname());
+            birthday.setPerfer(dataBean.getO_prefer_brith());
+            birthday.setSex(dataBean.getO_sex());
+            birthdays.add(birthday);
+        }
+
+        return birthdays;
+    }
+
+    public void getUsers() {
+        mModel.getUsers(0, 10)
                 .subscribeOn(Schedulers.io())
                 .unsubscribeOn(Schedulers.io())
                 .compose(RxUtils.bindToLifecycle(mRootView))
@@ -93,12 +140,12 @@ public class MainPresenter extends BasePresenter<MainContract.Model, MainContrac
 
                     @Override
                     public void onNext(@NonNull MovieEntity movieEntity) {
-                        Log.i("zmin.............",".11..." +  movieEntity);
+                        Log.i("zmin.............", ".11..." + movieEntity);
                     }
 
                     @Override
                     public void onError(@NonNull Throwable e) {
-                        Log.i("zmin.............",".22..." +  e);
+                        Log.i("zmin.............", ".22..." + e);
                     }
 
                     @Override
@@ -118,6 +165,7 @@ public class MainPresenter extends BasePresenter<MainContract.Model, MainContrac
 
     /**
      * 保存生日信息到数据库
+     *
      * @param birthday
      */
     private void savaInDB(Birthday birthday) {
@@ -142,6 +190,7 @@ public class MainPresenter extends BasePresenter<MainContract.Model, MainContrac
 
     /**
      * 添加条目
+     *
      * @param newBirthday
      */
     public void addItemData(Birthday newBirthday) {

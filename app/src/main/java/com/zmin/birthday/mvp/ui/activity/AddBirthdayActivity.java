@@ -10,6 +10,7 @@ import android.widget.RadioButton;
 import com.jess.arms.base.BaseActivity;
 import com.jess.arms.di.component.AppComponent;
 import com.zmin.birthday.R;
+import com.zmin.birthday.app.utils.LunarCalendar;
 import com.zmin.birthday.di.component.DaggerAddBirthdayComponent;
 import com.zmin.birthday.di.module.AddBirthdayModule;
 import com.zmin.birthday.mvp.contract.AddBirthdayContract;
@@ -85,13 +86,25 @@ public class AddBirthdayActivity extends BaseActivity<AddBirthdayPresenter> impl
             map.put("o_sex", "2");
         }
         //1农历 2阳历
+        String date = mEtDate.getText().toString().trim();
+        String[] split = date.split("-");
+        int year = Integer.parseInt(split[0]);
+        int month = Integer.parseInt(split[1]);
+        int day = Integer.parseInt(split[2]);
+
         if (mRbMale.isChecked()) {
             map.put("o_prefer_brith", "1");
+            map.put("o_lunar_birthday", date);
+            //农历 --> 转成阳历
+            LunarCalendar.Solar solar = LunarCalendar.lunarToSolar(new LunarCalendar.Lunar(day, month, year));
+            map.put("o_solar_birthday", solar.solarYear + "-" + solar.solarMonth + "-" + solar.solarDay);
         } else if (mRbLunar.isChecked()) {
             map.put("o_prefer_brith", "2");
+            map.put("o_solar_birthday", date);
+            //阳历 --> 转成农历
+            LunarCalendar.Lunar lunar = LunarCalendar.SolarToLunar(new LunarCalendar.Solar(day, month, year));
+            map.put("o_lunar_birthday", lunar.lunarYear + "-" + lunar.lunarMonth + "-" + lunar.lunarDay);
         }
-        String date = mEtDate.getText().toString().trim();
-        map.put("o_solar_birthday", date);
         return map;
     }
 

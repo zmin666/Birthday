@@ -5,11 +5,12 @@ import com.jess.arms.integration.IRepositoryManager;
 import com.jess.arms.mvp.BaseModel;
 import com.zmin.birthday.mvp.contract.MainContract;
 import com.zmin.birthday.mvp.model.api.cache.CommonCache;
+import com.zmin.birthday.mvp.model.api.service.CommonService;
 import com.zmin.birthday.mvp.model.api.service.UserService;
-import com.zmin.birthday.mvp.model.entity.Birthday;
+import com.zmin.birthday.mvp.model.entity.BithdayBeen;
 import com.zmin.birthday.mvp.model.entity.MovieEntity;
 
-import java.util.List;
+import java.util.Map;
 
 import javax.inject.Inject;
 
@@ -35,8 +36,8 @@ public class BirthdayModel extends BaseModel implements MainContract.Model {
 
 
     @Override
-    public List<Birthday> getBirthdayData() {
-        return BirthdayData.getData();
+    public Observable<BithdayBeen> getBirthdayData(Map<String, Object> fields) {
+        return    mRepositoryManager.obtainRetrofitService(CommonService.class).getBirthData(fields);
     }
 
     @Override
