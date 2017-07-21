@@ -1,6 +1,7 @@
 package com.zmin.birthday.mvp.ui.activity;
 
 import android.content.Intent;
+import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.FrameLayout;
@@ -105,6 +106,7 @@ public class AddBirthdayActivity extends BaseActivity<AddBirthdayPresenter> impl
             LunarCalendar.Lunar lunar = LunarCalendar.SolarToLunar(new LunarCalendar.Solar(day, month, year));
             map.put("o_lunar_birthday", lunar.lunarYear + "-" + lunar.lunarMonth + "-" + lunar.lunarDay);
         }
+        Log.i("zmin.添加的生日.....","...." +  map);
         return map;
     }
 

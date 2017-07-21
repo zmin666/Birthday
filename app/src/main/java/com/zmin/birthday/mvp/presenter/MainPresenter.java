@@ -92,8 +92,8 @@ public class MainPresenter extends BasePresenter<MainContract.Model, MainContrac
                             List<BithdayBeen.DataBean> data = bithdayBeen.getData();
                             mBirthdays.addAll(changeDate(data));
                             mMAdapter.notifyDataSetChanged();
-                            mRootView.hideLoading();
                         }
+                        mRootView.hideLoading();
                     }
 
                     @Override

@@ -93,11 +93,11 @@ public class AddBirthdayPresenter extends BasePresenter<AddBirthdayContract.Mode
         map.putAll(mRootView.getBirth());
         //构造生日个体
         mBirthday = new Birthday(userId
-                ,(String) map.get("o_realname")
+                , (String) map.get("o_realname")
                 , (String) map.get("o_solar_birthday")
-                ,(String) map.get("o_prefer_brith")
-                ,(String) map.get("o_sex")
-                ,(String) map.get("o_sex"));
+                , (String) map.get("o_lunar_birthday")
+                , (String) map.get("o_sex")
+                , (String) map.get("o_sex"));
 
 
         mModel.postBirthdayData(map)
@@ -113,7 +113,7 @@ public class AddBirthdayPresenter extends BasePresenter<AddBirthdayContract.Mode
                     @Override
                     public void onNext(@NonNull ResponseBeen responseBeen) {
                         mRootView.hideLoading();
-                        if(responseBeen.getCode() == 200){
+                        if (responseBeen.getCode() == 200) {
                             Intent data = new Intent();
                             Bundle bundle = new Bundle();
                             bundle.putParcelable("NewBirthday", mBirthday);

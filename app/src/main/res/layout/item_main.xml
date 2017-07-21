@@ -11,7 +11,6 @@
         android:layout_height="310px"
         android:layout_gravity="center_vertical"
         android:layout_margin="20px"
-        app:cardBackgroundColor="#2e96ff"
         app:cardCornerRadius="10dp"
         app:cardElevation="20dp">
 
@@ -37,6 +36,24 @@
                 android:text="生日偏好"/>
 
             <TextView
+                android:id="@+id/tv_zodiac"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/tv_perfer"
+                android:layout_centerHorizontal="true"
+                android:layout_margin="10px"
+                android:text="属相"/>
+
+            <TextView
+                android:id="@+id/tv_constellation"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/tv_zodiac"
+                android:layout_centerHorizontal="true"
+                android:layout_margin="10px"
+                android:text="星座"/>
+
+            <TextView
                 android:id="@+id/tv_count_time"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -51,8 +68,19 @@
                 android:layout_alignLeft="@+id/tv_count_time"
                 android:layout_below="@+id/tv_count_time"
                 android:layout_margin="10px"
+                android:paddingLeft="20px"
                 android:textSize="35sp"
-                tools:text="999天"/>
+                tools:text="99"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="100px"
+                android:layout_alignBottom="@+id/tv_num"
+                android:layout_toRightOf="@+id/tv_num"
+                android:gravity="center"
+                android:paddingLeft="10px"
+                android:text="天"
+                />
 
 
             <TextView

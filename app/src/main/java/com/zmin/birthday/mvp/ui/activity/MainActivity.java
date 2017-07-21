@@ -95,10 +95,10 @@ public class MainActivity extends BaseActivity<MainPresenter> implements MainCon
             }
         });
         //使用CollapsingToolbarLayout必须把title设置到CollapsingToolbarLayout上，设置到Toolbar上则不会显示
-        mCollapsingToolbarLayout.setTitle("生日记录");
+        mCollapsingToolbarLayout.setTitle("生日备忘录");
         //通过CollapsingToolbarLayout修改字体颜色
         mCollapsingToolbarLayout.setExpandedTitleColor(Color.WHITE);//设置还没收缩时状态下字体颜色
-        mCollapsingToolbarLayout.setCollapsedTitleTextColor(Color.GREEN);//设置收缩后Toolbar上字体的颜色
+        mCollapsingToolbarLayout.setCollapsedTitleTextColor(Color.WHITE);//设置收缩后Toolbar上字体的颜色
         mToolbar.setNavigationIcon(R.mipmap.ic_launcher);
         mToolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
@@ -133,7 +133,6 @@ public class MainActivity extends BaseActivity<MainPresenter> implements MainCon
         if (!mSwipeRefreshLayout.isRefreshing()) {
             mSwipeRefreshLayout.setRefreshing(true);
         }
-
     }
 
     @Override
@@ -183,7 +182,7 @@ public class MainActivity extends BaseActivity<MainPresenter> implements MainCon
         if (requestCode == REQUEST_DATE) {
             //获取新的生日
             Bundle bundle = data.getExtras();
-            Birthday newBirthday = (Birthday) bundle.getParcelable("NewBirthday");
+            Birthday newBirthday = bundle.getParcelable("NewBirthday");
             if (newBirthday != null) {
                 Log.i("zmin.......新加的生日......", "...." + newBirthday.toString());
                 mPresenter.addItemData(newBirthday);
