@@ -41,9 +41,6 @@ public class MainActivity extends BaseActivity<MainPresenter> implements MainCon
     @BindView(R.id.fab)
     FloatingActionButton mFloatingActionButton;
     @Nullable
-    @BindView(R.id.fab_test)
-    FloatingActionButton fab_test;
-    @Nullable
     @BindView(R.id.srl)
     SwipeRefreshLayout mSwipeRefreshLayout;
     @Nullable
@@ -59,11 +56,6 @@ public class MainActivity extends BaseActivity<MainPresenter> implements MainCon
     public void onViewClicked() {
         Intent intent = new Intent(this, AddBirthdayActivity.class);
         startActivityForResult(intent, REQUEST_DATE);
-    }
-
-    @OnClick(R.id.fab_test)
-    public void onViewTextClicked() {
-        Toast.makeText(this, "功能测试按钮", Toast.LENGTH_SHORT).show();
     }
 
     //记录用户首次点击返回键的时间

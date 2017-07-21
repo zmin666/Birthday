@@ -16,6 +16,8 @@ buildscript {
         //greendao
         classpath 'org.greenrobot:greendao-gradle-plugin:3.2.2'
         //hugo
+
+
         classpath 'com.jakewharton.hugo:hugo-plugin:1.2.1'
     }
 }

@@ -7,7 +7,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.zhy.autolayout.utils.AutoUtils;
 import com.zmin.birthday.R;
+import com.zmin.birthday.app.utils.TimeUtil;
 import com.zmin.birthday.mvp.model.entity.Birthday;
 
 import java.util.List;
@@ -49,7 +51,7 @@ public class BirthdayDataAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
         if (holder instanceof BirthdayHolder) {
             Birthday birthday = mBirthdayList.get(position);
             BirthdayHolder birthdayHolder = (BirthdayHolder) holder;
-            birthdayHolder.tv_name.setText(birthday.getName());
+            birthdayHolder.tv_name.setText("昵称: " + birthday.getName());
             String perfer = birthday.getPerfer();
             if ("1".equals(perfer)) {
                 birthdayHolder.tv_perfer.setText("农历生日");
@@ -58,15 +60,16 @@ public class BirthdayDataAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
             } else if ("3".equals(perfer)) {
                 birthdayHolder.tv_perfer.setText("两个生日");
             }
-
-            birthdayHolder.tv_old_birthday.setText(birthday.getOld_birth());
-            birthdayHolder.tv_new_birthday.setText(birthday.getBirth());
+            String birth = birthday.getBirth();
+            birthdayHolder.tv_old_birthday.setText("农历: " + birthday.getOld_birth());
+            birthdayHolder.tv_new_birthday.setText("阳历: " + birth);
             //倒计时
-            //  birthdayHolder.  tv_num          .setText(birthday.get());
+            birthdayHolder.tv_num.setText(TimeUtil.getCountdown(birth));
         } else if (holder instanceof BirthdayNullHolder) {
 
         }
     }
+
 
     @Override
     public int getItemCount() {
@@ -96,12 +99,14 @@ public class BirthdayDataAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
             tv_old_birthday = (TextView) itemView.findViewById(R.id.tv_old_birthday);
             tv_new_birthday = (TextView) itemView.findViewById(R.id.tv_new_birthday);
             tv_num = (TextView) itemView.findViewById(R.id.tv_num);
+            AutoUtils.autoSize(itemView);
         }
     }
 
     class BirthdayNullHolder extends RecyclerView.ViewHolder {
         public BirthdayNullHolder(View itemView) {
             super(itemView);
+            AutoUtils.autoSize(itemView);
         }
     }
 }
