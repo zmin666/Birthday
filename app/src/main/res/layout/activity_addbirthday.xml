@@ -158,7 +158,7 @@
                 android:id="@+id/et_date"
                 android:layout_width="190dp"
                 android:layout_height="wrap_content"
-                android:hint="请选择生日日期"
+                android:hint="请选择日期"
                 android:textSize="16sp"/>
 
             <ImageButton

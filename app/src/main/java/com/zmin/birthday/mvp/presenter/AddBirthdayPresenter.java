@@ -6,11 +6,11 @@ import android.app.DatePickerDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.widget.DatePicker;
-import android.widget.Toast;
 
 import com.jess.arms.di.scope.ActivityScope;
 import com.jess.arms.integration.AppManager;
 import com.jess.arms.mvp.BasePresenter;
+import com.zmin.birthday.R;
 import com.zmin.birthday.app.userpermission.user.UserControl;
 import com.zmin.birthday.app.utils.MD5Utils;
 import com.zmin.birthday.mvp.contract.AddBirthdayContract;
@@ -66,7 +66,7 @@ public class AddBirthdayPresenter extends BasePresenter<AddBirthdayContract.Mode
         int year = calendar.get(Calendar.YEAR);
         int month = calendar.get(Calendar.MONTH);
         int day = calendar.get(Calendar.DAY_OF_MONTH);
-        new DatePickerDialog(mActivity, new DatePickerDialog.OnDateSetListener() {
+        new DatePickerDialog(mActivity, R.style.AppThemeAppDate, new DatePickerDialog.OnDateSetListener() {
             @Override
             public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
                 String data = year + "-" + (monthOfYear + 1) + "-" + dayOfMonth;
