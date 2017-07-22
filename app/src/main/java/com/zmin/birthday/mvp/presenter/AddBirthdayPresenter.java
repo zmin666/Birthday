@@ -69,11 +69,6 @@ public class AddBirthdayPresenter extends BasePresenter<AddBirthdayContract.Mode
         new DatePickerDialog(mActivity, new DatePickerDialog.OnDateSetListener() {
             @Override
             public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
-                Toast.makeText(mActivity, year + "年" + monthOfYear + 1 + "月" + dayOfMonth + "日", Toast.LENGTH_SHORT).show();
-//                Birthday birthday = new Birthday("张三丰", year, monthOfYear + 1, dayOfMonth, 0, 0, 0);
-//                mBirthdays.add(birthday);
-//                mMAdapter.notifyItemInserted(mBirthdays.size() - 1);
-                //
                 String data = year + "-" + (monthOfYear + 1) + "-" + dayOfMonth;
                 mRootView.setDate(data);
                 //保存到本地数据库
