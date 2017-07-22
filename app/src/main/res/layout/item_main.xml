@@ -48,10 +48,11 @@
                 android:id="@+id/tv_constellation"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/tv_zodiac"
-                android:layout_centerHorizontal="true"
-                android:layout_margin="10px"
-                android:text="星座"/>
+                android:text="星座"
+                android:layout_alignBaseline="@+id/tv_new_birthday"
+                android:layout_alignBottom="@+id/tv_new_birthday"
+                android:layout_alignLeft="@+id/tv_zodiac"
+                android:layout_alignStart="@+id/tv_zodiac"/>
 
             <TextView
                 android:id="@+id/tv_count_time"
@@ -61,26 +62,39 @@
                 android:layout_margin="10px"
                 android:text="距离生日还有:"/>
 
-            <TextView
-                android:id="@+id/tv_num"
-                android:layout_width="wrap_content"
+            <FrameLayout
+                android:layout_width="230px"
                 android:layout_height="wrap_content"
-                android:layout_alignLeft="@+id/tv_count_time"
+                android:layout_alignParentRight="true"
                 android:layout_below="@+id/tv_count_time"
-                android:layout_margin="10px"
-                android:paddingLeft="20px"
-                android:textSize="35sp"
-                tools:text="99"/>
+                android:layout_marginRight="30px"
+                >
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="100px"
-                android:layout_alignBottom="@+id/tv_num"
-                android:layout_toRightOf="@+id/tv_num"
-                android:gravity="center"
-                android:paddingLeft="10px"
-                android:text="天"
-                />
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:orientation="horizontal"
+                    >
+
+                    <TextView
+                        android:id="@+id/tv_num"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="10px"
+                        android:textSize="35sp"
+                        tools:text="99"/>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="100px"
+                        android:gravity="center"
+                        android:text="天"
+                        />
+
+                </LinearLayout>
+
+            </FrameLayout>
 
 
             <TextView

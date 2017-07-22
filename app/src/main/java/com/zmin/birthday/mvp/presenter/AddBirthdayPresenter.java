@@ -94,9 +94,9 @@ public class AddBirthdayPresenter extends BasePresenter<AddBirthdayContract.Mode
         //构造生日个体
         mBirthday = new Birthday(userId
                 , (String) map.get("o_realname")
-                , (String) map.get("o_solar_birthday")
                 , (String) map.get("o_lunar_birthday")
-                , (String) map.get("o_sex")
+                , (String) map.get("o_solar_birthday")
+                , (String) map.get("o_prefer_brith")
                 , (String) map.get("o_sex"));
 
 

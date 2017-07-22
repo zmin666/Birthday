@@ -29,7 +29,18 @@ public class TimeUtil {
         Date d = new Date();
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
         String dateNowStr = sdf.format(d);
-        return String.valueOf(daysBetween(dateNowStr, Calendar.getInstance().get(Calendar.YEAR) + substring));
+        Calendar calendar = Calendar.getInstance();
+        int current = calendar.get(Calendar.YEAR);
+        int time = daysBetween(dateNowStr, current + substring);
+        int day = 0;
+        if (time < 0) {
+            calendar.set(Calendar.YEAR, current + 1);
+            int maxDay = calendar.getActualMaximum(Calendar.DAY_OF_YEAR);
+            day = maxDay + time;
+        } else {
+            day = time;
+        }
+        return String.valueOf(day);
     }
 
 

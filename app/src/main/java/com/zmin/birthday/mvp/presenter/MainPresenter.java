@@ -1,6 +1,7 @@
 package com.zmin.birthday.mvp.presenter;
 
 import android.app.Application;
+import android.os.Handler;
 import android.util.Log;
 
 import com.jess.arms.di.scope.ActivityScope;
@@ -47,6 +48,7 @@ public class MainPresenter extends BasePresenter<MainContract.Model, MainContrac
 
     private List<Birthday> mBirthdays = new ArrayList<>();
     private BirthdayDataAdapter mMAdapter;
+    private long starTime;
 
     @Inject
     public MainPresenter(MainContract.Model model, MainContract.view rootView, RxErrorHandler handler
@@ -75,35 +77,48 @@ public class MainPresenter extends BasePresenter<MainContract.Model, MainContrac
         Map<String, Object> fileMap = FileUtils.getFileMap(3);
         String userId = UserControl.getInstance().getCurrentUser(mActivity).getUserId();
         fileMap.put("o_uid", userId);
+
         mModel.getBirthdayData(fileMap)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Observer<BithdayBeen>() {
                     @Override
                     public void onSubscribe(@NonNull Disposable d) {
-                        if (refresh) {
-                            mBirthdays.clear();
-                        }
+                        starTime = System.currentTimeMillis();
                     }
 
                     @Override
                     public void onNext(@NonNull BithdayBeen bithdayBeen) {
                         if (bithdayBeen.getCode() == 200) {
                             List<BithdayBeen.DataBean> data = bithdayBeen.getData();
-                            mBirthdays.addAll(changeDate(data));
-                            mMAdapter.notifyDataSetChanged();
+                            if (data == null || data.size() == 0) {
+                                return;
+                            } else if (refresh) {
+                                mBirthdays.clear();
+                                mBirthdays.addAll(changeDate(data));
+                            } else {
+                                mBirthdays.addAll(changeDate(data));
+                            }
+                            long t = 1500 - (System.currentTimeMillis() - starTime);
+                            long time = t < 0 ? 0 : t;
+                            new Handler().postDelayed(new Runnable() {
+                                @Override
+                                public void run() {
+                                    mMAdapter.notifyDataSetChanged();
+                                    mRootView.hideLoading();
+                                }
+                            }, time);
+
                         }
-                        mRootView.hideLoading();
                     }
 
                     @Override
                     public void onError(@NonNull Throwable e) {
-
+                        mRootView.hideLoading();
                     }
 
                     @Override
                     public void onComplete() {
-
                     }
                 });
 

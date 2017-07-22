@@ -29,7 +29,8 @@
         </activity>
 
         <!--测试-->
-        <activity android:name=".mvp.ui.activity.LoginRegisterActivity"/>
+        <activity android:name=".mvp.ui.activity.LoginRegisterActivity"
+            android:theme="@style/ImageTranslucentTheme"/>
 
         <activity android:name=".mvp.ui.activity.MainActivity"/>
         <activity android:name=".mvp.ui.activity.AddBirthdayActivity"/>

@@ -1,5 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <!--医栈绿-->
+    <color name="color_green">#0BB375</color>
+
     <color name="color_83D7FB">#83D7FB</color>//我的界面
     <color name="color_C5E9FE">#C5E9FE</color>//工作界面
     <color name="colorPrimary">#3F51B5</color>

@@ -20,6 +20,7 @@ import android.widget.Toast;
 import com.jess.arms.base.BaseActivity;
 import com.jess.arms.di.component.AppComponent;
 import com.zmin.birthday.R;
+import com.zmin.birthday.app.utils.StatusBarCompat;
 import com.zmin.birthday.di.component.DaggerMainComponent;
 import com.zmin.birthday.di.module.MainModule;
 import com.zmin.birthday.mvp.contract.MainContract;
@@ -87,6 +88,10 @@ public class MainActivity extends BaseActivity<MainPresenter> implements MainCon
 
     private void setupView() {
         setSupportActionBar(mToolbar);
+        //沉浸式状态栏  状态栏颜色
+        StatusBarCompat.compat(this, 0xFF0BB375);
+        //刷新空间色彩
+        mSwipeRefreshLayout.setColorSchemeResources(android.R.color.holo_purple, android.R.color.holo_blue_bright, android.R.color.holo_orange_light, android.R.color.holo_red_light);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         mToolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
@@ -110,12 +115,14 @@ public class MainActivity extends BaseActivity<MainPresenter> implements MainCon
     }
 
     private void addListener() {
+
         mSwipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
                 mPresenter.requestBirthdayData(true);
             }
         });
+
     }
 
     @Override
