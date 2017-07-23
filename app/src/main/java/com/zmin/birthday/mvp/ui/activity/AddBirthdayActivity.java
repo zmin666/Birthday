@@ -5,7 +5,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.FrameLayout;
-import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.RadioButton;
 
 import com.jess.arms.base.BaseActivity;
@@ -36,7 +36,7 @@ public class AddBirthdayActivity extends BaseActivity<AddBirthdayPresenter> impl
     @BindView(R.id.rb_male) RadioButton mRbMale;
     @BindView(R.id.rb_lunar) RadioButton mRbLunar;
     @BindView(R.id.et_date) EditText mEtDate;
-    @BindView(R.id.image_select_date) ImageButton mImageSelectDate;
+    @BindView(R.id.image_select_date) ImageView mImageSelectDate;
     @BindView(R.id.rb_remine_0) RadioButton mRbRemine0;
     @BindView(R.id.rb_remine_1) RadioButton mRbRemine1;
     @BindView(R.id.rb_remine_3) RadioButton mRbRemine3;
