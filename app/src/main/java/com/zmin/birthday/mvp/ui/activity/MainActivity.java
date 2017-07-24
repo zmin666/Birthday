@@ -117,6 +117,7 @@ public class MainActivity extends BaseActivity<MainPresenter> implements MainCon
             }
         });
         mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
+
     }
 
     private void addListener() {
@@ -216,10 +217,6 @@ public class MainActivity extends BaseActivity<MainPresenter> implements MainCon
                             case R.id.user_data:
                                 Intent intent = new Intent(MainActivity.this,UserCenterActivity.class);
                                 launchActivity(intent);
-                                break;
-                            case R.id.num_find:
-                                break;
-                            case R.id.remind:
                                 break;
                             case R.id.update:
                                 break;

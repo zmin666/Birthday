@@ -5,14 +5,6 @@
         android:icon="@mipmap/ic_launcher"
         android:title="个人资料"/>
     <item
-        android:id="@+id/num_find"
-        android:icon="@mipmap/ic_launcher"
-        android:title="号码匹配"/>
-    <item
-        android:id="@+id/remind"
-        android:icon="@mipmap/ic_launcher"
-        android:title="提醒设置"/>
-    <item
         android:id="@+id/update"
         android:icon="@mipmap/ic_launcher"
         android:title="检查更新"/>

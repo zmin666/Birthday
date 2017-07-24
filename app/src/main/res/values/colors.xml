@@ -2,6 +2,10 @@
 <resources>
     <!--医栈绿-->
     <color name="color_green">#0BB375</color>
+    <!--医栈浅绿绿-->
+    <color name="color_greens">#ff0BB375</color>
+    <!--白色-->
+    <color name="color_white">#ffffff</color>
 
     <color name="color_83D7FB">#83D7FB</color>//我的界面
     <color name="color_C5E9FE">#C5E9FE</color>//工作界面
