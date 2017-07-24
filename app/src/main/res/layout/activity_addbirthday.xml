@@ -79,7 +79,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="男   "
+                    android:text="男    "
                     android:textSize="16sp"/>
 
                 <RadioButton
@@ -159,7 +159,7 @@
 
             <EditText
                 android:id="@+id/et_date"
-                android:layout_width="600px"
+                android:layout_width="380px"
                 android:layout_height="wrap_content"
                 android:hint="请选择日期"
                 android:textSize="16sp"/>
@@ -172,6 +172,17 @@
                 android:layout_marginLeft="20px"
                 android:scaleType="fitXY"
                 android:src="@drawable/calenda"/>
+
+            <RadioButton
+                android:id="@+id/rb_ignore_year"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="忽略年份"
+                android:textSize="16sp"/>
 
         </LinearLayout>
 
