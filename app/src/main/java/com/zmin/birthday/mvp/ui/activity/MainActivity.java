@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.design.widget.FloatingActionButton;
+import android.support.design.widget.NavigationView;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
@@ -14,6 +15,7 @@ import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.KeyEvent;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Toast;
 
@@ -52,6 +54,9 @@ public class MainActivity extends BaseActivity<MainPresenter> implements MainCon
     CollapsingToolbarLayout mCollapsingToolbarLayout;
     @BindView(R.id.drawerLayout)
     DrawerLayout mDrawerLayout;
+    @Nullable
+    @BindView(R.id.navigation)
+    NavigationView mNavigationView;
 
     @OnClick(R.id.fab)
     public void onViewClicked() {
@@ -104,7 +109,7 @@ public class MainActivity extends BaseActivity<MainPresenter> implements MainCon
         //通过CollapsingToolbarLayout修改字体颜色
         mCollapsingToolbarLayout.setExpandedTitleColor(Color.WHITE);//设置还没收缩时状态下字体颜色
         mCollapsingToolbarLayout.setCollapsedTitleTextColor(Color.WHITE);//设置收缩后Toolbar上字体的颜色
-        mToolbar.setNavigationIcon(R.mipmap.ic_launcher);
+        mToolbar.setNavigationIcon(R.drawable.ic_menu);
         mToolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -122,7 +127,7 @@ public class MainActivity extends BaseActivity<MainPresenter> implements MainCon
                 mPresenter.requestBirthdayData(true);
             }
         });
-
+        setupDrawerContent(mNavigationView);
     }
 
     @Override
@@ -195,5 +200,43 @@ public class MainActivity extends BaseActivity<MainPresenter> implements MainCon
                 mPresenter.addItemData(newBirthday);
             }
         }
+    }
+
+    /**
+     * 点击了侧边栏
+     *
+     * @param navigationView
+     */
+    private void setupDrawerContent(NavigationView navigationView) {
+        navigationView.setNavigationItemSelectedListener(
+                new NavigationView.OnNavigationItemSelectedListener() {
+                    @Override
+                    public boolean onNavigationItemSelected(MenuItem menuItem) {
+                        switch (menuItem.getItemId()) {
+                            case R.id.user_data:
+                                Intent intent = new Intent(MainActivity.this,UserCenterActivity.class);
+                                launchActivity(intent);
+                                break;
+                            case R.id.num_find:
+                                break;
+                            case R.id.remind:
+                                break;
+                            case R.id.update:
+                                break;
+                            case R.id.advise:
+                                break;
+                            case R.id.donate:
+                                break;
+                            case R.id.about_us:
+                                break;
+                            default:
+                                break;
+
+                        }
+                        // 关闭侧滑菜单
+                        mDrawerLayout.closeDrawers();
+                        return true;
+                    }
+                });
     }
 }
