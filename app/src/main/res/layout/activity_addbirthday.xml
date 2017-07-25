@@ -286,8 +286,8 @@
                 <CheckBox
                     android:id="@+id/cb_ignore_remine"
                     android:layout_width="wrap_content"
-                    android:checked="true"
-                    android:layout_height="wrap_content"/>
+                    android:layout_height="wrap_content"
+                    android:checked="true"/>
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -300,13 +300,45 @@
 
         </LinearLayout>
 
-        <Button
-            android:id="@+id/bt_add"
-            android:layout_width="700px"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
-            android:background="@color/color_green"
-            android:text="确认添加"/>
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <Button
+                android:id="@+id/bt_add"
+                android:layout_width="700px"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:background="@color/color_green"
+                android:text="确认添加"
+                android:visibility="gone"/>
+
+
+            <FrameLayout
+                android:id="@+id/fl_botton"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:visibility="visible">
+
+                <Button
+                    android:layout_width="500px"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="left"
+                    android:layout_marginLeft="40px"
+                    android:text="取消"/>
+
+                <Button
+                    android:layout_width="500px"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="right"
+                    android:layout_marginRight="40px"
+                    android:text="保存修改"/>
+
+            </FrameLayout>
+
+
+        </FrameLayout>
+
 
     </LinearLayout>
 

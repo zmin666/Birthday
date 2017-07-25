@@ -27,19 +27,28 @@ public class BirthdayDataAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
     private static final int TYPE_DATA = 0;
     private static final int TYPE_NULL = 1;
 
+    public interface OnItemClickListener {
+        void onItemClick(View view, int position, Birthday birthday);
+    }
 
     List<Birthday> mBirthdayList;
     Context mContext;
+    OnItemClickListener mOnItemClickListener;
 
     public BirthdayDataAdapter(List<Birthday> birthdayList, Context context) {
         mBirthdayList = birthdayList;
         mContext = context;
     }
 
+    public void setOnItemClickListener(OnItemClickListener onItemClickListener) {
+        mOnItemClickListener = onItemClickListener;
+    }
+
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         if (viewType == TYPE_DATA) {
             View view = LayoutInflater.from(mContext).inflate(R.layout.item_main, parent, false);
+
             return new BirthdayHolder(view);
         } else if (viewType == TYPE_NULL) {
             View view = LayoutInflater.from(mContext).inflate(R.layout.item_main_null, parent, false);
@@ -80,9 +89,18 @@ public class BirthdayDataAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
             String[] split = birth.split("-");
             birthdayHolder.tv_zodiac.setText(TimeUtil.getZodiac(Integer.parseInt(split[0])));
             birthdayHolder.tv_constellation.setText(TimeUtil.getConstellation(Integer.parseInt(split[1]), Integer.parseInt(split[2])));
+
+            holder.itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    mOnItemClickListener.onItemClick(v,position,birthday);
+                }
+            });
         } else if (holder instanceof BirthdayNullHolder) {
 
         }
+
+
     }
 
 

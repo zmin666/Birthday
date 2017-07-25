@@ -121,7 +121,6 @@ public class MainActivity extends BaseActivity<MainPresenter> implements MainCon
     }
 
     private void addListener() {
-
         mSwipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
@@ -133,6 +132,17 @@ public class MainActivity extends BaseActivity<MainPresenter> implements MainCon
 
     @Override
     public void setAdapter(BirthdayDataAdapter adapter) {
+        adapter.setOnItemClickListener(new BirthdayDataAdapter.OnItemClickListener() {
+            @Override
+            public void onItemClick(View view, int position, Birthday birthday) {
+                Bundle bundle = new Bundle();
+                bundle.putParcelable("birth", birthday);
+                bundle.putInt("position", position);
+                Intent intent = new Intent(MainActivity.this, AddBirthdayActivity.class);
+                intent.putExtras(bundle);
+                launchActivity(intent);
+            }
+        });
         mRecyclerView.setAdapter(adapter);
     }
 
@@ -215,7 +225,7 @@ public class MainActivity extends BaseActivity<MainPresenter> implements MainCon
                     public boolean onNavigationItemSelected(MenuItem menuItem) {
                         switch (menuItem.getItemId()) {
                             case R.id.user_data:
-                                Intent intent = new Intent(MainActivity.this,UserCenterActivity.class);
+                                Intent intent = new Intent(MainActivity.this, UserCenterActivity.class);
                                 launchActivity(intent);
                                 break;
                             case R.id.update:

@@ -2,6 +2,7 @@ package com.zmin.birthday.mvp.contract;
 
 import com.jess.arms.mvp.IModel;
 import com.jess.arms.mvp.IView;
+import com.zmin.birthday.mvp.model.entity.Birthday;
 import com.zmin.birthday.mvp.model.entity.ResponseBeen;
 
 import java.util.HashMap;
@@ -21,6 +22,11 @@ public interface AddBirthdayContract {
         void selectDate();
 
         void setDate(String date);
+
+        /**
+         * 编辑展示生日信息
+         */
+        void showDate(Birthday birthday);
     }
 
     interface Model extends IModel {

@@ -3,6 +3,7 @@ package com.zmin.birthday.mvp.ui.activity;
 import android.content.Intent;
 import android.util.Log;
 import android.view.View;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
@@ -15,12 +16,15 @@ import com.zmin.birthday.app.utils.LunarCalendar;
 import com.zmin.birthday.di.component.DaggerAddBirthdayComponent;
 import com.zmin.birthday.di.module.AddBirthdayModule;
 import com.zmin.birthday.mvp.contract.AddBirthdayContract;
+import com.zmin.birthday.mvp.model.entity.Birthday;
 import com.zmin.birthday.mvp.presenter.AddBirthdayPresenter;
 
 import java.util.HashMap;
 
 import butterknife.BindView;
 import butterknife.OnClick;
+
+import static com.zmin.birthday.R.id.rb_male;
 
 /**
  * @author: ZhangMin
@@ -33,7 +37,7 @@ public class AddBirthdayActivity extends BaseActivity<AddBirthdayPresenter> impl
     @BindView(R.id.name) EditText mName;
     @BindView(R.id.rb_sex_man) RadioButton mRbSexMan;
     @BindView(R.id.rb_sex_woman) RadioButton mRbSexWoman;
-    @BindView(R.id.rb_male) RadioButton mRbMale;
+    @BindView(rb_male) RadioButton mRbMale;
     @BindView(R.id.rb_lunar) RadioButton mRbLunar;
     @BindView(R.id.et_date) EditText mEtDate;
     @BindView(R.id.image_select_date) ImageView mImageSelectDate;
@@ -43,6 +47,8 @@ public class AddBirthdayActivity extends BaseActivity<AddBirthdayPresenter> impl
     @BindView(R.id.rb_note) RadioButton mRbNote;
     @BindView(R.id.rb_inform) RadioButton mRbInform;
     @BindView(R.id.fl_loading) FrameLayout mFlloading;
+    @BindView(R.id.fl_botton) FrameLayout mflBotton;
+    @BindView(R.id.bt_add) Button mBtadd;
 
     @OnClick(R.id.bt_add)
     public void onViewAddClicked() {
@@ -73,7 +79,14 @@ public class AddBirthdayActivity extends BaseActivity<AddBirthdayPresenter> impl
 
     @Override
     public void initData() {
-
+        Birthday birthday = getIntent().getExtras().getParcelable("birthday");
+        if (birthday != null) {
+            mflBotton.setVisibility(View.VISIBLE);
+            mBtadd.setVisibility(View.GONE);
+        } else {
+            mBtadd.setVisibility(View.VISIBLE);
+            mflBotton.setVisibility(View.GONE);
+        }
     }
 
     @Override
@@ -106,7 +119,7 @@ public class AddBirthdayActivity extends BaseActivity<AddBirthdayPresenter> impl
             LunarCalendar.Lunar lunar = LunarCalendar.SolarToLunar(new LunarCalendar.Solar(day, month, year));
             map.put("o_lunar_birthday", lunar.lunarYear + "-" + lunar.lunarMonth + "-" + lunar.lunarDay);
         }
-        Log.i("zmin.添加的生日.....","...." +  map);
+        Log.i("zmin.添加的生日.....", "...." + map);
         return map;
     }
 
@@ -118,6 +131,29 @@ public class AddBirthdayActivity extends BaseActivity<AddBirthdayPresenter> impl
     @Override
     public void setDate(String date) {
         mEtDate.setText(date);
+    }
+
+    @Override
+    public void showDate(Birthday birthday) {
+        mName.setText(birthday.getName());
+        String sex = birthday.getSex();
+        if (sex.equals("1")) {
+            mRbSexMan.setChecked(true);
+            mRbSexWoman.setChecked(false);
+        } else {
+            mRbSexWoman.setChecked(true);
+            mRbSexMan.setChecked(false);
+        }
+        String perfer = birthday.getPerfer();
+        if (perfer.equals("1")) {
+            mRbMale.setChecked(true);
+            mRbLunar.setChecked(false);
+            mEtDate.setText(birthday.getOld_birth());
+        } else {
+            mRbLunar.setChecked(true);
+            mRbMale.setChecked(false);
+            mEtDate.setText(birthday.getBirth());
+        }
     }
 
     @Override
