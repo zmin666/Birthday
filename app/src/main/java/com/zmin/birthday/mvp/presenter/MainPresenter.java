@@ -212,4 +212,17 @@ public class MainPresenter extends BasePresenter<MainContract.Model, MainContrac
         mBirthdays.add(newBirthday);
         mMAdapter.notifyDataSetChanged();
     }
+
+
+    /**
+     * 更新条目
+     *
+     * @param position
+     * @param birthday
+     */
+    public void updateItemData(int position, Birthday birthday) {
+        mBirthdays.remove(position);
+        mBirthdays.add(position, birthday);
+        mMAdapter.notifyItemChanged(position);
+    }
 }

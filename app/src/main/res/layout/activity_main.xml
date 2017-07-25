@@ -9,13 +9,5 @@
     <!--主布局-->
     <include layout="@layout/activity_main_coor"/>
     <!--侧滑菜单-->
-    <android.support.design.widget.NavigationView
-        android:id="@+id/navigation"
-        android:layout_width="wrap_content"
-        android:layout_height="match_parent"
-        android:layout_gravity="left"
-        android:background="#ddd"
-        app:headerLayout="@layout/navigationview_header"
-        app:menu="@menu/navigationview_menu"/>
-
+    <include layout="@layout/activity_main_navigation"/>
 </android.support.v4.widget.DrawerLayout>

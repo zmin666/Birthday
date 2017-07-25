@@ -1,13 +1,19 @@
 package com.zmin.birthday.mvp.ui.activity;
 
 import android.content.Intent;
+import android.os.Handler;
+import android.os.Message;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.RadioButton;
+import android.widget.Toast;
 
 import com.jess.arms.base.BaseActivity;
 import com.jess.arms.di.component.AppComponent;
@@ -23,6 +29,7 @@ import java.util.HashMap;
 
 import butterknife.BindView;
 import butterknife.OnClick;
+import butterknife.OnTextChanged;
 
 import static com.zmin.birthday.R.id.rb_male;
 
@@ -47,18 +54,83 @@ public class AddBirthdayActivity extends BaseActivity<AddBirthdayPresenter> impl
     @BindView(R.id.rb_note) RadioButton mRbNote;
     @BindView(R.id.rb_inform) RadioButton mRbInform;
     @BindView(R.id.fl_loading) FrameLayout mFlloading;
-    @BindView(R.id.fl_botton) FrameLayout mflBotton;
+    @BindView(R.id.ll_botton) LinearLayout mLlBotton;
     @BindView(R.id.bt_add) Button mBtadd;
+    @BindView(R.id.cb_ignore_year) CheckBox mCbignoreyear;
+    /** 通过日历获取的日期 只有两种格式 y-m-d  或者 m-d */
+    private String mDate;
+    /** 点击的位置 */
+    private int mClickPosition;
+    /** 点击item跳转过来 */
+    private Birthday mBirthday;
+
+    private Handler mHandler = new Handler() {
+        @Override
+        public void handleMessage(Message msg) {
+            super.handleMessage(msg);
+            onIgnoreYear();
+        }
+    };
 
     @OnClick(R.id.bt_add)
     public void onViewAddClicked() {
         showLoading();
-        mPresenter.uploadeData();
+        mPresenter.uploadeData("1", -1);
+    }
+
+    @OnClick(R.id.bt_delete)
+    public void onDelete() {
+        showLoading();
+        mPresenter.setBirthday(mBirthday);
+        mPresenter.uploadeData("4", mClickPosition);
+    }
+
+    @OnClick(R.id.bt_update)
+    public void onSave() {
+        showLoading();
+        mPresenter.setBirthday(mBirthday);
+        mPresenter.uploadeData("1", mClickPosition);
     }
 
     @OnClick(R.id.image_select_date)
     public void onViewClicked() {
         selectDate();
+    }
+
+    @OnTextChanged(value = R.id.et_date, callback = OnTextChanged.Callback.AFTER_TEXT_CHANGED)
+    public void onEtChange() {
+        mHandler.removeCallbacksAndMessages(this);
+        mHandler.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                mHandler.sendEmptyMessage(1);
+            }
+        }, 2000);
+    }
+
+
+    @OnClick(R.id.cb_ignore_year)
+    public void onIgnoreYear() {
+        String s = mEtDate.getText().toString().trim();
+        String[] split = s.split("-");
+        if (split.length == 2) {
+            String[] dateSplit = mDate.split("-");
+            mDate = dateSplit[0] + "-" + s;
+        } else if (split.length == 3) {
+            mDate = s;
+        } else {
+            Toast.makeText(this, "日期不符合规范\n请参照 1991-10-24 或者 10-24 格式来写", Toast.LENGTH_SHORT).show();
+            return;
+        }
+        if (mCbignoreyear.isChecked()) {
+            if (!TextUtils.isEmpty(s)) {
+                if (split.length == 3 && split[0].length() == 4) {
+                    mEtDate.setText(split[1] + "-" + split[2]);
+                }
+            }
+        } else {
+            mEtDate.setText(mDate);
+        }
     }
 
 
@@ -79,13 +151,15 @@ public class AddBirthdayActivity extends BaseActivity<AddBirthdayPresenter> impl
 
     @Override
     public void initData() {
-        Birthday birthday = getIntent().getExtras().getParcelable("birthday");
-        if (birthday != null) {
-            mflBotton.setVisibility(View.VISIBLE);
+        mBirthday = getIntent().getExtras().getParcelable("birthday");
+        if (mBirthday != null) {
+            mClickPosition = getIntent().getExtras().getInt("position");
+            mLlBotton.setVisibility(View.VISIBLE);
             mBtadd.setVisibility(View.GONE);
+            showDate(mBirthday);
         } else {
             mBtadd.setVisibility(View.VISIBLE);
-            mflBotton.setVisibility(View.GONE);
+            mLlBotton.setVisibility(View.GONE);
         }
     }
 
@@ -130,6 +204,7 @@ public class AddBirthdayActivity extends BaseActivity<AddBirthdayPresenter> impl
 
     @Override
     public void setDate(String date) {
+        this.mDate = date;
         mEtDate.setText(date);
     }
 

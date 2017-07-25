@@ -1,0 +1,162 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              xmlns:app="http://schemas.android.com/apk/res-auto"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:id="@+id/ll_main_left"
+              android:layout_gravity="start"
+              android:background="@color/color_white"
+              android:clickable="true"
+              android:orientation="vertical">
+    <!--头部-->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="200dp"
+        android:orientation="vertical"
+        >
+
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:id="@+id/cv_head"
+            android:layout_width="200px"
+            android:layout_height="200px"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="200px"
+            android:padding="2px"
+            android:scaleType="centerCrop"
+            android:src="@mipmap/ic_launcher"
+            app:civ_border_color="#66000000"
+            app:civ_border_width="1px"/>
+
+        <TextView
+            android:id="@+id/tv_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:text="张无忌"
+            android:textSize="15sp"/>
+
+        <TextView
+            android:id="@+id/tv_member"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:text="普通会员"
+            android:textSize="10sp"/>
+    </LinearLayout>
+
+    <!--中部-->
+    <LinearLayout
+        android:id="@+id/user_data"
+        android:layout_width="match_parent"
+        android:layout_height="120px"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:paddingLeft="40px">
+
+        <ImageView
+            android:layout_width="100px"
+            android:layout_height="100px"
+            android:src="@mipmap/ic_launcher"/>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingLeft="50px"
+            android:text="个人资料"/>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/update"
+        android:layout_width="match_parent"
+        android:layout_height="120px"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:paddingLeft="40px">
+
+        <ImageView
+            android:layout_width="100px"
+            android:layout_height="100px"
+            android:src="@mipmap/ic_launcher"/>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingLeft="50px"
+            android:text="检查更新"/>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/advise"
+        android:layout_width="match_parent"
+        android:layout_height="120px"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:paddingLeft="40px">
+
+        <ImageView
+            android:layout_width="100px"
+            android:layout_height="100px"
+            android:src="@mipmap/ic_launcher"/>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingLeft="50px"
+            android:text="意见建议"/>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/donate"
+        android:layout_width="match_parent"
+        android:layout_height="120px"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:paddingLeft="40px">
+
+        <ImageView
+            android:layout_width="100px"
+            android:layout_height="100px"
+            android:src="@mipmap/ic_launcher"/>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingLeft="50px"
+            android:text="捐赠我们"/>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/about_us"
+        android:layout_width="match_parent"
+        android:layout_height="120px"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:paddingLeft="40px">
+
+        <ImageView
+            android:layout_width="100px"
+            android:layout_height="100px"
+            android:src="@mipmap/ic_launcher"/>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingLeft="50px"
+            android:text="关于我们"/>
+
+    </LinearLayout>
+
+    <!--未部-->
+    <Button
+        android:id="@+id/bt_Contacts"
+        android:layout_width="500px"
+        android:layout_height="100px"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="360px"
+        android:background="@color/color_90596fbf"
+        android:text="匹配联系人生日"/>
+</LinearLayout>

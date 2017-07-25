@@ -6,7 +6,6 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.NavigationView;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
@@ -15,8 +14,8 @@ import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.KeyEvent;
-import android.view.MenuItem;
 import android.view.View;
+import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import com.jess.arms.base.BaseActivity;
@@ -54,9 +53,37 @@ public class MainActivity extends BaseActivity<MainPresenter> implements MainCon
     CollapsingToolbarLayout mCollapsingToolbarLayout;
     @BindView(R.id.drawerLayout)
     DrawerLayout mDrawerLayout;
-    @Nullable
-    @BindView(R.id.navigation)
-    NavigationView mNavigationView;
+    @BindView(R.id.ll_main_left)
+    LinearLayout mLlmainleft;
+
+    @OnClick({R.id.user_data, R.id.update, R.id.advise, R.id.donate, R.id.about_us, R.id.bt_Contacts, R.id.cv_head, R.id.tv_name, R.id.tv_member})
+    public void click(View view) {
+        switch (view.getId()) {
+            case R.id.user_data:
+            case R.id.cv_head:
+            case R.id.tv_name:
+            case R.id.tv_member:
+                Intent intent = new Intent(MainActivity.this, UserCenterActivity.class);
+                launchActivity(intent);
+                break;
+            case R.id.update:
+                break;
+            case R.id.advise:
+                break;
+            case R.id.donate:
+                break;
+            case R.id.about_us:
+                break;
+            case R.id.bt_Contacts:
+                Toast.makeText(this, "如果通讯录中有人也注册了这软件\n那么能直接获取这个人的生日信息.", Toast.LENGTH_SHORT).show();
+                break;
+            default:
+                break;
+        }
+        // 关闭侧滑菜单
+        mDrawerLayout.closeDrawers();
+    }
+
 
     @OnClick(R.id.fab)
     public void onViewClicked() {
@@ -127,7 +154,6 @@ public class MainActivity extends BaseActivity<MainPresenter> implements MainCon
                 mPresenter.requestBirthdayData(true);
             }
         });
-        setupDrawerContent(mNavigationView);
     }
 
     @Override
@@ -136,7 +162,7 @@ public class MainActivity extends BaseActivity<MainPresenter> implements MainCon
             @Override
             public void onItemClick(View view, int position, Birthday birthday) {
                 Bundle bundle = new Bundle();
-                bundle.putParcelable("birth", birthday);
+                bundle.putParcelable("birthday", birthday);
                 bundle.putInt("position", position);
                 Intent intent = new Intent(MainActivity.this, AddBirthdayActivity.class);
                 intent.putExtras(bundle);
@@ -149,6 +175,11 @@ public class MainActivity extends BaseActivity<MainPresenter> implements MainCon
     @Override
     public void deleteItem(int position) {
         mPresenter.deleteItemData(position);
+    }
+
+    @Override
+    public void updateItem(int position, Birthday birthday) {
+        mPresenter.updateItemData(position, birthday);
     }
 
     @Override
@@ -205,45 +236,32 @@ public class MainActivity extends BaseActivity<MainPresenter> implements MainCon
         if (requestCode == REQUEST_DATE) {
             //获取新的生日
             Bundle bundle = data.getExtras();
+            int action = bundle.getInt("action");
             Birthday newBirthday = bundle.getParcelable("NewBirthday");
-            if (newBirthday != null) {
-                Log.i("zmin.......新加的生日......", "...." + newBirthday.toString());
-                mPresenter.addItemData(newBirthday);
+            switch (action) {
+                case 1:
+                    if (newBirthday != null) {
+                        mPresenter.addItemData(newBirthday);
+                        Log.i("zmin.............", "...新增.");
+                    }
+                    break;
+                case 2:
+                    if (newBirthday != null) {
+                        int mPosition = bundle.getInt("position");
+                        updateItem(mPosition, newBirthday);
+                        Log.i("zmin.............", "...更新." + mPosition);
+                    }
+                    break;
+                case 3:
+                    int position = bundle.getInt("position");
+                    deleteItem(position);
+                    Log.i("zmin.............", "...删除." + position);
+                    break;
+                default:
+                    break;
             }
+
         }
     }
 
-    /**
-     * 点击了侧边栏
-     *
-     * @param navigationView
-     */
-    private void setupDrawerContent(NavigationView navigationView) {
-        navigationView.setNavigationItemSelectedListener(
-                new NavigationView.OnNavigationItemSelectedListener() {
-                    @Override
-                    public boolean onNavigationItemSelected(MenuItem menuItem) {
-                        switch (menuItem.getItemId()) {
-                            case R.id.user_data:
-                                Intent intent = new Intent(MainActivity.this, UserCenterActivity.class);
-                                launchActivity(intent);
-                                break;
-                            case R.id.update:
-                                break;
-                            case R.id.advise:
-                                break;
-                            case R.id.donate:
-                                break;
-                            case R.id.about_us:
-                                break;
-                            default:
-                                break;
-
-                        }
-                        // 关闭侧滑菜单
-                        mDrawerLayout.closeDrawers();
-                        return true;
-                    }
-                });
-    }
 }

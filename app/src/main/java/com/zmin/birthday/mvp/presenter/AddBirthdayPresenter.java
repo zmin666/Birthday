@@ -44,6 +44,10 @@ public class AddBirthdayPresenter extends BasePresenter<AddBirthdayContract.Mode
     private final AddBirthdayActivity mActivity;
     private Birthday mBirthday;
 
+    public void setBirthday(Birthday birthday) {
+        mBirthday = birthday;
+    }
+
     @Inject
     public AddBirthdayPresenter(AddBirthdayContract.Model model, AddBirthdayContract.view rootView, RxErrorHandler handler
             , AppManager appManager, Application application) {
@@ -77,14 +81,22 @@ public class AddBirthdayPresenter extends BasePresenter<AddBirthdayContract.Mode
         }, year, month, day).show();
     }
 
-    public void uploadeData() {
+    /**
+     * 更新信息
+     *
+     * @param act      操作
+     * @param position 点击的位置.
+     */
+    public void uploadeData(String act, int position) {
         HashMap<String, Object> map = new HashMap<>();
         String userId = UserControl.getInstance().getCurrentUser(mActivity).getUserId();
         long time = System.currentTimeMillis();
         map.put("time", time);
-        map.put("act", 1);
-        map.put("md5", MD5Utils.getMd5(time + "1"));
+        map.put("act", act);
+        map.put("md5", MD5Utils.getMd5(time + act));
         map.put("o_uid", userId);
+        //删除用户时候传入ssid
+        map.put("del_id", mBirthday.getId());
         map.putAll(mRootView.getBirth());
         //构造生日个体
         mBirthday = new Birthday(userId
@@ -111,7 +123,16 @@ public class AddBirthdayPresenter extends BasePresenter<AddBirthdayContract.Mode
                         if (responseBeen.getCode() == 200) {
                             Intent data = new Intent();
                             Bundle bundle = new Bundle();
-                            bundle.putParcelable("NewBirthday", mBirthday);
+                            if ("1".equals(act) && position == -1) {  //新增
+                                bundle.putInt("action", 1);
+                                bundle.putParcelable("NewBirthday", mBirthday);
+                            } else if ("1".equals(act) && position != -1) { //修改更新
+                                bundle.putInt("action", 2);
+                                bundle.putInt("position", position);
+                            } else if ("4".equals(act)) { //删除
+                                bundle.putInt("action", 3);
+                                bundle.putInt("position", position);
+                            }
                             data.putExtras(bundle);
                             mActivity.setResult(Activity.RESULT_OK, data);
                             mRootView.killMyself();
