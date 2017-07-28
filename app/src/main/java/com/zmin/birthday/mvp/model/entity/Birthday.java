@@ -17,7 +17,7 @@ import org.greenrobot.greendao.annotation.Generated;
 @Entity
 public class Birthday implements Parcelable {
     @Id
-    private String id;
+    private String id = "";
     @Property(nameInDb = "NAME")
     private String name;
     //农历生日

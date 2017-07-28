@@ -61,6 +61,7 @@ public class AddBirthdayPresenter extends BasePresenter<AddBirthdayContract.Mode
     @Override
     public void onDestroy() {
         super.onDestroy();
+
     }
 
 
@@ -96,7 +97,6 @@ public class AddBirthdayPresenter extends BasePresenter<AddBirthdayContract.Mode
         map.put("md5", MD5Utils.getMd5(time + act));
         map.put("o_uid", userId);
         //删除用户时候传入ssid
-        map.put("del_id", mBirthday.getId());
         map.putAll(mRootView.getBirth());
         //构造生日个体
         mBirthday = new Birthday(userId
@@ -105,6 +105,19 @@ public class AddBirthdayPresenter extends BasePresenter<AddBirthdayContract.Mode
                 , (String) map.get("o_solar_birthday")
                 , (String) map.get("o_prefer_brith")
                 , (String) map.get("o_sex"));
+
+        switch (act) {
+            case "2": //完善用户资料 --共享信息
+                map.put("share_data",2);
+            case "4": //删除
+                map.put("del_id", mBirthday.getId());
+                break;
+            case "5": //修改
+                map.put("edit_id", mBirthday.getId());
+                break;
+            default:
+                break;
+        }
 
 
         mModel.postBirthdayData(map)

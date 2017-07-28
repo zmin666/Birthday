@@ -99,17 +99,16 @@ public class MainPresenter extends BasePresenter<MainContract.Model, MainContrac
                             } else {
                                 mBirthdays.addAll(changeDate(data));
                             }
-                            long t = 1500 - (System.currentTimeMillis() - starTime);
-                            long time = t < 0 ? 0 : t;
-                            new Handler().postDelayed(new Runnable() {
-                                @Override
-                                public void run() {
-                                    mMAdapter.notifyDataSetChanged();
-                                    mRootView.hideLoading();
-                                }
-                            }, time);
-
                         }
+                        long t = 1500 - (System.currentTimeMillis() - starTime);
+                        long time = t < 0 ? 0 : t;
+                        new Handler().postDelayed(new Runnable() {
+                            @Override
+                            public void run() {
+                                mMAdapter.notifyDataSetChanged();
+                                mRootView.hideLoading();
+                            }
+                        }, time);
                     }
 
                     @Override

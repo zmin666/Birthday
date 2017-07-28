@@ -1,8 +1,6 @@
 package com.zmin.birthday.mvp.ui.activity;
 
 import android.content.Intent;
-import android.os.Handler;
-import android.os.Message;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
@@ -29,7 +27,6 @@ import java.util.HashMap;
 
 import butterknife.BindView;
 import butterknife.OnClick;
-import butterknife.OnTextChanged;
 
 import static com.zmin.birthday.R.id.rb_male;
 
@@ -64,18 +61,13 @@ public class AddBirthdayActivity extends BaseActivity<AddBirthdayPresenter> impl
     /** 点击item跳转过来 */
     private Birthday mBirthday;
 
-    private Handler mHandler = new Handler() {
-        @Override
-        public void handleMessage(Message msg) {
-            super.handleMessage(msg);
-            onIgnoreYear();
-        }
-    };
 
     @OnClick(R.id.bt_add)
     public void onViewAddClicked() {
-        showLoading();
-        mPresenter.uploadeData("1", -1);
+        if (checkDate()) {
+            showLoading();
+            mPresenter.uploadeData("1", -1);
+        }
     }
 
     @OnClick(R.id.bt_delete)
@@ -87,27 +79,17 @@ public class AddBirthdayActivity extends BaseActivity<AddBirthdayPresenter> impl
 
     @OnClick(R.id.bt_update)
     public void onSave() {
-        showLoading();
-        mPresenter.setBirthday(mBirthday);
-        mPresenter.uploadeData("1", mClickPosition);
+        if (checkDate()) {
+            showLoading();
+            mPresenter.setBirthday(mBirthday);
+            mPresenter.uploadeData("5", mClickPosition);
+        }
     }
 
     @OnClick(R.id.image_select_date)
     public void onViewClicked() {
         selectDate();
     }
-
-    @OnTextChanged(value = R.id.et_date, callback = OnTextChanged.Callback.AFTER_TEXT_CHANGED)
-    public void onEtChange() {
-        mHandler.removeCallbacksAndMessages(this);
-        mHandler.postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                mHandler.sendEmptyMessage(1);
-            }
-        }, 2000);
-    }
-
 
     @OnClick(R.id.cb_ignore_year)
     public void onIgnoreYear() {
@@ -119,7 +101,7 @@ public class AddBirthdayActivity extends BaseActivity<AddBirthdayPresenter> impl
         } else if (split.length == 3) {
             mDate = s;
         } else {
-            Toast.makeText(this, "日期不符合规范\n请参照 1991-10-24 或者 10-24 格式来写", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "日期不符合规范 可以点击日历图标选择日期\n请参照 1991-10-24 或者 10-24 格式来写", Toast.LENGTH_SHORT).show();
             return;
         }
         if (mCbignoreyear.isChecked()) {
@@ -161,6 +143,15 @@ public class AddBirthdayActivity extends BaseActivity<AddBirthdayPresenter> impl
             mBtadd.setVisibility(View.VISIBLE);
             mLlBotton.setVisibility(View.GONE);
         }
+
+        mEtDate.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View v, boolean hasFocus) {
+                if (!hasFocus) {
+                    onIgnoreYear();
+                }
+            }
+        });
     }
 
     @Override
@@ -254,6 +245,22 @@ public class AddBirthdayActivity extends BaseActivity<AddBirthdayPresenter> impl
     @Override
     public void killMyself() {
         finish();
+    }
+
+    /**
+     * 检查时间格式
+     *
+     * @return
+     */
+    private boolean checkDate() {
+        String s = mEtDate.getText().toString().trim();
+        String[] split = s.split("-");
+        if (split.length == 2 || split.length == 3) {
+            return true;
+        } else {
+            Toast.makeText(this, "日期不符合规范 可以点击日历图标选择日期\n请参照 1991-10-24 或者 10-24 格式来写", Toast.LENGTH_SHORT).show();
+            return false;
+        }
     }
 
 }

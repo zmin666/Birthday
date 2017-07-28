@@ -46,6 +46,8 @@ import timber.log.Timber;
  */
 public class GlobalConfiguration implements ConfigModule {
     @Override
+
+
     public void applyOptions(Context context, GlobalConfigModule.Builder builder) {
         builder.baseurl(Api.APP_DOMAIN)
                 .globalHttpHandler(new GlobalHttpHandler() {// 这里可以提供一个全局处理Http请求和响应结果的处理类,
