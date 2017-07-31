@@ -157,7 +157,7 @@ public class AddBirthdayActivity extends BaseActivity<AddBirthdayPresenter> impl
             mClickPosition = getIntent().getExtras().getInt("position");
             mLlBotton.setVisibility(View.VISIBLE);
             mBtadd.setVisibility(View.GONE);
-            mDate = mRbMale.isChecked() ? mBirthday.getOld_birth() : mBirthday.getBirth();
+            mDate = "1".equals(mBirthday.getPerfer()) ? mBirthday.getOld_birth() : mBirthday.getBirth();
             mYear = mDate.split("-")[0];
             showDate(mBirthday);
         } else {

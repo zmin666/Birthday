@@ -1,16 +1,21 @@
 package com.zmin.birthday.mvp.presenter;
 
 import android.app.Application;
+import android.database.Cursor;
 import android.os.Handler;
+import android.provider.ContactsContract;
 import android.util.Log;
 
 import com.jess.arms.di.scope.ActivityScope;
 import com.jess.arms.integration.AppManager;
 import com.jess.arms.mvp.BasePresenter;
+import com.jess.arms.utils.PermissionUtil;
+import com.tbruyelle.rxpermissions2.RxPermissions;
 import com.zmin.birthday.app.db.BirthdayHelp;
 import com.zmin.birthday.app.db.DbUtil;
 import com.zmin.birthday.app.userpermission.user.UserControl;
 import com.zmin.birthday.app.utils.FileUtils;
+import com.zmin.birthday.app.utils.PermissionUtils;
 import com.zmin.birthday.app.utils.RxUtils;
 import com.zmin.birthday.mvp.contract.MainContract;
 import com.zmin.birthday.mvp.model.entity.Birthday;
@@ -49,6 +54,7 @@ public class MainPresenter extends BasePresenter<MainContract.Model, MainContrac
     private List<Birthday> mBirthdays = new ArrayList<>();
     private BirthdayDataAdapter mMAdapter;
     private long starTime;
+    private RxPermissions mRxPermissions;
 
     @Inject
     public MainPresenter(MainContract.Model model, MainContract.view rootView, RxErrorHandler handler
@@ -59,6 +65,7 @@ public class MainPresenter extends BasePresenter<MainContract.Model, MainContrac
         this.mAppManager = appManager;
 
         mActivity = (MainActivity) mRootView;
+        mRxPermissions = new RxPermissions(mActivity);
     }
 
     /**
@@ -224,5 +231,45 @@ public class MainPresenter extends BasePresenter<MainContract.Model, MainContrac
         mBirthdays.remove(position);
         mBirthdays.add(position, birthday);
         mMAdapter.notifyItemChanged(position);
+    }
+
+    public void getContacts() {
+        PermissionUtils.readContacts(new PermissionUtil.RequestPermission() {
+            @Override
+            public void onRequestPermissionSuccess() {
+                Log.i("zmin.............", "..获取通讯录..");
+                getContact();//请求权限成功后做一些操作
+            }
+        }, mRxPermissions, mRootView, mErrorHandler);
+
+    }
+
+    private void getContact() {
+
+        List<String> numberList = new ArrayList<>();
+        List<String> nameList = new ArrayList<>();
+        String[] cols = {ContactsContract.PhoneLookup.DISPLAY_NAME, ContactsContract.CommonDataKinds.Phone.NUMBER};
+        Cursor cursor = mActivity.getContentResolver().query(ContactsContract.CommonDataKinds.Phone.CONTENT_URI,
+                cols, null, null, null);
+        for (int i = 0; i < cursor.getCount(); i++) {
+            cursor.moveToPosition(i);
+            // 取得联系人名字
+            int nameFieldColumnIndex = cursor.getColumnIndex(ContactsContract.PhoneLookup.DISPLAY_NAME);
+            int numberFieldColumnIndex = cursor.getColumnIndex(ContactsContract.CommonDataKinds.Phone.NUMBER);
+            String name = cursor.getString(nameFieldColumnIndex);
+            String number = cursor.getString(numberFieldColumnIndex);
+            if (number.length() == 11) {
+                numberList.add(number);
+                nameList.add(name);
+            } else if (number.length() > 11) {
+                String s1 = number.replace("+86", "");
+                String s2 = s1.replace(" ", "");
+                numberList.add(s2);
+                nameList.add(name);
+            }
+        }
+        cursor.close();
+        Log.i("zmin...........联系人名字..", "...." + nameList);
+        Log.i("zmin...........联系人电话..", "...." + numberList);
     }
 }
