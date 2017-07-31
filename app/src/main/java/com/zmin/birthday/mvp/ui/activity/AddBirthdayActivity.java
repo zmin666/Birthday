@@ -27,7 +27,9 @@ import java.util.HashMap;
 
 import butterknife.BindView;
 import butterknife.OnClick;
+import butterknife.OnTextChanged;
 
+import static com.zmin.birthday.R.id.et_date;
 import static com.zmin.birthday.R.id.rb_male;
 
 /**
@@ -43,7 +45,7 @@ public class AddBirthdayActivity extends BaseActivity<AddBirthdayPresenter> impl
     @BindView(R.id.rb_sex_woman) RadioButton mRbSexWoman;
     @BindView(rb_male) RadioButton mRbMale;
     @BindView(R.id.rb_lunar) RadioButton mRbLunar;
-    @BindView(R.id.et_date) EditText mEtDate;
+    @BindView(et_date) EditText mEtDate;
     @BindView(R.id.image_select_date) ImageView mImageSelectDate;
     @BindView(R.id.rb_remine_0) RadioButton mRbRemine0;
     @BindView(R.id.rb_remine_1) RadioButton mRbRemine1;
@@ -54,13 +56,28 @@ public class AddBirthdayActivity extends BaseActivity<AddBirthdayPresenter> impl
     @BindView(R.id.ll_botton) LinearLayout mLlBotton;
     @BindView(R.id.bt_add) Button mBtadd;
     @BindView(R.id.cb_ignore_year) CheckBox mCbignoreyear;
-    /** 通过日历获取的日期 只有两种格式 y-m-d  或者 m-d */
+    /** 通过日历获取的日期 只有两种格式 y-m-d  或者 0000-m-d */
     private String mDate;
+    /** 需要保存的年份 */
+    private String mYear;
     /** 点击的位置 */
     private int mClickPosition;
     /** 点击item跳转过来 */
     private Birthday mBirthday;
 
+    @OnTextChanged(value = et_date, callback = OnTextChanged.Callback.AFTER_TEXT_CHANGED)
+    public void changedYear() {
+        String s = mEtDate.getText().toString().trim();
+        String[] split = s.split("-");
+        if (split.length == 3) {
+            mYear = split[0];
+        }
+    }
+
+    @OnClick(R.id.iv_back)
+    public void onBack() {
+        killMyself();
+    }
 
     @OnClick(R.id.bt_add)
     public void onViewAddClicked() {
@@ -93,24 +110,25 @@ public class AddBirthdayActivity extends BaseActivity<AddBirthdayPresenter> impl
 
     @OnClick(R.id.cb_ignore_year)
     public void onIgnoreYear() {
+        if (!checkDate()) return;
+
         String s = mEtDate.getText().toString().trim();
         String[] split = s.split("-");
         if (split.length == 2) {
-            String[] dateSplit = mDate.split("-");
-            mDate = dateSplit[0] + "-" + s;
+            mDate = "".equals(mYear) ? "1900-" + s : mYear + "-" + s;
         } else if (split.length == 3) {
+            mYear = split[0];
             mDate = s;
-        } else {
-            Toast.makeText(this, "日期不符合规范 可以点击日历图标选择日期\n请参照 1991-10-24 或者 10-24 格式来写", Toast.LENGTH_SHORT).show();
-            return;
         }
+        String[] splitRealDate = mDate.split("-");
         if (mCbignoreyear.isChecked()) {
-            if (!TextUtils.isEmpty(s)) {
-                if (split.length == 3 && split[0].length() == 4) {
-                    mEtDate.setText(split[1] + "-" + split[2]);
-                }
-            }
+            mEtDate.setText(splitRealDate[1] + "-" + splitRealDate[2]);
         } else {
+            //如果没有输入年份,但是又不忽略年份, 默认使用2017年
+            if ("1900".equals(splitRealDate[0])) {
+                String t = "2017-" + splitRealDate[1] + "-" + splitRealDate[2];
+                mDate = t;
+            }
             mEtDate.setText(mDate);
         }
     }
@@ -157,29 +175,37 @@ public class AddBirthdayActivity extends BaseActivity<AddBirthdayPresenter> impl
     @Override
     public HashMap<String, Object> getBirth() {
         HashMap<String, Object> map = new HashMap<>();
+
         String name = mName.getText().toString().trim();
         map.put("o_realname", name);
+
+        if (mCbignoreyear.isChecked()) {
+            map.put("o_del_year", "2");
+        } else {
+            map.put("o_del_year", "1");
+        }
+
         if (mRbSexMan.isChecked()) {
             map.put("o_sex", "1");
         } else if (mRbSexWoman.isChecked()) {
             map.put("o_sex", "2");
         }
+
         //1农历 2阳历
-        String date = mEtDate.getText().toString().trim();
-        String[] split = date.split("-");
+        String[] split = mDate.split("-");
         int year = Integer.parseInt(split[0]);
         int month = Integer.parseInt(split[1]);
         int day = Integer.parseInt(split[2]);
 
         if (mRbMale.isChecked()) {
             map.put("o_prefer_brith", "1");
-            map.put("o_lunar_birthday", date);
+            map.put("o_lunar_birthday", mDate);
             //农历 --> 转成阳历
             LunarCalendar.Solar solar = LunarCalendar.lunarToSolar(new LunarCalendar.Lunar(day, month, year));
             map.put("o_solar_birthday", solar.solarYear + "-" + solar.solarMonth + "-" + solar.solarDay);
         } else if (mRbLunar.isChecked()) {
             map.put("o_prefer_brith", "2");
-            map.put("o_solar_birthday", date);
+            map.put("o_solar_birthday", mDate);
             //阳历 --> 转成农历
             LunarCalendar.Lunar lunar = LunarCalendar.SolarToLunar(new LunarCalendar.Solar(day, month, year));
             map.put("o_lunar_birthday", lunar.lunarYear + "-" + lunar.lunarMonth + "-" + lunar.lunarDay);
@@ -252,11 +278,29 @@ public class AddBirthdayActivity extends BaseActivity<AddBirthdayPresenter> impl
      *
      * @return
      */
-    private boolean checkDate() {
+    @Override
+    public boolean checkDate() {
         String s = mEtDate.getText().toString().trim();
+        if (TextUtils.isEmpty(s)) {
+            Toast.makeText(this, "生日日期不能为空", Toast.LENGTH_SHORT).show();
+            return false;
+        }
         String[] split = s.split("-");
         if (split.length == 2 || split.length == 3) {
-            return true;
+            try {
+                int month = Integer.parseInt(split[split.length - 2]);
+                int day = Integer.parseInt(split[split.length - 1]);
+                if (month > 0 && month < 13 && day > 0 && day < 32) {
+                    return true;
+                } else {
+                    Toast.makeText(this, "日期不符合规范 可以点击日历图标选择日期\n请参照 1991-10-24 或者 10-24 格式来写", Toast.LENGTH_SHORT).show();
+                    return false;
+                }
+            } catch (NumberFormatException e) {
+                e.printStackTrace();
+                Toast.makeText(this, "日期不符合规范 可以点击日历图标选择日期\n请参照 1991-10-24 或者 10-24 格式来写", Toast.LENGTH_SHORT).show();
+                return false;
+            }
         } else {
             Toast.makeText(this, "日期不符合规范 可以点击日历图标选择日期\n请参照 1991-10-24 或者 10-24 格式来写", Toast.LENGTH_SHORT).show();
             return false;

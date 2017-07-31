@@ -95,6 +95,6 @@ public class TimeUtil {
         int start = 1900;
         String[] years = new String[]{"鼠", "牛", "虎", "兔", "龙", "蛇", "马", "羊",
                 "猴", "鸡", "狗", "猪"};
-        return "属" + years[(year - start) % years.length];
+        return "属: " + years[(year - start) % years.length];
     }
 }

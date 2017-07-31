@@ -11,7 +11,6 @@ import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.Gravity;
 import android.view.KeyEvent;
 import android.view.View;
@@ -34,7 +33,7 @@ import butterknife.OnClick;
 
 public class MainActivity extends BaseActivity<MainPresenter> implements MainContract.view {
 
-    public static final int REQUEST_DATE = 261;
+    public static final int REQUEST_CODE = 100;
 
     @Nullable
     @BindView(R.id.rv)
@@ -67,12 +66,16 @@ public class MainActivity extends BaseActivity<MainPresenter> implements MainCon
                 launchActivity(intent);
                 break;
             case R.id.update:
+                Toast.makeText(this, "检查更新", Toast.LENGTH_SHORT).show();
                 break;
             case R.id.advise:
+                Toast.makeText(this, "意见和建议", Toast.LENGTH_SHORT).show();
                 break;
             case R.id.donate:
+                Toast.makeText(this, "捐赠", Toast.LENGTH_SHORT).show();
                 break;
             case R.id.about_us:
+                Toast.makeText(this, "关于我们", Toast.LENGTH_SHORT).show();
                 break;
             case R.id.bt_Contacts:
                 Toast.makeText(this, "如果通讯录中有人也注册了这软件\n那么能直接获取这个人的生日信息.", Toast.LENGTH_SHORT).show();
@@ -88,7 +91,7 @@ public class MainActivity extends BaseActivity<MainPresenter> implements MainCon
     @OnClick(R.id.fab)
     public void onViewClicked() {
         Intent intent = new Intent(this, AddBirthdayActivity.class);
-        startActivityForResult(intent, REQUEST_DATE);
+        startActivityForResult(intent, REQUEST_CODE);
     }
 
     //记录用户首次点击返回键的时间
@@ -166,7 +169,7 @@ public class MainActivity extends BaseActivity<MainPresenter> implements MainCon
                 bundle.putInt("position", position);
                 Intent intent = new Intent(MainActivity.this, AddBirthdayActivity.class);
                 intent.putExtras(bundle);
-                launchActivity(intent);
+                startActivityForResult(intent, REQUEST_CODE);
             }
         });
         mRecyclerView.setAdapter(adapter);
@@ -233,7 +236,7 @@ public class MainActivity extends BaseActivity<MainPresenter> implements MainCon
         if (resultCode != RESULT_OK) {
             return;
         }
-        if (requestCode == REQUEST_DATE) {
+        if (requestCode == REQUEST_CODE) {
             //获取新的生日
             Bundle bundle = data.getExtras();
             int action = bundle.getInt("action");
@@ -242,20 +245,20 @@ public class MainActivity extends BaseActivity<MainPresenter> implements MainCon
                 case 1:
                     if (newBirthday != null) {
                         mPresenter.addItemData(newBirthday);
-                        Log.i("zmin.............", "...新增.");
+                        Toast.makeText(this, "新增生日成功", Toast.LENGTH_SHORT).show();
                     }
                     break;
-                case 2:
+                case 5:
                     if (newBirthday != null) {
                         int mPosition = bundle.getInt("position");
                         updateItem(mPosition, newBirthday);
-                        Log.i("zmin.............", "...更新." + mPosition);
+                        Toast.makeText(this, "生日信息修改成功", Toast.LENGTH_SHORT).show();
                     }
                     break;
-                case 3:
+                case 4:
                     int position = bundle.getInt("position");
                     deleteItem(position);
-                    Log.i("zmin.............", "...删除." + position);
+                    Toast.makeText(this, "生日信息删除成功", Toast.LENGTH_SHORT).show();
                     break;
                 default:
                     break;

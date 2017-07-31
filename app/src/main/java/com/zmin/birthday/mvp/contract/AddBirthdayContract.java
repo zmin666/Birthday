@@ -27,6 +27,11 @@ public interface AddBirthdayContract {
          * 编辑展示生日信息
          */
         void showDate(Birthday birthday);
+
+        /**
+         * 检查录入的数据
+         */
+        boolean checkDate();
     }
 
     interface Model extends IModel {

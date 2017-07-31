@@ -89,6 +89,9 @@ public class AddBirthdayPresenter extends BasePresenter<AddBirthdayContract.Mode
      * @param position 点击的位置.
      */
     public void uploadeData(String act, int position) {
+        if (!mRootView.checkDate()) {
+            return;
+        }
         HashMap<String, Object> map = new HashMap<>();
         String userId = UserControl.getInstance().getCurrentUser(mActivity).getUserId();
         long time = System.currentTimeMillis();
@@ -96,19 +99,11 @@ public class AddBirthdayPresenter extends BasePresenter<AddBirthdayContract.Mode
         map.put("act", act);
         map.put("md5", MD5Utils.getMd5(time + act));
         map.put("o_uid", userId);
-        //删除用户时候传入ssid
         map.putAll(mRootView.getBirth());
-        //构造生日个体
-        mBirthday = new Birthday(userId
-                , (String) map.get("o_realname")
-                , (String) map.get("o_lunar_birthday")
-                , (String) map.get("o_solar_birthday")
-                , (String) map.get("o_prefer_brith")
-                , (String) map.get("o_sex"));
 
         switch (act) {
-            case "2": //完善用户资料 --共享信息
-                map.put("share_data",2);
+            case "1":
+                break;
             case "4": //删除
                 map.put("del_id", mBirthday.getId());
                 break;
@@ -136,14 +131,28 @@ public class AddBirthdayPresenter extends BasePresenter<AddBirthdayContract.Mode
                         if (responseBeen.getCode() == 200) {
                             Intent data = new Intent();
                             Bundle bundle = new Bundle();
-                            if ("1".equals(act) && position == -1) {  //新增
-                                bundle.putInt("action", 1);
+                            if ("1".equals(act)) {  //新增
+                                //构造生日个体
+                                mBirthday = new Birthday(String.valueOf(responseBeen.getId())
+                                        , (String) map.get("o_realname")
+                                        , (String) map.get("o_lunar_birthday")
+                                        , (String) map.get("o_solar_birthday")
+                                        , (String) map.get("o_prefer_brith")
+                                        , (String) map.get("o_sex"));
                                 bundle.putParcelable("NewBirthday", mBirthday);
-                            } else if ("1".equals(act) && position != -1) { //修改更新
-                                bundle.putInt("action", 2);
+                                bundle.putInt("action", 1);
+                            } else if ("5".equals(act)) { //修改
+                                mBirthday = new Birthday(mBirthday.getId()
+                                        , (String) map.get("o_realname")
+                                        , (String) map.get("o_lunar_birthday")
+                                        , (String) map.get("o_solar_birthday")
+                                        , (String) map.get("o_prefer_brith")
+                                        , (String) map.get("o_sex"));
+                                bundle.putInt("action", 5);
                                 bundle.putInt("position", position);
+                                bundle.putParcelable("NewBirthday", mBirthday);
                             } else if ("4".equals(act)) { //删除
-                                bundle.putInt("action", 3);
+                                bundle.putInt("action", 4);
                                 bundle.putInt("position", position);
                             }
                             data.putExtras(bundle);

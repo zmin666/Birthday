@@ -87,7 +87,9 @@ public class BirthdayDataAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
             birthdayHolder.tv_num.setText(countdown);
             //属相和生肖
             String[] split = birth.split("-");
+            //星座
             birthdayHolder.tv_zodiac.setText(TimeUtil.getZodiac(Integer.parseInt(split[0])));
+            //生肖
             birthdayHolder.tv_constellation.setText(TimeUtil.getConstellation(Integer.parseInt(split[1]), Integer.parseInt(split[2])));
 
             holder.itemView.setOnClickListener(new View.OnClickListener() {
