@@ -133,6 +133,7 @@ public class MainPresenter extends BasePresenter<MainContract.Model, MainContrac
             birthday.setName(dataBean.getO_realname());
             birthday.setPerfer(dataBean.getO_prefer_brith());
             birthday.setSex(dataBean.getO_sex());
+            birthday.setIgnoreYear(dataBean.getO_del_year());
             birthdays.add(birthday);
         }
 

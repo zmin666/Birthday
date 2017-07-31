@@ -17,6 +17,7 @@ import com.jess.arms.base.BaseActivity;
 import com.jess.arms.di.component.AppComponent;
 import com.zmin.birthday.R;
 import com.zmin.birthday.app.utils.LunarCalendar;
+import com.zmin.birthday.app.utils.TimeUtil;
 import com.zmin.birthday.di.component.DaggerAddBirthdayComponent;
 import com.zmin.birthday.di.module.AddBirthdayModule;
 import com.zmin.birthday.mvp.contract.AddBirthdayContract;
@@ -156,6 +157,8 @@ public class AddBirthdayActivity extends BaseActivity<AddBirthdayPresenter> impl
             mClickPosition = getIntent().getExtras().getInt("position");
             mLlBotton.setVisibility(View.VISIBLE);
             mBtadd.setVisibility(View.GONE);
+            mDate = mRbMale.isChecked() ? mBirthday.getOld_birth() : mBirthday.getBirth();
+            mYear = mDate.split("-")[0];
             showDate(mBirthday);
         } else {
             mBtadd.setVisibility(View.VISIBLE);
@@ -192,6 +195,7 @@ public class AddBirthdayActivity extends BaseActivity<AddBirthdayPresenter> impl
         }
 
         //1农历 2阳历
+
         String[] split = mDate.split("-");
         int year = Integer.parseInt(split[0]);
         int month = Integer.parseInt(split[1]);
@@ -222,7 +226,11 @@ public class AddBirthdayActivity extends BaseActivity<AddBirthdayPresenter> impl
     @Override
     public void setDate(String date) {
         this.mDate = date;
-        mEtDate.setText(date);
+        if (mCbignoreyear.isChecked()) {
+            mEtDate.setText(TimeUtil.ignoreYear(date));
+        } else {
+            mEtDate.setText(date);
+        }
     }
 
     @Override
@@ -236,15 +244,24 @@ public class AddBirthdayActivity extends BaseActivity<AddBirthdayPresenter> impl
             mRbSexWoman.setChecked(true);
             mRbSexMan.setChecked(false);
         }
+
         String perfer = birthday.getPerfer();
+        String ignoreYear = birthday.getIgnoreYear();
+        if ("2".equals(ignoreYear)) {
+            mCbignoreyear.setChecked(true);
+        } else {
+            mCbignoreyear.setChecked(false);
+        }
         if (perfer.equals("1")) {
             mRbMale.setChecked(true);
             mRbLunar.setChecked(false);
-            mEtDate.setText(birthday.getOld_birth());
+            String s = "2".equals(ignoreYear) ? TimeUtil.ignoreYear(birthday.getOld_birth()) : birthday.getOld_birth();
+            mEtDate.setText(s);
         } else {
             mRbLunar.setChecked(true);
             mRbMale.setChecked(false);
-            mEtDate.setText(birthday.getBirth());
+            String s = "2".equals(ignoreYear) ? TimeUtil.ignoreYear(birthday.getBirth()) : birthday.getBirth();
+            mEtDate.setText(s);
         }
     }
 

@@ -30,6 +30,7 @@ public class BirthdayDao extends AbstractDao<Birthday, String> {
         public final static Property Birth = new Property(3, String.class, "birth", false, "YEAR");
         public final static Property Perfer = new Property(4, String.class, "perfer", false, "PERFER");
         public final static Property Sex = new Property(5, String.class, "sex", false, "SEX");
+        public final static Property IgnoreYear = new Property(6, String.class, "ignoreYear", false, "IGNOREYEAR");
     }
 
 
@@ -50,7 +51,8 @@ public class BirthdayDao extends AbstractDao<Birthday, String> {
                 "\"OLD_YEAR\" TEXT," + // 2: old_birth
                 "\"YEAR\" TEXT," + // 3: birth
                 "\"PERFER\" TEXT," + // 4: perfer
-                "\"SEX\" TEXT);"); // 5: sex
+                "\"SEX\" TEXT," + // 5: sex
+                "\"IGNOREYEAR\" TEXT);"); // 6: ignoreYear
     }
 
     /** Drops the underlying database table. */
@@ -92,6 +94,11 @@ public class BirthdayDao extends AbstractDao<Birthday, String> {
         if (sex != null) {
             stmt.bindString(6, sex);
         }
+ 
+        String ignoreYear = entity.getIgnoreYear();
+        if (ignoreYear != null) {
+            stmt.bindString(7, ignoreYear);
+        }
     }
 
     @Override
@@ -127,6 +134,11 @@ public class BirthdayDao extends AbstractDao<Birthday, String> {
         if (sex != null) {
             stmt.bindString(6, sex);
         }
+ 
+        String ignoreYear = entity.getIgnoreYear();
+        if (ignoreYear != null) {
+            stmt.bindString(7, ignoreYear);
+        }
     }
 
     @Override
@@ -142,7 +154,8 @@ public class BirthdayDao extends AbstractDao<Birthday, String> {
             cursor.isNull(offset + 2) ? null : cursor.getString(offset + 2), // old_birth
             cursor.isNull(offset + 3) ? null : cursor.getString(offset + 3), // birth
             cursor.isNull(offset + 4) ? null : cursor.getString(offset + 4), // perfer
-            cursor.isNull(offset + 5) ? null : cursor.getString(offset + 5) // sex
+            cursor.isNull(offset + 5) ? null : cursor.getString(offset + 5), // sex
+            cursor.isNull(offset + 6) ? null : cursor.getString(offset + 6) // ignoreYear
         );
         return entity;
     }
@@ -155,6 +168,7 @@ public class BirthdayDao extends AbstractDao<Birthday, String> {
         entity.setBirth(cursor.isNull(offset + 3) ? null : cursor.getString(offset + 3));
         entity.setPerfer(cursor.isNull(offset + 4) ? null : cursor.getString(offset + 4));
         entity.setSex(cursor.isNull(offset + 5) ? null : cursor.getString(offset + 5));
+        entity.setIgnoreYear(cursor.isNull(offset + 6) ? null : cursor.getString(offset + 6));
      }
     
     @Override

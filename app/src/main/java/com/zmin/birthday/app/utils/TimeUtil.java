@@ -97,4 +97,19 @@ public class TimeUtil {
                 "猴", "鸡", "狗", "猪"};
         return "属: " + years[(year - start) % years.length];
     }
+
+    /**
+     * 忽略年份
+     *
+     * @param birth
+     * @return
+     */
+    public static String ignoreYear(String birth) {
+        String[] split = birth.split("-");
+        if (split.length == 3) {
+            return split[1] + "-" + split[2];
+        } else {
+            return "";
+        }
+    }
 }

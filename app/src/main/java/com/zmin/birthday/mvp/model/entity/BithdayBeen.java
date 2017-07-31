@@ -9,9 +9,10 @@ import java.util.List;
  */
 public class BithdayBeen {
 
+
     /**
      * code : 200
-     * data : [{"o_addtime":"1499670242","o_head_img":"","o_lunar_birthday":"0000-00-00","o_prefer_brith":"1","o_realname":"小潘","o_sex":"1","o_solar_birthday":"2017-07-20","o_uid":"5","sysid":"1"},{"o_addtime":"1499670554","o_head_img":"","o_lunar_birthday":"0000-00-00","o_prefer_brith":"1","o_realname":"小潘","o_sex":"1","o_solar_birthday":"2017-07-20","o_uid":"5","sysid":"2"},{"o_addtime":"1499676846","o_head_img":"","o_lunar_birthday":"0000-00-00","o_prefer_brith":"1","o_realname":"呵呵哈哈哈","o_sex":"2","o_solar_birthday":"2017-07-07","o_uid":"5","sysid":"3"},{"o_addtime":"1499676846","o_head_img":"","o_lunar_birthday":"0000-00-00","o_prefer_brith":"1","o_realname":"呵呵哈哈哈","o_sex":"2","o_solar_birthday":"2017-07-07","o_uid":"5","sysid":"4"},{"o_addtime":"1499676846","o_head_img":"","o_lunar_birthday":"0000-00-00","o_prefer_brith":"1","o_realname":"呵呵哈哈哈","o_sex":"2","o_solar_birthday":"2017-07-07","o_uid":"5","sysid":"5"},{"o_addtime":"1499676937","o_head_img":"","o_lunar_birthday":"0000-00-00","o_prefer_brith":"1","o_realname":"嘿嘿","o_sex":"2","o_solar_birthday":"2017-07-01","o_uid":"5","sysid":"6"},{"o_addtime":"1499677157","o_head_img":"","o_lunar_birthday":"0000-00-00","o_prefer_brith":"1","o_realname":"大锤","o_sex":"1","o_solar_birthday":"2017-07-01","o_uid":"5","sysid":"7"},{"o_addtime":"1499677189","o_head_img":"","o_lunar_birthday":"0000-00-00","o_prefer_brith":"1","o_realname":"哈哈哈","o_sex":"1","o_solar_birthday":"2017-07-01","o_uid":"5","sysid":"8"},{"o_addtime":"1499679654","o_head_img":"","o_lunar_birthday":"0000-00-00","o_prefer_brith":"1","o_realname":"哈哈哈哈哈哈哈哈","o_sex":"2","o_solar_birthday":"2017-07-06","o_uid":"5","sysid":"9"},{"o_addtime":"1499680703","o_head_img":"","o_lunar_birthday":"0000-00-00","o_prefer_brith":"1","o_realname":"哈哈哈哈","o_sex":"2","o_solar_birthday":"2017-07-01","o_uid":"5","sysid":"10"},{"o_addtime":"1499681283","o_head_img":"","o_lunar_birthday":"0000-00-00","o_prefer_brith":"1","o_realname":"哈哈哈哈","o_sex":"2","o_solar_birthday":"2017-07-01","o_uid":"5","sysid":"11"},{"o_addtime":"1499681379","o_head_img":"","o_lunar_birthday":"0000-00-00","o_prefer_brith":"1","o_realname":"近距离","o_sex":"2","o_solar_birthday":"2017-07-07","o_uid":"5","sysid":"12"},{"o_addtime":"1499739853","o_head_img":"","o_lunar_birthday":"0000-00-00","o_prefer_brith":"1","o_realname":"李经理","o_sex":"2","o_solar_birthday":"2017-07-14","o_uid":"5","sysid":"14"}]
+     * data : [{"o_addtime":"1501468621","o_del_year":"1","o_head_img":"","o_lunar_birthday":"2017-06-21","o_prefer_brith":"2","o_realname":"哈哈哈","o_sex":"2","o_solar_birthday":"2017-07-14","o_uid":"15","sysid":"62"},{"o_addtime":"1501488873","o_del_year":"2","o_head_img":"","o_lunar_birthday":"1991-07-29","o_prefer_brith":"1","o_realname":"得得","o_sex":"1","o_solar_birthday":"1991-09-07","o_uid":"15","sysid":"75"},{"o_addtime":"1501468252","o_del_year":"1","o_head_img":"","o_lunar_birthday":"2017-06-07","o_prefer_brith":"2","o_realname":"加","o_sex":"1","o_solar_birthday":"2017-07-29","o_uid":"15","sysid":"67"},{"o_addtime":"1501488847","o_del_year":"2","o_head_img":"","o_lunar_birthday":"2017-06-22","o_prefer_brith":"2","o_realname":"哦哦哦","o_sex":"2","o_solar_birthday":"2017-07-15","o_uid":"15","sysid":"74"},{"o_addtime":"1501483960","o_del_year":"1","o_head_img":"","o_lunar_birthday":"2017-07-14","o_prefer_brith":"1","o_realname":"摸摸","o_sex":"1","o_solar_birthday":"2017-09-04","o_uid":"15","sysid":"73"},{"o_addtime":"1501469541","o_del_year":"1","o_head_img":"","o_lunar_birthday":"2017-06-14","o_prefer_brith":"2","o_realname":"新增","o_sex":"1","o_solar_birthday":"2017-08-05","o_uid":"15","sysid":"70"},{"o_addtime":"1501482953","o_del_year":"1","o_head_img":"","o_lunar_birthday":"2017-07-12","o_prefer_brith":"2","o_realname":"哦哦","o_sex":"2","o_solar_birthday":"2017-09-02","o_uid":"15","sysid":"71"},{"o_addtime":"1501489446","o_del_year":"1","o_head_img":"","o_lunar_birthday":"1991-07-29","o_prefer_brith":"1","o_realname":"自由自在","o_sex":"1","o_solar_birthday":"1991-09-07","o_uid":"15","sysid":"76"},{"o_addtime":"1501490002","o_del_year":"2","o_head_img":"","o_lunar_birthday":"2017-06-08","o_prefer_brith":"2","o_realname":"摸摸","o_sex":"2","o_solar_birthday":"2017-07-01","o_uid":"15","sysid":"77"},{"o_addtime":"1501490113","o_del_year":"2","o_head_img":"","o_lunar_birthday":"2017-06-15","o_prefer_brith":"2","o_realname":"摸摸哦哦哦","o_sex":"2","o_solar_birthday":"2017-07-08","o_uid":"15","sysid":"78"},{"o_addtime":"1501490286","o_del_year":"2","o_head_img":"","o_lunar_birthday":"2017-06-08","o_prefer_brith":"2","o_realname":"摸摸","o_sex":"1","o_solar_birthday":"2017-07-01","o_uid":"15","sysid":"79"},{"o_addtime":"1501490365","o_del_year":"2","o_head_img":"","o_lunar_birthday":"2017-06-14","o_prefer_brith":"2","o_realname":"摸摸","o_sex":"1","o_solar_birthday":"2017-07-07","o_uid":"15","sysid":"80"}]
      * msg : 查询成功
      */
 
@@ -45,18 +46,20 @@ public class BithdayBeen {
 
     public static class DataBean {
         /**
-         * o_addtime : 1499670242
+         * o_addtime : 1501468621
+         * o_del_year : 1
          * o_head_img :
-         * o_lunar_birthday : 0000-00-00
-         * o_prefer_brith : 1
-         * o_realname : 小潘
-         * o_sex : 1
-         * o_solar_birthday : 2017-07-20
-         * o_uid : 5
-         * sysid : 1
+         * o_lunar_birthday : 2017-06-21
+         * o_prefer_brith : 2
+         * o_realname : 哈哈哈
+         * o_sex : 2
+         * o_solar_birthday : 2017-07-14
+         * o_uid : 15
+         * sysid : 62
          */
 
         private String o_addtime;
+        private String o_del_year;
         private String o_head_img;
         private String o_lunar_birthday;
         private String o_prefer_brith;
@@ -72,6 +75,14 @@ public class BithdayBeen {
 
         public void setO_addtime(String o_addtime) {
             this.o_addtime = o_addtime;
+        }
+
+        public String getO_del_year() {
+            return o_del_year;
+        }
+
+        public void setO_del_year(String o_del_year) {
+            this.o_del_year = o_del_year;
         }
 
         public String getO_head_img() {

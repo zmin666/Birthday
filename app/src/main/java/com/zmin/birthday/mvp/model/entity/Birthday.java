@@ -32,15 +32,19 @@ public class Birthday implements Parcelable {
     //性别
     @Property(nameInDb = "SEX")
     private String sex;
+    //是否忽略年份
+    @Property(nameInDb = "IGNOREYEAR")
+    private String ignoreYear;
 
     @Keep
-    public Birthday(String id, String name, String old_birth, String birth, String perfer, String sex) {
+    public Birthday(String id, String name, String old_birth, String birth, String perfer, String sex, String ignoreYear) {
         this.id = id;
         this.name = name;
         this.old_birth = old_birth;
         this.birth = birth;
         this.perfer = perfer;
         this.sex = sex;
+        this.ignoreYear = ignoreYear;
     }
 
     public String getId() {
@@ -92,6 +96,15 @@ public class Birthday implements Parcelable {
     }
 
 
+    public String getIgnoreYear() {
+        return this.ignoreYear;
+    }
+
+    public void setIgnoreYear(String ignoreYear) {
+        this.ignoreYear = ignoreYear;
+    }
+
+
     @Override
     public int describeContents() {
         return 0;
@@ -105,6 +118,7 @@ public class Birthday implements Parcelable {
         dest.writeString(this.birth);
         dest.writeString(this.perfer);
         dest.writeString(this.sex);
+        dest.writeString(this.ignoreYear);
     }
 
     protected Birthday(Parcel in) {
@@ -114,6 +128,7 @@ public class Birthday implements Parcelable {
         this.birth = in.readString();
         this.perfer = in.readString();
         this.sex = in.readString();
+        this.ignoreYear = in.readString();
     }
 
     @Generated(hash = 1467867887)

@@ -65,7 +65,9 @@ public class UsercenterPresenter extends BasePresenter<UserCenterContract.Model,
                 , (String) map.get("o_lunar_birthday")
                 , (String) map.get("o_solar_birthday")
                 , (String) map.get("o_prefer_brith")
-                , (String) map.get("o_sex"));
+                , (String) map.get("o_sex")
+                , (String) map.get("o_del_year")
+        );
 
 
         mModel.postBirthdayData(map)

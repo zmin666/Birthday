@@ -138,7 +138,8 @@ public class AddBirthdayPresenter extends BasePresenter<AddBirthdayContract.Mode
                                         , (String) map.get("o_lunar_birthday")
                                         , (String) map.get("o_solar_birthday")
                                         , (String) map.get("o_prefer_brith")
-                                        , (String) map.get("o_sex"));
+                                        , (String) map.get("o_sex")
+                                        , (String) map.get("o_del_year"));
                                 bundle.putParcelable("NewBirthday", mBirthday);
                                 bundle.putInt("action", 1);
                             } else if ("5".equals(act)) { //修改
@@ -147,7 +148,8 @@ public class AddBirthdayPresenter extends BasePresenter<AddBirthdayContract.Mode
                                         , (String) map.get("o_lunar_birthday")
                                         , (String) map.get("o_solar_birthday")
                                         , (String) map.get("o_prefer_brith")
-                                        , (String) map.get("o_sex"));
+                                        , (String) map.get("o_sex")
+                                        , (String) map.get("o_del_year"));
                                 bundle.putInt("action", 5);
                                 bundle.putInt("position", position);
                                 bundle.putParcelable("NewBirthday", mBirthday);
