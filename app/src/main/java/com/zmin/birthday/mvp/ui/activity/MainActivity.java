@@ -79,7 +79,6 @@ public class MainActivity extends BaseActivity<MainPresenter> implements MainCon
                 break;
             case R.id.bt_Contacts:
                 mPresenter.getContacts();
-                Toast.makeText(this, "如果通讯录中有人也注册了这软件\n那么能直接获取这个人的生日信息.", Toast.LENGTH_SHORT).show();
                 break;
             default:
                 break;

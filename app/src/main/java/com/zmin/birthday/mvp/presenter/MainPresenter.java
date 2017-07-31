@@ -4,8 +4,11 @@ import android.app.Application;
 import android.database.Cursor;
 import android.os.Handler;
 import android.provider.ContactsContract;
+import android.text.TextUtils;
 import android.util.Log;
+import android.widget.Toast;
 
+import com.google.gson.Gson;
 import com.jess.arms.di.scope.ActivityScope;
 import com.jess.arms.integration.AppManager;
 import com.jess.arms.mvp.BasePresenter;
@@ -16,11 +19,11 @@ import com.zmin.birthday.app.db.DbUtil;
 import com.zmin.birthday.app.userpermission.user.UserControl;
 import com.zmin.birthday.app.utils.FileUtils;
 import com.zmin.birthday.app.utils.PermissionUtils;
-import com.zmin.birthday.app.utils.RxUtils;
+import com.zmin.birthday.app.utils.TextUtil;
 import com.zmin.birthday.mvp.contract.MainContract;
 import com.zmin.birthday.mvp.model.entity.Birthday;
 import com.zmin.birthday.mvp.model.entity.BithdayBeen;
-import com.zmin.birthday.mvp.model.entity.MovieEntity;
+import com.zmin.birthday.mvp.model.entity.BithdayContactBeen;
 import com.zmin.birthday.mvp.ui.activity.MainActivity;
 import com.zmin.birthday.mvp.ui.adapter.BirthdayDataAdapter;
 
@@ -36,7 +39,6 @@ import io.reactivex.annotations.NonNull;
 import io.reactivex.disposables.Disposable;
 import io.reactivex.schedulers.Schedulers;
 import me.jessyan.rxerrorhandler.core.RxErrorHandler;
-import me.jessyan.rxerrorhandler.handler.RetryWithDelay;
 
 /**
  * @author: ZhangMin
@@ -147,34 +149,47 @@ public class MainPresenter extends BasePresenter<MainContract.Model, MainContrac
         return birthdays;
     }
 
-    public void getUsers() {
-        mModel.getUsers(0, 10)
-                .subscribeOn(Schedulers.io())
-                .unsubscribeOn(Schedulers.io())
-                .compose(RxUtils.bindToLifecycle(mRootView))
-                .retryWhen(new RetryWithDelay(3, 2))
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Observer<MovieEntity>() {
-                    @Override
-                    public void onSubscribe(@NonNull Disposable d) {
+    /**
+     * 匹配通讯录并处理结果 去掉无效数据和已经有的数据
+     * @param data
+     * @param beforebirthdays
+     * @return
+     */
+    private List<Birthday> changeContactDate(List<BithdayContactBeen.DataBean> data, List<Birthday> beforebirthdays) {
+        ArrayList<Birthday> birthdays = new ArrayList<>();
+        for (BithdayContactBeen.DataBean dataBean : data) {
+            Birthday birthday = new Birthday();
+            birthday.setId(dataBean.getSysid());
+            birthday.setBirth(dataBean.getSolar_birthday());
+            birthday.setOld_birth(dataBean.getLunar_birthday());
+            birthday.setName(dataBean.getUsername());
+            birthday.setPerfer(dataBean.getPrefer_brith());
+            birthday.setSex(dataBean.getSex());
+            birthday.setIgnoreYear("1");
+            String tel = dataBean.getTel();
+            birthday.setTel(tel);
+            if (!TextUtil.checkDate(dataBean.getSolar_birthday()) && !TextUtil.checkDate(dataBean.getLunar_birthday())) {
+                continue;
+            }
+            if (TextUtils.isEmpty(dataBean.getUsername())) {
+                continue;
+            }
+            for (Birthday beforebirthday : beforebirthdays) {
+                if (beforebirthday.getTel().equals(tel)) {
+                    continue;
+                }
+            }
+            birthdays.add(birthday);
+        }
 
-                    }
+        //提示
+        if (birthdays.size() == 0) {
+            Toast.makeText(mApplication, "在通讯录中没有匹配到对应的生日", Toast.LENGTH_SHORT).show();
+        } else {
+            Toast.makeText(mApplication, "在通讯录中匹配到了" + birthdays.size() + "个对应的生日", Toast.LENGTH_SHORT).show();
+        }
 
-                    @Override
-                    public void onNext(@NonNull MovieEntity movieEntity) {
-                        Log.i("zmin.............", ".11..." + movieEntity);
-                    }
-
-                    @Override
-                    public void onError(@NonNull Throwable e) {
-                        Log.i("zmin.............", ".22..." + e);
-                    }
-
-                    @Override
-                    public void onComplete() {
-
-                    }
-                });
+        return birthdays;
     }
 
     /**
@@ -271,5 +286,56 @@ public class MainPresenter extends BasePresenter<MainContract.Model, MainContrac
         cursor.close();
         Log.i("zmin...........联系人名字..", "...." + nameList);
         Log.i("zmin...........联系人电话..", "...." + numberList);
+        Gson gson = new Gson();
+        String s = gson.toJson(numberList).toString();
+        Log.i("zmin.......sss......", "...." + s);
+        requestContactData(s);
+    }
+
+    public void requestContactData(String contact) {
+        mRootView.showLoading();
+        if (mMAdapter == null) {
+            //  mMAdapter = new BirthdayAdapter(mBirthdays);
+            mMAdapter = new BirthdayDataAdapter(mBirthdays, mActivity);
+            mRootView.setAdapter(mMAdapter);//设置Adapter
+        }
+        //获取数据  展示数据  保存到数据库中
+        Map<String, Object> fileMap = FileUtils.getFileMap(1);
+        String userId = UserControl.getInstance().getCurrentUser(mActivity).getUserId();
+        fileMap.put("o_uid", userId);
+        fileMap.put("tel_group", contact);
+        Log.i("zmin..fileMap...", ".." + fileMap);
+
+        mModel.getContacts(fileMap)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Observer<BithdayContactBeen>() {
+                    @Override
+                    public void onSubscribe(@NonNull Disposable d) {
+
+                    }
+
+                    @Override
+                    public void onNext(@NonNull BithdayContactBeen bithdayContactBeen) {
+                        if (bithdayContactBeen.getCode() == 200) {
+                            List<BithdayContactBeen.DataBean> data = bithdayContactBeen.getData();
+                            mBirthdays.addAll(changeContactDate(data,mBirthdays));
+                        }
+                        mMAdapter.notifyDataSetChanged();
+                        mRootView.hideLoading();
+                    }
+
+                    @Override
+                    public void onError(@NonNull Throwable e) {
+                        mRootView.hideLoading();
+                    }
+
+                    @Override
+                    public void onComplete() {
+
+                    }
+
+                });
+
     }
 }

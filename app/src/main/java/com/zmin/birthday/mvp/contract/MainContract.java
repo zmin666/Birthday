@@ -4,6 +4,7 @@ import com.jess.arms.mvp.IModel;
 import com.jess.arms.mvp.IView;
 import com.zmin.birthday.mvp.model.entity.Birthday;
 import com.zmin.birthday.mvp.model.entity.BithdayBeen;
+import com.zmin.birthday.mvp.model.entity.BithdayContactBeen;
 import com.zmin.birthday.mvp.model.entity.MovieEntity;
 import com.zmin.birthday.mvp.ui.adapter.BirthdayDataAdapter;
 
@@ -29,5 +30,7 @@ public interface MainContract {
         Observable<BithdayBeen> getBirthdayData(Map<String, Object> fields);
 
         Observable<MovieEntity> getUsers(int star, int end);
+
+        Observable<BithdayContactBeen> getContacts(Map<String, Object> fields);
     }
 }

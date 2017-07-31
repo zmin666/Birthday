@@ -8,6 +8,7 @@ import com.zmin.birthday.mvp.model.api.cache.CommonCache;
 import com.zmin.birthday.mvp.model.api.service.CommonService;
 import com.zmin.birthday.mvp.model.api.service.UserService;
 import com.zmin.birthday.mvp.model.entity.BithdayBeen;
+import com.zmin.birthday.mvp.model.entity.BithdayContactBeen;
 import com.zmin.birthday.mvp.model.entity.MovieEntity;
 
 import java.util.Map;
@@ -52,6 +53,11 @@ public class BirthdayModel extends BaseModel implements MainContract.Model {
                         return Observable.just(movieEntityReply.getData());
                     }
                 });
+    }
+
+    @Override
+    public Observable<BithdayContactBeen> getContacts(Map<String, Object> fields) {
+        return mRepositoryManager.obtainRetrofitService(CommonService.class).getContactBirthData(fields);
     }
 
 }

@@ -35,6 +35,10 @@ public class Birthday implements Parcelable {
     //是否忽略年份
     @Property(nameInDb = "IGNOREYEAR")
     private String ignoreYear;
+    //电话号码
+    @Property(nameInDb = "Tel")
+    private String Tel = "-1";
+
 
     @Keep
     public Birthday(String id, String name, String old_birth, String birth, String perfer, String sex, String ignoreYear) {
@@ -104,6 +108,14 @@ public class Birthday implements Parcelable {
         this.ignoreYear = ignoreYear;
     }
 
+    public String getTel() {
+        return Tel;
+    }
+
+    public void setTel(String tel) {
+        Tel = tel;
+    }
+
 
     @Override
     public int describeContents() {
@@ -133,6 +145,19 @@ public class Birthday implements Parcelable {
 
     @Generated(hash = 1467867887)
     public Birthday() {
+    }
+
+    @Generated(hash = 860918427)
+    public Birthday(String id, String name, String old_birth, String birth, String perfer, String sex, String ignoreYear,
+            String Tel) {
+        this.id = id;
+        this.name = name;
+        this.old_birth = old_birth;
+        this.birth = birth;
+        this.perfer = perfer;
+        this.sex = sex;
+        this.ignoreYear = ignoreYear;
+        this.Tel = Tel;
     }
 
     public static final Parcelable.Creator<Birthday> CREATOR = new Parcelable.Creator<Birthday>() {
