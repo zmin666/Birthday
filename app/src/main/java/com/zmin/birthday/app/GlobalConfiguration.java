@@ -21,7 +21,9 @@ import com.jess.arms.utils.UiUtils;
 import com.squareup.leakcanary.LeakCanary;
 import com.squareup.leakcanary.RefWatcher;
 import com.zmin.birthday.BuildConfig;
+import com.zmin.birthday.R;
 import com.zmin.birthday.app.db.DbCore;
+import com.zmin.birthday.app.libs.loadandretry.LoadingAndRetryManager;
 import com.zmin.birthday.mvp.model.api.Api;
 import com.zmin.birthday.mvp.model.api.cache.CommonCache;
 import com.zmin.birthday.mvp.model.api.service.CommonService;
@@ -140,6 +142,12 @@ public class GlobalConfiguration implements ConfigModule {
                 ((App) application).getAppComponent().extras().put(RefWatcher.class.getName(), BuildConfig.USE_CANARY ? LeakCanary.install(application) : RefWatcher.DISABLED);
                 // 初始化参数依次为 this, AppId, AppKey
                 AVOSCloud.initialize(context, "V3cr3sUeFENOdjEekOGCIG7P-gzGzoHsz", "DVztMKlqm6uG5YlkaMBrHAJV");
+
+
+                //统一的封装界面 加载中 空数据 出错重试 指定对应布局
+                LoadingAndRetryManager.BASE_RETRY_LAYOUT_ID = R.layout.base_retry;
+                LoadingAndRetryManager.BASE_LOADING_LAYOUT_ID = R.layout.base_loading;
+                LoadingAndRetryManager.BASE_EMPTY_LAYOUT_ID = R.layout.base_empty;
 
                 //数据库初始化
                 DbCore.init(context);

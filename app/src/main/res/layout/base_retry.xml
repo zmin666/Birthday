@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    >
+
+    <!--默认错误是网络错误-->
+    <ImageView
+        android:id="@+id/iv_retry"
+        android:layout_width="296px"
+        android:layout_height="296px"
+        android:layout_gravity="center"
+        android:src="@drawable/network"/>
+
+    <TextView
+        android:id="@+id/tv_retry"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginTop="200px"
+        android:text="当前网络不畅，请检查网络"
+        android:textColor="@color/color_666666"
+        android:textSize="32px"/>
+</FrameLayout>

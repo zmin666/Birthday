@@ -33,8 +33,6 @@ import butterknife.OnClick;
 
 public class MainActivity extends BaseActivity<MainPresenter> implements MainContract.view {
 
-    public static final int REQUEST_CODE = 100;
-
     @Nullable
     @BindView(R.id.rv)
     RecyclerView mRecyclerView;
@@ -54,6 +52,8 @@ public class MainActivity extends BaseActivity<MainPresenter> implements MainCon
     DrawerLayout mDrawerLayout;
     @BindView(R.id.ll_main_left)
     LinearLayout mLlmainleft;
+
+    public static final int REQUEST_CODE = 100;
 
     @OnClick({R.id.user_data, R.id.update, R.id.advise, R.id.donate, R.id.about_us, R.id.bt_Contacts, R.id.cv_head, R.id.tv_name, R.id.tv_member})
     public void click(View view) {
@@ -201,7 +201,6 @@ public class MainActivity extends BaseActivity<MainPresenter> implements MainCon
 
     @Override
     public void showMessage(String message) {
-
     }
 
     @Override
@@ -213,6 +212,7 @@ public class MainActivity extends BaseActivity<MainPresenter> implements MainCon
     public void killMyself() {
 
     }
+
 
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {

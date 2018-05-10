@@ -109,6 +109,7 @@ public class MainPresenter extends BasePresenter<MainContract.Model, MainContrac
                                 mBirthdays.addAll(changeDate(data));
                             }
                         }
+
                         long t = 1500 - (System.currentTimeMillis() - starTime);
                         long time = t < 0 ? 0 : t;
                         new Handler().postDelayed(new Runnable() {
@@ -116,6 +117,9 @@ public class MainPresenter extends BasePresenter<MainContract.Model, MainContrac
                             public void run() {
                                 mMAdapter.notifyDataSetChanged();
                                 mRootView.hideLoading();
+                                if (bithdayBeen.getCode() == 300) {
+                                    mRootView.showMessage("没有数据");
+                                }
                             }
                         }, time);
                     }
@@ -151,6 +155,7 @@ public class MainPresenter extends BasePresenter<MainContract.Model, MainContrac
 
     /**
      * 匹配通讯录并处理结果 去掉无效数据和已经有的数据
+     *
      * @param data
      * @param beforebirthdays
      * @return
@@ -319,7 +324,7 @@ public class MainPresenter extends BasePresenter<MainContract.Model, MainContrac
                     public void onNext(@NonNull BithdayContactBeen bithdayContactBeen) {
                         if (bithdayContactBeen.getCode() == 200) {
                             List<BithdayContactBeen.DataBean> data = bithdayContactBeen.getData();
-                            mBirthdays.addAll(changeContactDate(data,mBirthdays));
+                            mBirthdays.addAll(changeContactDate(data, mBirthdays));
                         }
                         mMAdapter.notifyDataSetChanged();
                         mRootView.hideLoading();
