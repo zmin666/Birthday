@@ -3,7 +3,7 @@ package com.zmin.birthday.di.component;
 import com.jess.arms.di.component.AppComponent;
 import com.jess.arms.di.scope.ActivityScope;
 import com.zmin.birthday.di.module.LoginModule;
-import com.zmin.birthday.mvp.ui.activity.LoginRegisterActivity;
+import com.zmin.birthday.mvp.ui.activity.LoginActivity;
 
 import dagger.Component;
 
@@ -15,5 +15,5 @@ import dagger.Component;
 @ActivityScope
 @Component(modules = LoginModule.class,dependencies = AppComponent.class)
 public interface LoginComponent {
-    void inject(LoginRegisterActivity loginActivity);
+    void inject(LoginActivity loginActivity);
 }

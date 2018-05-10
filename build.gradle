@@ -8,9 +8,10 @@ buildscript {
             url "http://mvn.leancloud.cn/nexus/content/repositories/public"
         }
         mavenCentral()
+        google()
     }
     dependencies {
-        classpath 'com.android.tools.build:gradle:2.3.3'
+        classpath 'com.android.tools.build:gradle:3.0.1'
         //lambda
         classpath 'me.tatarka:gradle-retrolambda:3.6.0'
         //greendao
@@ -31,6 +32,7 @@ allprojects {
         maven {
             url "http://mvn.leancloud.cn/nexus/content/repositories/public"
         }
+        google()
     }
 }
 

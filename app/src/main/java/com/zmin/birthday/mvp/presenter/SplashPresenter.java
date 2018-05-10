@@ -13,7 +13,7 @@ import com.jess.arms.mvp.BaseModel;
 import com.jess.arms.mvp.BasePresenter;
 import com.zmin.birthday.app.userpermission.user.UserControl;
 import com.zmin.birthday.mvp.contract.SplashContract;
-import com.zmin.birthday.mvp.ui.activity.LoginRegisterActivity;
+import com.zmin.birthday.mvp.ui.activity.LoginActivity;
 import com.zmin.birthday.mvp.ui.activity.MainActivity;
 import com.zmin.birthday.mvp.ui.activity.SplashActivity;
 
@@ -70,7 +70,8 @@ public class SplashPresenter extends BasePresenter<BaseModel, SplashContract.vie
                 String userId = UserControl.getInstance().getCurrentUser(mApplication).getUserId();
                 Intent intent =  new Intent();
                 if (userId == null || userId.equals("0")) {
-                    intent = new Intent((SplashActivity) mRootView, LoginRegisterActivity.class);
+//                    intent = new Intent((SplashActivity) mRootView, LoginRegisterActivity.class);
+                    intent = new Intent((SplashActivity) mRootView, LoginActivity.class);
                 } else {
                     intent = new Intent((SplashActivity) mRootView, MainActivity.class);
                 }

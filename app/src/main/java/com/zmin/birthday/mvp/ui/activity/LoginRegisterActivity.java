@@ -11,8 +11,8 @@ import com.jess.arms.base.BaseActivity;
 import com.jess.arms.di.component.AppComponent;
 import com.zmin.birthday.R;
 import com.zmin.birthday.app.utils.MD5Utils;
-import com.zmin.birthday.di.component.DaggerLoginComponent;
-import com.zmin.birthday.di.module.LoginModule;
+import com.zmin.birthday.di.component.DaggerLoginRegisterComponent;
+import com.zmin.birthday.di.module.LoginRegisterModule;
 import com.zmin.birthday.mvp.contract.LoginRegisterContract;
 import com.zmin.birthday.mvp.presenter.LoginRegisterPresenter;
 
@@ -89,10 +89,10 @@ public class LoginRegisterActivity extends BaseActivity<LoginRegisterPresenter> 
 
     @Override
     public void setupActivityComponent(AppComponent appComponent) {
-        DaggerLoginComponent
+        DaggerLoginRegisterComponent
                 .builder()
                 .appComponent(appComponent)
-                .loginModule(new LoginModule(this))
+                .loginRegisterModule(new LoginRegisterModule(this))
                 .build()
                 .inject(this);
     }

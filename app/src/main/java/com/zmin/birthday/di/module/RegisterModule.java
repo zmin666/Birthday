@@ -1,8 +1,8 @@
 package com.zmin.birthday.di.module;
 
 import com.jess.arms.di.scope.ActivityScope;
-import com.zmin.birthday.mvp.contract.LoginContract;
-import com.zmin.birthday.mvp.model.LoginModel;
+import com.zmin.birthday.mvp.contract.RegisterContract;
+import com.zmin.birthday.mvp.model.RegisterModel;
 
 import dagger.Module;
 import dagger.Provides;
@@ -13,23 +13,23 @@ import dagger.Provides;
  * @desc:
  */
 @Module
-public class LoginModule {
+public class RegisterModule {
 
-    private LoginContract.view view;
+    private RegisterContract.view view;
 
-    public LoginModule(LoginContract.view view) {
+    public RegisterModule(RegisterContract.view view) {
         this.view = view;
     }
 
     @ActivityScope
     @Provides
-    LoginContract.view  provideView(){
+    RegisterContract.view  provideView(){
         return view;
     }
 
     @ActivityScope
     @Provides
-    LoginContract.Model provideModel(LoginModel model){
+    RegisterContract.Model provideModel(RegisterModel model){
         return model;
     }
 }
