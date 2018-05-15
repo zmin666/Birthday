@@ -1,13 +1,23 @@
 apply plugin: 'com.android.application'
 apply plugin: 'org.greenrobot.greendao' // apply plugin
 apply plugin: 'hugo' //hugo
+apply plugin: 'bugly'
+
 
 android {
-
+    signingConfigs {
+        debug {
+        }
+        release {
+            keyAlias 'key0'
+            keyPassword '3959534qq'
+            storeFile file('../birthday.jks')
+            storePassword '3959534qq'
+        }
+    }
     compileSdkVersion rootProject.ext.android["compileSdkVersion"]
     buildToolsVersion rootProject.ext.android["buildToolsVersion"]
     useLibrary 'org.apache.http.legacy'
-
     defaultConfig {
         applicationId "com.zmin.birthday"
         minSdkVersion rootProject.ext.android["minSdkVersion"]
@@ -15,8 +25,12 @@ android {
         versionCode rootProject.ext.android["versionCode"]
         versionName rootProject.ext.android["versionName"]
         testInstrumentationRunner rootProject.ext.dependencies["androidJUnitRunner"]
-    }
 
+        ndk {
+            // 设置支持的SO库架构
+            abiFilters 'armeabi' //, 'x86', 'armeabi-v7a', 'x86_64', 'arm64-v8a'
+        }
+    }
     buildTypes {
         debug {
             buildConfigField "boolean", "LOG_DEBUG", "true"
@@ -24,34 +38,32 @@ android {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
-
         release {
             buildConfigField "boolean", "LOG_DEBUG", "false"
             buildConfigField "boolean", "USE_CANARY", "false"
             minifyEnabled true
             shrinkResources true
             zipAlignEnabled true
+            signingConfig signingConfigs.release
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            debuggable true
+            jniDebuggable true
         }
     }
-
     lintOptions {
         disable 'InvalidPackage'
         disable "ResourceType"
         abortOnError false
     }
-
     compileOptions {
         targetCompatibility JavaVersion.VERSION_1_8
         sourceCompatibility JavaVersion.VERSION_1_8
     }
-
     //为了解决部分第三方库重复打包了META-INF的问题
-    packagingOptions{
+    packagingOptions {
         exclude 'META-INF/LICENSE.txt'
         exclude 'META-INF/NOTICE.txt'
     }
-
 }
 
 
@@ -66,6 +78,12 @@ buildscript {
     repositories {
         jcenter()
     }
+}
+
+bugly {
+    appId = '<2ab4c5dad2>' // 注册时分配的App ID
+    appKey = '<7b66d2a5-44d8-4d8d-af80-7b1815d07e08>' // 注册时分配的App Key
+    debug = true  //开启插件调试模式之后，将打印更详细日志
 }
 
 dependencies {
@@ -99,5 +117,9 @@ dependencies {
     compile 'com.android.support:cardview-v7:27.1.1'
     //圆形图像
     compile 'de.hdodenhof:circleimageview:2.1.0'
-
+    //bugly
+    compile 'com.tencent.bugly:crashreport:latest.release'
+    //其中latest.release指代最新Bugly SDK版本号，也可以指定明确的版本号，例如2.1.9
+    compile 'com.tencent.bugly:nativecrashreport:latest.release'
+    //其中latest.release指代最新Bugly NDK版本号，也可以指定明确的版本号，例如3.0
 }

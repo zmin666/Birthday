@@ -19,6 +19,7 @@ import android.widget.Toast;
 
 import com.jess.arms.base.BaseActivity;
 import com.jess.arms.di.component.AppComponent;
+import com.tencent.bugly.crashreport.CrashReport;
 import com.zmin.birthday.R;
 import com.zmin.birthday.app.utils.StatusBarCompat;
 import com.zmin.birthday.di.component.DaggerMainComponent;
@@ -119,6 +120,8 @@ public class MainActivity extends BaseActivity<MainPresenter> implements MainCon
         setupView();
         addListener();
         mPresenter.requestBirthdayData(true);
+
+        CrashReport.testJavaCrash();
     }
 
     private void setupView() {

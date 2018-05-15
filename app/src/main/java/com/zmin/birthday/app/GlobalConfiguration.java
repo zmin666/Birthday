@@ -20,6 +20,7 @@ import com.jess.arms.integration.IRepositoryManager;
 import com.jess.arms.utils.UiUtils;
 import com.squareup.leakcanary.LeakCanary;
 import com.squareup.leakcanary.RefWatcher;
+import com.tencent.bugly.crashreport.CrashReport;
 import com.zmin.birthday.BuildConfig;
 import com.zmin.birthday.R;
 import com.zmin.birthday.app.db.DbCore;
@@ -150,7 +151,9 @@ public class GlobalConfiguration implements ConfigModule {
                 LoadingAndRetryManager.BASE_EMPTY_LAYOUT_ID = R.layout.base_empty;
 
                 //数据库初始化
-                DbCore.init(context);
+                DbCore.init(application);
+                //bugly
+                CrashReport.initCrashReport(application.getApplicationContext(), "2ab4c5dad2", true);
             }
 
             @Override
@@ -159,6 +162,7 @@ public class GlobalConfiguration implements ConfigModule {
             }
         });
     }
+
 
     @Override
     public void injectActivityLifecycle(Context context, List<Application.ActivityLifecycleCallbacks> lifecycles) {
